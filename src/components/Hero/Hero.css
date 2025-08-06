@@ -1,0 +1,91 @@
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.fa-arrow-left,
+.fa-arrow-right {
+  background: transparent;
+  font-weight: 900;
+  font-size: 1.2rem;
+  transition: .4s;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border: 1px solid whitesmoke;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+}
+/* Custom class to hide scrollbar */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+section{
+  padding: 30px 20px;
+  
+}
+.fa-info{
+
+  width: 30px !important;
+  height: 30px !important;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+.fa-plus,
+.fa-play{
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+}
+
+.overlay-subscription
+ {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  display: flex;
+  z-index: 10;
+}
+
+.movie-card:hover .overlay-subscription {
+  opacity: 1;
+  cursor: progress;
+}
+.movie-card:hover .overlay {
+  opacity: 1;
+  cursor: progress;
+}
+.span-play,
+.acc-btn,
+.span-plus{
+  padding: 3px 10px;
+}
+.genre{
+  padding: 2px 7px;
+}
+.overlay{
+  backdrop-filter: blur(.9px);
+}
+.navbar-phone{
+/* background-color: aqua; */
+padding: 5px;
+}
+.movie-poster:hover .overlay{
+  opacity: 1;
+}

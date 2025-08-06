@@ -1,0 +1,63 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.playBtn,
+.downloadBtn{
+    padding: 6px 16px;
+}
+.dislike-btn,
+.likes-btn{
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+     background: red;
+     padding: 4px 30px;
+     border-radius: 20px;
+     /* border-bottom-left-radius: 20px;
+     border-top-left-radius: 20px; */
+     text-align: center;
+
+}
+.fa-thumbs-up,
+.fa-thumbs-down{
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    /* background: red; */
+    border: none;
+    border-radius: 50px;
+
+}
+.info-container{
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+}
+/* .fa-play {
+    width: 30px ;
+    height: 30px;
+    font-size: 20px;
+    background: transparent;
+    color: white;
+} */
+.fa-calendar,
+.fa-tags,
+.fa-globe,
+.fa-film{
+    color: green;
+}
+.description-tittle{
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-decoration-thickness: 2.2px;
+    text-underline-offset: 3.5px;
+}
+.movie-info{
+    background: transparent;
+}

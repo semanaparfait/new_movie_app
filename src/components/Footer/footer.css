@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 4rem;
+    padding-left: 2rem;
+    flex-wrap: wrap;
+    /* background-color: yellow ; */
+}
+
+/* -----------container2-------------- */
+.titles:hover{
+    text-decoration: underline;
+    text-decoration-color: #1DA1F2;
+    color: wheat;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 4px;
+   
+}
+.container2{
+    color: white;
+    p:hover{
+        color: wheat;
+        cursor: pointer;
+    }
+}
+/* --------------------container3----------------- */
+.container3{
+    color: white;
+    
+    h1:hover{
+        text-decoration: underline;
+        text-decoration-color: #1DA1F2;
+        color: wheat;
+        text-underline-offset: 10px;
+        text-decoration-thickness: 4px;
+       
+    }
+    p:hover{
+        color: wheat;
+        cursor: pointer;
+    }
+    a{
+        color: rgb(173, 153, 153);
+    }
+}
+/* --------------container4-------------- */
+.container4{
+    color: white;
+    
+    /* background-color: #007bff; */
+    h1:hover{
+        text-decoration: underline;
+        text-decoration-color: #1DA1F2;
+        color: wheat;
+        text-underline-offset: 10px;
+        text-decoration-thickness: 4px;
+       
+    }
+    input{
+        width: 17rem;
+        height: 3rem;
+        /* background: #26272d; */
+        padding: 1rem;
+        border: #ffffff solid 1px;
+        border-radius: 10px;
+        color: rgb(0, 0, 0);
+    }
+
+    button{
+        background: #4CAF50;
+        padding: 5px;
+        border: black solid 1px;
+        border-radius: 9px;
+        cursor: progress;
+        width: 100%;
+    }
+    button:hover{
+        background: green;
+        box-shadow:4px 4px 4px 4px #022810;
+    }
+
+
+}
+/* ------------------------fo0ter--------------------- */
+footer{
+    background:  #000000;
+    color: rgb(255, 255, 255);
+    height: 5rem;
+    padding-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}

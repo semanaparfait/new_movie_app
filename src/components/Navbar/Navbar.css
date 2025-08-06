@@ -1,0 +1,37 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    
+}
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     background: black; /*  akantu kubwenge */
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    opacity: .7;
+    backdrop-filter: blur(5rem);
+    height: 2rem;
+    input{
+        width: 0;
+        border: none;
+        outline: none;  /*  line on the input */
+        transition: .8s;
+        background: transparent;
+        color: rgb(255, 255, 255);
+        font-weight: 700;
+    }
+    a{
+        color: red;
+    }
+   
+}
+.search-bar:hover input{
+    width: 10rem;
+}
+input:focus{
+    outline: none;
+}

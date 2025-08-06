@@ -1,0 +1,85 @@
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.search-input{
+    /* background-color: #00ffff; */
+    padding-right:50px;
+    width: 30%;
+    input{
+        border: 2px solid white;
+        
+    }
+    input:focus{
+       background-color: white;
+    }
+}
+.logo{
+       /* background-color: aqua; */
+       padding-left:50px;
+}
+.recent-movie-genre{
+    color: #ffc107;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.explore-btn {
+    background-color:#ffc107;
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    gap: 10px;
+    &:hover {
+        background-color: #e0a800; /* Darker shade on hover */
+    }
+}
+.more-info-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    padding: 10px 20px;
+    color: rgb(255, 248, 248);
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+    backdrop-filter: blur(10px); /* Apply a blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+}
+.fa-info{
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    font-weight: bolder;
+    text-align: center;
+    /* padding: .2rem; */
+}
+.recent-movie-info{
+    /* background-color: aqua; */
+    margin-left: 30px;
+    width: 100%;
+}
+.recent-movie-poster{
+    margin-right: 100px;
+}
+/* .search-bar{
+    margin-right: 10rem;
+    
+} */
+.search-inter:hover input{
+    width: 15rem;
+}

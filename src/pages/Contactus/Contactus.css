@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'Roboto Mono', monospace; */
+}
+.contactus-image{
+/* background-image: url(/movie_app_react/src/assets/images/contactus/contactus.jpg); */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+h2{
+    font-size: 24px;
+}
+strong{
+    color: #e74c3c;
+    font-weight: bold;
+}
+.contact-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Contact Box */
+.contact-box {
+    background: white;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
+}
+
+.contact-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Icons */
+.contact-box i {
+    font-size: 30px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Headings */
+.contact-box h3 {
+    margin: 0;
+    color: #34495e;
+}
+
+/* Text */
+.contact-box p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.contact-box strong {
+    color: #e74c3c;
+}
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #000000;
+}
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #000000;
+    resize: none;
+}
+
+
+

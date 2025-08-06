@@ -1,0 +1,69 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+/* .all-container {
+    background-image: url(https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg);
+    z-index: 10;
+
+} */
+.right-tect-content{
+    backdrop-filter: blur(5px);
+    padding: 20px 40px;
+    /* background-color: aqua; */
+}
+input[type="email"],
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    /* width: 100%; */
+    /* padding: 10px; */
+    border: none;
+    /* border-radius: 4px; */
+    /* background-color: white; */
+    height: 2.6rem;
+}
+.google-btn  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    gap: 15px;
+    padding: 8px 15px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    color: white;
+    /* border: none; */
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+@media (max-width: 640px) {
+  .google-btn,
+  .facebook-btn {
+    font-size: 13px; /* or 12px if you want it smaller */
+  }
+}
+.signin-btn{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+
+}
+/* .container{
+    background-color: aqua;
+    background-image: url(https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: color-mix(in oklab, var(--color-black) #000 = #000000 60%, transparent);
+} */
