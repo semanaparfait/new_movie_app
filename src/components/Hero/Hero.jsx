@@ -65,7 +65,7 @@ import { Link } from "react-router-dom";
       </div>
     );
   }
-  export const isLoggedin = true
+  export const isLoggedin = false
 function Hero() {
 
   function overlay(movie) {

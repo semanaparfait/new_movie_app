@@ -5,13 +5,28 @@ import bgimage from '../../assets/images/account/bg react.jpg';
 import facebook from '../../assets/images/account/facebook.png';
 import google from '../../assets/images/account/google.png'
 import logo from '../../assets/images/overlay-2.png'
+import { useNavigate } from 'react-router-dom';
 
 function Accountpage() {
-  const [loginTitle, setloginTitle] = useState("Welcome back ! ")
-  function toSignup(){
-    setloginTitle("Get Started")
-    
+  const navigate = useNavigate();
+
+  const [action, setAction] = useState("Sign up")
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [phonenumber, setPhonenumber] = useState("")
+  const [password, setPassword] = useState("")
+  const submitform = (e) => {
+  if(
+    username==="semana" &&
+    password=="semana2004"
+  ){
+    navigate("/adminaccounts");
+  }else{
+    console.log("error")
   }
+};
+
+ 
   const date = new Date();
 const year = date.getFullYear();
   return (
@@ -23,8 +38,8 @@ const year = date.getFullYear();
 <img src={logo} alt="weblogo" className='w-[6rem] '/>
 </Link>
   <ul className="flex gap-3 text-xs sm:text-base">
-    <li className="cursor-pointer font-bold" >Login</li>
-    <li className="cursor-pointer font-bold" onClick={toSignup}>Sign up</li>
+    <li className="cursor-pointer font-bold" onClick={()=>setAction("Log in")}>Login</li>
+    <li className="cursor-pointer font-bold" onClick={()=>setAction("Sign up")}>Sign up</li>
   </ul>
 </nav><br />
 
@@ -37,39 +52,57 @@ const year = date.getFullYear();
 {/* Centered Content */}
 <div className='min-h-screen flex items-center justify-center'>
   <div className="right-tect-content text-center text-white space-y-4 w-full max-w-md">
-    <h1 className="text-3xl sm:text-4xl font-bold">{loginTitle}</h1>
+    <h1 className="text-3xl sm:text-4xl font-bold">{action}</h1>
     <h4 className="text-lg sm:text-2xl">SEMANA SHEMA PARFAIT</h4>
 
     {/* Inputs */}
     <div className="space-y-3 text-black">
+      <form onSubmit={submitform} className='flex flex-col gap-2'>
+      
       <input
         type="text"
+        value={username}
+        onChange={(e)=>setUsername(e.target.value)}
         placeholder="Enter your Full name"
         className="w-full rounded bg-white/90 outline-none text-sm"
       />
+       {action ==="Log in"? <div></div>:
         <input
        type="number"
+       value={phonenumber}
+       onChange={(e)=>setPhonenumber(e.target.value)}
        placeholder="Enter your Phone number"
-       className="w-full rounded bg-white/90 outline-none text-sm"
+       className="w-full rounded-[10px] bg-white/90 outline-none text-sm"
+       style={{paddingLeft:'7px'}}
      />
+       }
+       {action==="Log in"?<div></div>:
       <input
         type="text"
+        value={email}
+        onChange={(e)=>setEmail(e.target.value)}
         placeholder="Enter your email address"
         className="w-full rounded bg-white/90 outline-none text-sm"
       />
+       }
+       
       <input
         type="password"
+        value={password}
+        onChange={(e)=>setPassword(e.target.value)}
         placeholder="Enter your password"
-        className="w-full rounded bg-white/90 outline-none text-sm"
+        className="w-full rounded-[10px] bg-white/90 outline-none text-sm"
+        style={{paddingLeft:'7px'}}
       />
-    </div><br />
-
-    <p className="text-right text-sm text-red-400 cursor-pointer">Forgot your password?</p><br />
+    {action==="Log in"?<div></div>:
+    <p className="text-right text-sm text-red-400 cursor-pointer">Forgot your password?</p>
+    }
 
     {/* Buttons */}
-    <button className='signin-btn'>Sign in</button><br /><br />
+    <button type="submit" className='signin-btn'>{action}</button>
     <button className='google-btn '>Continue with Google <img src={google} /></button><br />
-
+   </form>
+    </div>
   </div>
 </div>
 

@@ -11,6 +11,7 @@ import Hero2 from './components/Hero/Hero2';
 import MovieApp from './pages/MovieApp/MovieApp';
 import UserProfile from './pages/UserProfile/UserProfile';
 import AdminPage from './pages/AdminPage/AdminPage';
+import AdminAcc from './components/AdminAcc/AdminAcc';
 
 
 
@@ -29,8 +30,10 @@ function App() {
   <Route path="/player/:movieid" element={<Player />} />
   <Route path="/userprofile" element={<UserProfile />}/>
   <Route path='/adminpage' element={<AdminPage />} />
+  <Route path='/adminaccounts' element={<AdminAcc />} />
   {/* Add other routes here as needed */}
   <Route path='hero2' element={<Hero2 />}/>
+  
   
  
 
