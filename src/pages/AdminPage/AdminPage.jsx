@@ -1,10 +1,19 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../../assets/images/overlay-2.png'
 import { Link } from 'react-router-dom';
 import './AdminPage.css'
 
 function AdminPage() {
     const [activeTab, setActiveTab] = useState('dashboard');
+      const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/admin/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error('Error fetching users:', err));
+  }, []);
+
     function adminnavbar(){
     return(
     <div className=" block md:hidden fixed bottom-0 w-full bg-black z-50 " style={{padding:'10px'}}>
@@ -111,49 +120,19 @@ function AdminPage() {
                                 <th>Password</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>semana shema parfait</td>
-                                    <td>+250787845162</td>
-                                    <td>semana@gmail.com</td>
-                                    <td>semana@12</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>christian regnante ngwino</td>
-                                    <td>+1234567890</td>
-                                    <td>christianregnante@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>3</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>shami placide igabe</td>
-                                    <td>+1234567890</td>
-                                    <td>shamiplacide@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>4</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>placide niyonizey</td>
-                                    <td>+1234567890</td>
-                                    <td>niyonizeye@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>5</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>sando mugwaneza</td>
-                                    <td>+25078887364</td>
-                                    <td>mugwaneza@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
+                                    <tbody>
+                                    {users.map(user => (
+                                        <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{new Date(user.created_at).toLocaleString()}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.phonenumber}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.password}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
 
-                            </tbody>
                         </table>
                     </div><br /><br />
                     {/* most recent movies */}
@@ -379,49 +358,18 @@ function AdminPage() {
                                 <th>Password</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>semana shema parfait</td>
-                                    <td>+250787845162</td>
-                                    <td>semana@gmail.com</td>
-                                    <td>semana@12</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>christian regnante ngwino</td>
-                                    <td>+1234567890</td>
-                                    <td>christianregnante@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>3</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>shami placide igabe</td>
-                                    <td>+1234567890</td>
-                                    <td>shamiplacide@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>4</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>placide niyonizey</td>
-                                    <td>+1234567890</td>
-                                    <td>niyonizeye@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-                                                                <tr>
-                                    <td>5</td>
-                                    <td>1/1/2050 12:00 AM</td>
-                                    <td>sando mugwaneza</td>
-                                    <td>+25078887364</td>
-                                    <td>mugwaneza@gmail.com</td>
-                                    <td>12345</td>
-                                </tr>
-
-                            </tbody>
+                                    <tbody>
+                                    {users.map(user => (
+                                        <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{new Date(user.created_at).toLocaleString()}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.phonenumber}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.password}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
                         </table>
                     </div>
 

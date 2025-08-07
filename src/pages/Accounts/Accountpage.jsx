@@ -15,20 +15,65 @@ function Accountpage() {
   const [email, setEmail] = useState("")
   const [phonenumber, setPhonenumber] = useState("")
   const [password, setPassword] = useState("")
-  const submitform = (e) => {
-  if(
-    username==="semana" &&
-    password=="semana2004"
-  ){
-    navigate("/adminaccounts");
-  }else{
-    console.log("error")
+
+
+  const submitform = async (e) => {
+  e.preventDefault();
+
+  if (action === "Sign up") {
+    // Call backend signup API
+    try {
+      const response = await fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, phonenumber, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        // Optionally reset form fields here
+        setUsername('');
+        setEmail('');
+        setPhonenumber('');
+        setPassword('');
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('Network error: ' + error.message);
+    }
+  } else if (action === "Log in") {
+    // Call backend login API
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        navigate("/"); // Redirect on success
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('Network error: ' + error.message);
+    }
   }
 };
+
 
  
   const date = new Date();
 const year = date.getFullYear();
+
+
+
+
+
   return (
  <div className="absolute overflow-hidden  inset-0 bg-[url('https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg')] bg-cover bg-center ">
 
@@ -72,6 +117,7 @@ const year = date.getFullYear();
        value={phonenumber}
        onChange={(e)=>setPhonenumber(e.target.value)}
        placeholder="Enter your Phone number"
+       pattern="^\+?[1-9][0-9]{7,14}$"
        className="w-full rounded-[10px] bg-white/90 outline-none text-sm"
        style={{paddingLeft:'7px'}}
      />
