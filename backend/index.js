@@ -3,15 +3,27 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import pg from 'pg';
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
+
+dotenv.config();
+const isNeon = process.env.DATABASE_URL?.includes("neon.tech");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const { Pool } = pg; // Destructure Pool from pg
 // Connect to PostgreSQL
-const pool = new pg.Pool({
-  connectionString: 'postgresql://postgres:Semana2004@localhost:5432/moviehub'
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: isNeon
+    ? { rejectUnauthorized: false }
+    : false,
 });
+
+// const local = new pg.Pool({
+//   connectionString: process.env.LOCAL_UR,
+// });
 
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
@@ -30,6 +42,7 @@ app.post('/api/signup', async (req, res) => {
       'INSERT INTO accountusers (username, email, phonenumber, password) VALUES ($1, $2, $3, $4)',
       [username, email, phonenumber, hashedPassword]
     );
+    
 
     res.status(201).json({ message: 'User created successfully' });
 
