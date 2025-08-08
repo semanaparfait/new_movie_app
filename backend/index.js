@@ -10,9 +10,10 @@ dotenv.config();
 const isNeon = process.env.DATABASE_URL?.includes("neon.tech");
 const app = express();
 app.use(cors({
-  origin: 'https://new-movie-app-1.onrender.com',
+  origin: ['https://new-movie-app-1.onrender.com', 'https://new-movie-app.onrender.com'],
   credentials: true
 }));
+
 app.use(bodyParser.json());
 
 const { Pool } = pg; // Destructure Pool from pg
