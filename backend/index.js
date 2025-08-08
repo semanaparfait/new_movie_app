@@ -9,11 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const isNeon = process.env.DATABASE_URL?.includes("neon.tech");
 const app = express();
-app.use(cors({
-  origin: ['https://new-movie-app-1.onrender.com', 'https://new-movie-app.onrender.com'],
-  credentials: true
-}));
-
+app.use(cors());
 app.use(bodyParser.json());
 
 const { Pool } = pg; // Destructure Pool from pg
@@ -48,7 +44,7 @@ app.post('/api/signup', async (req, res) => {
     );
     
 
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).send({ message: 'User created successfully' });
 
   } catch (err) {
     console.error(err);
@@ -105,6 +101,6 @@ app.get('/api/admin/users', async (req, res) => {
 
 
 // Start server
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

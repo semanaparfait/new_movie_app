@@ -6,15 +6,14 @@ import './AdminPage.css'
 function AdminPage() {
     const [activeTab, setActiveTab] = useState('dashboard');
       const [users, setUsers] = useState([]);
-const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:5000";
 
-useEffect(() => {
-  fetch(`${API_BASE_URL}/api/admin/users`)
-    .then(res => res.json())
-    .then(data => setUsers(data))
-    .catch(err => console.error('Error fetching users:', err));
-}, []);
-
+  useEffect(() => {
+    fetch('https://new-movie-app.onrender.com/api/admin/users')
+    // fetch('https://new-movie-app.onrender.com/api/admin/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error('Error fetching users:', err));
+  }, []);
 
     function adminnavbar(){
     return(

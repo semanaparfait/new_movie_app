@@ -20,13 +20,10 @@ function Accountpage() {
   const submitform = async (e) => {
   e.preventDefault();
 
-
-  const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
   if (action === "Sign up") {
     // Call backend signup API
     try {
-          const response = await fetch(`${API_BASE_URL}/api/signup`, {
-      // const response = await fetch('http://localhost:5000/api/signup', {
+      const response = await fetch('https://new-movie-app.onrender.com/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, phonenumber, password }),
@@ -49,8 +46,7 @@ function Accountpage() {
   } else if (action === "Log in") {
     // Call backend login API
     try {
-      const response = await fetch(`${API_BASE_URL}/api/login`, {
-      // const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('https://new-movie-app.onrender.com/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
