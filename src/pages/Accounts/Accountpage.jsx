@@ -131,7 +131,7 @@ function Accountpage() {
                   onChange={(e) => setPhonenumber(e.target.value)}
                   placeholder="Enter your Phone number"
                   pattern="^\+?[1-9][0-9]{7,14}$"
-                  className="w-full rounded-[10px] bg-white/90 outline-none text-sm"
+                  className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
                   style={{ paddingLeft: "7px" }}
                 />
               )}
@@ -149,7 +149,7 @@ function Accountpage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full rounded-[10px] bg-white/90 outline-none text-sm"
+                className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
                 style={{ paddingLeft: "7px" }}
               />
               {action === "Log in" ? (
