@@ -1,8 +1,34 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import logo from '../../assets/images/overlay-2.png'
 import { Link } from 'react-router-dom'
 
 function UserProfile() {
+    const API_URL =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:5000"
+          : "https://new-movie-app.onrender.com";
+    
+      const [isLoggedin, setIsLoggedin] = useState(false);
+      const [user, setUser] = useState(null);
+    
+      // Check login status
+      useEffect(() => {
+        fetch(`${API_URL}/api/me`, { 
+          method:"GET",
+          credentials: "include" })
+          .then(res => res.json())
+          .then(data => {
+            console.log("User data from /api/me:", data);
+            if (data?.id) {
+              setIsLoggedin(true);
+              setUser(data);
+            } else {
+              setIsLoggedin(false);
+              setUser(null);
+            }
+          })
+          .catch(err => console.error('Error fetching user data:', err));
+      }, []);
   return (
     <main>
     <nav className="pl-4 sm:pl-10">
@@ -17,9 +43,9 @@ function UserProfile() {
                 <img src="https://i.pinimg.com/1200x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg" alt="profile picture" className='w-[7rem] object-cover rounded-full'/>
             </div>
             <div>
-                <h3 className='font-bold'>Semana Shema Parfait</h3>
+                <h3 className='font-bold'>{user?.username}</h3>
                 <p className='text-[green]'>Active</p>
-                <p>ID: 123RFDS</p>
+                <p>ID: {user?.id}RFDS</p>
             </div>
         </div><br /><br />
         <div className=' w-[80%]'>
@@ -42,11 +68,11 @@ function UserProfile() {
                 <div>
                     <div>
                         <p>Email Address:</p>
-                         <h3 className='font-bold'>semana@gmail.com</h3>
+                         <h3 className='font-bold'>{user?.email}</h3>
                     </div><br />
                     <div>
                         <p>Phone Number:</p>
-                         <h3 className='font-bold'>+250787845162</h3>
+                         <h3 className='font-bold'>{user?.phonenumber}</h3>
                     </div>
                 </div>
             </div>

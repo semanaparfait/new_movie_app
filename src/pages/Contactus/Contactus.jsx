@@ -6,7 +6,7 @@ function Contactus() {
   return (
     <main>
         <div className='contactus-image'>
-            <img src={contact} alt="contactuse image" className='w-full h-90'/>
+            <img src={contact} alt="contactuse image" className='w-full h-90' />
         </div>
         <div className='bg-[#d8dee3] p-10 text-center'> 
         <div className='text-center p-8'><br />

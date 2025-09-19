@@ -49,7 +49,7 @@ function Footer() {
          <input
             type="email"
             placeholder="Enter your email"
-            className="text-black placeholder-black border border-gray-300 p-2 rounded"
+            className="text-white placeholder-white border border-gray-300 p-2 rounded"
           /><br /><br />
           <button type="submit">subscribe</button><br /><br /><br />
           <img className="w-35" src={appstore} alt="app store"/><br />

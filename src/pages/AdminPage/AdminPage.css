@@ -19,7 +19,7 @@ tr:nth-child(even) {
 }
 input[type="text"]{
     height: 2.6rem;
-    border: 2px solid black;
+    /* border: 2px solid red; */
     border-radius: 10px;
     /* width: 50%; */
 }
