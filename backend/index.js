@@ -14,11 +14,9 @@ import { error } from 'console';
 
 dotenv.config();
 const isNeon = process.env.DATABASE_URL?.includes("neon.tech");
-const router = express.Router();
-app.use(router);
 const app = express();
-app.use(cookieParser());
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'));
 app.use(cors({
@@ -28,6 +26,9 @@ app.use(cors({
   ],
   credentials: true,
 }));
+const router = express.Router();
+app.use(router);
+
 const { Pool } = pg; // Destructure Pool from pg
 // Connect to PostgreSQL
 const pool = new Pool({
