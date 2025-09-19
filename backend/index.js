@@ -55,6 +55,8 @@ function authenticateToken(req, res, next) {
   // 3. Determine which token to use.
   const token = bearerToken || cookieToken;
 
+  console.log('Token received:', token); // Debug log
+
   // 4. If no token is found in either location, deny access.
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
@@ -66,7 +68,7 @@ function authenticateToken(req, res, next) {
     req.user = decoded; // Attaches user info to the request object
     next();
   } catch (err) {
-    // This catch block handles invalid, expired, or malformed tokens.
+    console.error('Token verification failed:', err.message); // Debug log
     res.status(403).json({ message: 'Invalid or expired token' });
   }
 }
