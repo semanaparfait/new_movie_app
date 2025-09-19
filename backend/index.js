@@ -14,6 +14,8 @@ import { error } from 'console';
 
 dotenv.config();
 const isNeon = process.env.DATABASE_URL?.includes("neon.tech");
+const router = express.Router();
+app.use(router);
 const app = express();
 app.use(cookieParser());
 
@@ -22,7 +24,7 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors({
   origin: [
     'http://localhost:5173', // React dev
-    'https://new-movie-app.onrender.com' // deployed frontend
+    'https://new-movie-app-1.onrender.com' // deployed frontend
   ],
   credentials: true,
 }));
@@ -472,27 +474,7 @@ app.put('/api/users/:id/status', async (req, res) => {
   }
 });
 
-// admin deleting------
-// DELETE /api/users/:id
-app.delete('/api/users/:id', async (req, res) => {
-  const { id } = req.params;
 
-  try {
-    const result = await pool.query(
-      'DELETE FROM users WHERE id = $1',
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error deleting user' });
-  }
-});
 
 
 // Start server
