@@ -91,7 +91,7 @@ function Watchlist() {
             <button className='downloadBtn bg-[red] rounded-[6px] font-bold px-4 py-2'
             onClick={() => removeFromWatchlist(movie.movie_id)}
             >
-                <i class="fa-solid fa-xmark"></i> Remove
+                <i className="fa-solid fa-xmark"></i> Remove
             </button>
             
         </div>

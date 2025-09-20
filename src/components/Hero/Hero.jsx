@@ -62,7 +62,7 @@ export function phonenavbar(isAuthenticated) {
   );
 }
 
-export function overlay(movie) {
+export function overlay(movie, userId) {
   const API_URL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
@@ -173,7 +173,7 @@ function Hero() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    fetch(`${API_URL}/api/me`, { method: "GET", credentials: "include" })
+    fetch(`${API_URL}/api/me`, {method: "GET", credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data?.id) {
@@ -224,6 +224,13 @@ function Hero() {
   return (
     // abasobanuzii
     <main>
+      <div className="alert-watchlist absolute right-0 top-0 hidden">
+        <div>
+
+        <h1 className=" text-green-600 text-2xl">Success</h1>
+        <p className=" text-green-600  bg-amber-50 w-fit" style={{padding:"12px 14px"}}><i className="fa-solid fa-circle-check"></i> This item is now in your watchlist</p>
+        </div>
+      </div>
       <div>{phonenavbar()}</div>
       <section>
         <div>
@@ -293,7 +300,7 @@ function Hero() {
         </div>
 
         {/* most recents */}
-        <div>
+        <div className="hidden">
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Most recent</h1>
             <div className="flex gap-4">
@@ -397,7 +404,9 @@ function Hero() {
                         </div>
 
                         <div>
-                          {isAuthenticated ? overlay(movie) : overlaysub()}
+                          {isAuthenticated ? overlay(movie, userId) : overlaysub()}
+
+                          
                         </div>
                       </div>
                     ))}

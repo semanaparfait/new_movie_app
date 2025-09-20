@@ -59,12 +59,14 @@ function authenticateToken(req, res, next) {
 
   // 4. If no token is found in either location, deny access.
   if (!token) {
+    console.error('No token provided'); // Debug log
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
 
   // 5. Verify the token.
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Token decoded successfully:', decoded); // Debug log
     req.user = decoded; // Attaches user info to the request object
     next();
   } catch (err) {
@@ -479,8 +481,10 @@ app.put('/api/users/:id/status', async (req, res) => {
   }
 });
 
-
-
+// Add a placeholder route for /account to handle 404 errors
+app.get('/account', (req, res) => {
+  res.status(200).json({ message: 'Account route placeholder' });
+});
 
 // Start server
 const PORT = process.env.PORT || 5000;

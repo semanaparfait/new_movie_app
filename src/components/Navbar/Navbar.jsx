@@ -24,7 +24,7 @@ function Navbar() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("User data from /api/me:", data);
+        // console.log("User data from /api/me:", data); show user data in console for debugging and testing
         if (data?.id) {
           setIsLoggedin(true);
           setUser(data);
