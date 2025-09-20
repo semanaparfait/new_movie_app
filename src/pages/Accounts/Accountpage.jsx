@@ -57,15 +57,19 @@ function Accountpage() {
         });
 
         const data = await response.json();
-        if (response.ok && data.is_admin === true) {
+       if (response.ok) {
+        localStorage.setItem("token", data.token);
+        alert(data.message);
+
+        if (data.is_admin === true) {
           navigate("/adminpage");
-        } else if (response.ok) {
-          alert(data.message);
-          navigate("/"); // Redirect on success
         } else {
-          alert(data.message);
+          navigate("/");
         }
-      } catch (error) {
+      } else {
+        alert(data.message || "Login failed.");
+      }
+    } catch (error) {
         alert("Network error: " + error.message);
       }
     }

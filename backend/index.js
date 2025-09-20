@@ -152,10 +152,12 @@ app.post('/api/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber, is_admin: user.is_admin },
+      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber},
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
+        console.log("JWT generated:", token);
+console.log("Setting cookie session_token...");
 
     const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('session_token', token, {
