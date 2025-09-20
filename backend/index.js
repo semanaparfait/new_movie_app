@@ -446,7 +446,7 @@ app.delete("/api/watchlist", async (req, res) => {
 app.get('/api/admin/admins', async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT id, username, phonenumber, password, created_at , is_admin FROM users WHERE is_admin = true'
+      'SELECT * FROM accountusers WHERE is_admin = true'
     );
     res.status(200).json(result.rows);
   } catch (err) {

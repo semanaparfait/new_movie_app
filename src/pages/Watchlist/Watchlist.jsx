@@ -14,7 +14,7 @@ function Watchlist() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/me`, { credentials: "include" })
+    fetch(`${API_URL}/api/me`, { method:"GET", credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data?.id) {

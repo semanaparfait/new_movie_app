@@ -14,7 +14,7 @@ const Protector = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get(`${API_URL}/api/me`)
+    axios.get(`${API_URL}/api/me`, { method: "GET" , credentials: "include" })
       .then(() => setAuthenticated(true))
       .catch(() => setAuthenticated(false))
       .finally(() => setLoading(false));

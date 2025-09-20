@@ -32,7 +32,7 @@ function MovieApp() {
   }, []);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/me`, { credentials: "include" })
+    fetch(`${API_URL}/api/me`, {method:"GET", credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log("User data:", data);
