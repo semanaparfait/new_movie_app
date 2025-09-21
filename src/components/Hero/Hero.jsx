@@ -77,7 +77,7 @@ export function overlay(movie, userId) {
 
       const data = await res.json();
       if (data.success) {
-        alert("Added to your watchlist!");
+        // alert("Added to your watchlist!");
       } else {
         alert("Failed to add: " + data.error);
       }
@@ -131,63 +131,25 @@ export function overlay(movie, userId) {
   );
 }
 function Hero() {
-
   const scrollRef = useRef(null);
   const recentRef = useRef(null);
   const popularRef = useRef(null);
 
-  const scroll = (direction) => {
-    const { current } = scrollRef;
-    if (direction === "left") {
-      current.scrollLeft -= 300;
-    } else {
-      current.scrollLeft += 300;
-    }
-  };
-  // -------------------fetching izidasobanuye main category---------
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [izidasobanuye, setIzidasobanuye] = useState([]);
+  const [agasobanuye, setAgasobanuye] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
+
   const API_URL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
       : "https://new-movie-app.onrender.com";
-  const [izidasobanuye, setIzidasobanuye] = useState([]);
-  useEffect(() => {
-    fetch(`${API_URL}/api/izidasobanuye`)
-      .then((res) => res.json())
-      .then((data) => setIzidasobanuye(data))
-      .catch((err) => console.error(err));
-  }, []);
-  const [agasobanuye, setAgasobanuye] = useState([]);
-  useEffect(() => {
-    fetch(`${API_URL}/api/agasobanuye`)
-      .then((res) => res.json())
-      .then((data) => setAgasobanuye(data))
-      .catch((err) => console.error(err));
-  }, []);
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    fetch(`${API_URL}/api/movies`)
-      .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((err) => console.error(err));
-  }, []);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userId, setUserId] = useState(null);
-  useEffect(() => {
-    fetch(`${API_URL}/api/me`, {method: "GET", credentials: "include" })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.id) {
-          setIsAuthenticated(true);
-          setUserId(data.id); // save user id
-        } else {
-          setIsAuthenticated(false);
-          setUserId(null);
-        }
-      })
-      .catch((err) => console.error(err));
-  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Set loading to true before fetching data
       try {
         const [izidasobanuyeRes, agasobanuyeRes, moviesRes, userRes] =
           await Promise.all([
@@ -215,24 +177,42 @@ function Hero() {
         }
       } catch (err) {
         console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false); // Set loading to false after fetching data
       }
     };
 
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="loading-container flex justify-center items-center h-screen">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     // abasobanuzii
     <main>
       <div className="alert-watchlist absolute right-0 top-0 hidden">
         <div>
-
-        <h1 className=" text-green-600 text-2xl">Success</h1>
-        <p className=" text-green-600  bg-amber-50 w-fit" style={{padding:"12px 14px"}}><i className="fa-solid fa-circle-check"></i> This item is now in your watchlist</p>
+          <h1 className=" text-green-600 text-2xl">Success</h1>
+          <p
+            className=" text-green-600  bg-amber-50 w-fit"
+            style={{ padding: "12px 14px" }}
+          >
+            <i className="fa-solid fa-circle-check"></i> This item is now in
+            your watchlist
+          </p>
         </div>
       </div>
       <div>{phonenavbar()}</div>
       <section>
+        {/* Render content after loading */}
         <div>
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Interpreter</h1>
@@ -248,15 +228,15 @@ function Hero() {
               <Link
                 to={`/moviesites/${interpreter.category_id}`}
                 className="site-link"
-                key={interpreter.category_id} // ✅ keep only here
+                key={interpreter.category_id}
               >
-                <div className="interpreter-card flex-shrink-0 w-[150px] ">
+                <div className="interpreter-card flex-shrink-0 w-[150px]">
                   <img
                     src={`${API_URL}/uploads/${interpreter.category_image}`}
                     alt={interpreter.category_name}
                     className="rounded-full w-35 h-35 object-cover"
                   />
-                  <h3 className="text-center font-medium ">
+                  <h3 className="text-center font-medium">
                     {interpreter.category_name}
                   </h3>
                 </div>
@@ -266,7 +246,7 @@ function Hero() {
         </div>
         <br />
 
-        {/* // movie app providers */}
+        {/* Movie providers */}
         <div>
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Movie providers</h1>
@@ -282,15 +262,15 @@ function Hero() {
               <Link
                 to={`/moviesites/${site.category_id}`}
                 className="site-link"
-                key={site.category_id} // ✅ keep only here
+                key={site.category_id}
               >
                 <div className="provider-card flex-shrink-0 text-center w-[100px]">
                   <img
                     src={`${API_URL}/uploads/${site.category_image}`}
                     alt={site.category_name}
-                    className=" w-24 h-24 object-cover"
+                    className="w-24 h-24 object-cover"
                   />
-                  <h3 className="text-center font-medium ">
+                  <h3 className="text-center font-medium">
                     {site.category_name}
                   </h3>
                 </div>
@@ -404,9 +384,9 @@ function Hero() {
                         </div>
 
                         <div>
-                          {isAuthenticated ? overlay(movie, userId) : overlaysub()}
-
-                          
+                          {isAuthenticated
+                            ? overlay(movie, userId)
+                            : overlaysub()}
                         </div>
                       </div>
                     ))}

@@ -57,11 +57,11 @@ function UserProfile() {
                 <div>
                 <div>
                     <p>First Name:</p>
-                     <h3 className='font-bold'>Semana </h3>
+                     <h3 className='font-bold'>{user?.username}</h3>
                 </div><br />
                 <div>
                     <p>Last Name:</p>
-                     <h3 className='font-bold'>Shema parfait</h3>
+                     <h3 className='font-bold'>- - -</h3>
                 </div>
 
                 </div>
@@ -81,7 +81,7 @@ function UserProfile() {
         <div className="w-[80%] ">
              <h3 className='font-bold'>Account Status</h3><br />
             <p>Activated:</p>
-             <h3 className='font-bold'>01 / 01 / 2004</h3>
+             <h3 className='font-bold'>{user?.created_at}</h3>
         </div>
     </div>
      </main>

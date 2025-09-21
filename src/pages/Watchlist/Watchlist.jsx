@@ -63,7 +63,7 @@ function Watchlist() {
 
   if (loading) return <p className="p-4">Loading your watchlist...</p>;
 
-  if (watchlist.length === 0) return <p className="p-4">Your watchlist is empty.</p>;
+  if (watchlist.length === 0) return <img src="https://i.pinimg.com/736x/44/c4/e4/44c4e483771d88fbbca4caf5f09bc46e.jpg" alt="watch list id empy" className="w-full h-full" />;
 
   return (
     <div className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2" style={{padding:"20px 30px"}}>

@@ -83,6 +83,8 @@ function Navbar() {
         <div className="hidden sm:block">
           <ul className="flex gap-8">
             <li><Link to="/">Home</Link></li>
+            <li><Link to="/tvshows">Tv shows</Link></li>
+            <li><Link to="/livestreaming">Live streaming</Link></li>
             <li><Link to="/watchlist">watchlist</Link></li>
             <li><Link to="/contactus">Contact us</Link></li>
           </ul>

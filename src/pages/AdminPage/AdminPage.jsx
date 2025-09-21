@@ -59,7 +59,7 @@ function AdminPage() {
        <div>{adminnavbar()}</div>
         <div className='admin-container'>
               
-        <nav className='flex justify-around items-center bg-[#2c3e50] h-[4.5rem] text-[white] '>
+        <nav className='flex justify-around items-center bg-[#2c3e50] h-[4.5rem] text-[white] fixed w-full z-50' >
             <div>
                 <img src={logo} alt="logo" className='w-[5rem]'/>
             </div>
@@ -75,7 +75,7 @@ function AdminPage() {
             <Link to={"/"}><button className='bg-amber-700 rounded-[5px]' style={{padding:"6px 20px"}}>Home</button></Link>
             
 
-        </nav><br /><br />
+        </nav><br /><br /><br /><br /><br />
         <div>
             {/* by defaoult this is the admin Dashboard */}
             {activeTab === 'dashboard' && (

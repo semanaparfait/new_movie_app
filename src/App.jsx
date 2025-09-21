@@ -16,6 +16,9 @@ import AdminAcc from "./components/AdminAcc/AdminAcc";
 import Clerk from "./pages/Clerk/Clerk";
 import Watchlist from "./pages/Watchlist/Watchlist";
 import Protector from "./components/Protector/Protector";
+import Building from "./components/Building/Building";
+import Tvshows from "./pages/Tvshows/Tvshows";
+import Livestreaming from "./pages/Livestreaming/Livestreaming";
 
 const LazyWatchlist = lazy(() => import("./pages/Watchlist/Watchlist"));
 const LazyHome = lazy(() => import("./pages/Home/Home"));
@@ -45,6 +48,10 @@ function App() {
             }
           />
           <Route path="/" element={<Home />} />
+          <Route path="building" element={<Building />} />
+          
+          <Route path="/tvshows" element={<Tvshows />} />
+          <Route path="/livestreaming" element={<Livestreaming />} />
           <Route path="/contactus" element={<Contactus />} />
           <Route path="/hero" element={<Hero />} />
           <Route path="/account" element={<LazyAccountpage />} />

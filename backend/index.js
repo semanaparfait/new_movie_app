@@ -55,7 +55,7 @@ function authenticateToken(req, res, next) {
   // 3. Determine which token to use.
   const token = bearerToken || cookieToken;
 
-  console.log('Token received:', token); // Debug log
+  // console.log('Token received:', token); // Debug log
 
   // 4. If no token is found in either location, deny access.
   if (!token) {
@@ -154,7 +154,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber},
+      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber, created_at: user.created_at },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -181,8 +181,8 @@ console.log("Setting cookie session_token...");
 
 // getting the logged in user
 app.get("/api/me", authenticateToken, (req, res) => {
-  const { id, username, phonenumber, email } = req.user;
-  res.json({ id, username, phonenumber,email });
+  const { id, username, phonenumber, email, created_at } = req.user;
+  res.json({ id, username, phonenumber,email, created_at });
 });
 
 // -----logout-----------

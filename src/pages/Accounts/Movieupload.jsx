@@ -129,7 +129,7 @@ const Uploadmovie = async (e) => {
       }, []);
 
   return (
-    <div className=' h-[100vw]'>
+    <div >
         <div className='flex justify-center gap-7 font-semibold cursor-pointer'>
             <h1 onClick={() => setUploadmovie("movie")}>Upload Movie</h1>
             <h1 onClick={()=> setUploadmovie("category")}>Upload Category</h1>
@@ -138,7 +138,7 @@ const Uploadmovie = async (e) => {
         {uploadmovie === 'movie' && (
 
                 <div className='flex flex-col gap-4 items-center justify-center ' style={{padding:'10px'}}>
-                <form onSubmit={Uploadmovie}  className='flex flex-col gap-4 items-center justify-center w-full md:w-[40%]'>
+                <form onSubmit={Uploadmovie}  className='flex flex-col gap-4 items-center justify-center w-full md:w-[40%]' style={{padding:'10px', marginBottom:'5rem'}}>
                 {/* <label className="block">
                 <span className="text-sm font-medium text-gray-700">Upload Movie poster</span>
                 <input 
@@ -242,8 +242,8 @@ const Uploadmovie = async (e) => {
             {/* -----------------------upload movie sub category------------ */}
             {uploadmovie === "category" && (
 
-            <div  className='flex flex-col gap-4 items-center justify-center ' style={{padding:'10px'}}>
-            <form onSubmit={uploadcategory}>
+            <div className='flex justify-center w-full ' style={{padding:'10px', height:'100vh'}}>
+            <form onSubmit={uploadcategory} className='flex flex-col gap-4 w-1/2'>
                     <input 
                     onChange={(e) => setCategoryimage(e.target.files[0])}
                     type="file" 

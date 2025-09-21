@@ -68,3 +68,16 @@ input[type="password"] { */
     background-size: cover;
     background-color: color-mix(in oklab, var(--color-black) #000 = #000000 60%, transparent);
 } */
+.login-alert{
+    animation: slideDown .8s ease-in-out;
+}
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
