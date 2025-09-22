@@ -5,6 +5,7 @@ import './AdminPage.css'
 import Movieupload from '../Accounts/Movieupload';
 import Users from '../Users/Users';
 import Movies from '../Movies/Movies';
+import Categories from '../Categories/Categories';
 
 function AdminPage() {
             const API_URL = 
@@ -33,6 +34,10 @@ function AdminPage() {
           <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('movies')}>
             <i className="fa-solid fa-bookmark"></i>
             <span>Movies</span>
+          </li>
+            <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('categories')}>
+            <i className="fa-solid fa-bookmark"></i>
+            <span>Categories</span>
           </li>
           <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('users')}>
             <i className="fa-solid fa-envelope"></i>
@@ -67,6 +72,7 @@ function AdminPage() {
                 <ul className='gap-5 font-bold cursor-pointer hidden md:flex'>
               <li onClick={() => setActiveTab('dashboard')}>Dashboard</li>
               <li onClick={() => setActiveTab('movies')}>Movies</li>
+              <li onClick={() => setActiveTab('categories')}>categories</li>
               <li onClick={() => setActiveTab('users')}>Users</li>
               <li onClick={() => setActiveTab('upload')}>Upload</li>
                 </ul>
@@ -208,6 +214,10 @@ function AdminPage() {
             {/* movies page */}
             {activeTab === 'movies' && (
                <Movies/>
+            )}
+            {/* categories page */}
+            {activeTab === 'categories' && (
+               <Categories />
             )}
 
             {/* ------userspage------- */}

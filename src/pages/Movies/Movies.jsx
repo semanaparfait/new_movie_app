@@ -12,6 +12,28 @@ function Movies() {
         .then(data => setMovies(data))
         .catch((err) => console.error(err));
       },[])
+const deletMovie = (id) => {
+  fetch(`${API_URL}/api/movies/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.movie) {
+        alert("Movie deleted successfully");
+        setMovies(movies.filter(movie => movie.movie_id !== id));
+      } else {
+        alert("Failed to delete movie: " + data.message);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Something went wrong.");
+    });
+};
+
+
   return (
     <div className="overflow-x-auto px-4">
                         <h4 className="font-bold ml-4">Most Recent Movies</h4><br />
@@ -48,6 +70,7 @@ function Movies() {
                                 <td className="text-blue-600 underline">{movie.movie_trailer_link}</td>
                                 <td className="text-blue-600 underline">{movie.movie_download_link}</td>
                                 <td>{movie.category_name}</td>
+                                <td title='delete' onClick={() => deletMovie(movie.movie_id)}><i className="fa-solid fa-trash text-red-600 cursor-pointer"></i></td>
                             </tr>
                                 ))}
 

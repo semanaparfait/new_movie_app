@@ -245,57 +245,6 @@ app.get('/api/categories', async (req,res) => {
 }
 
 })
-// ---------------uploading the movie------------
-// app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
-//   try {
-//     const {
-//       movie_name,
-//       movie_description,
-//       movie_country,
-//       movie_genre,
-//       movie_released_date,
-//       movie_video_link,
-//       movie_download_link,
-//       movie_trailer_link,
-//       category_id, // include this if you want to link to categories
-//     } = req.body;
-
-//     // const movie_image = req.file ? req.file.filename : null;
-//     const movie_image = req.file ? req.file.filename : movie_image_url || null;
-
-//     if (!movie_name || !movie_image || !movie_description) {
-//       return res.status(400).json({ error: "Movie name, description, and poster are required" });
-//     }
-
-//     const query = `
-//       INSERT INTO movies 
-//         (movie_name, movie_image, movie_description, movie_country, category_id,
-//          movie_genre, movie_released_date, movie_video_link, movie_download_link, movie_trailer_link)
-//       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-//       RETURNING *;
-//     `;
-
-//     const values = [
-//       movie_name,
-//       movie_image,
-//       movie_description,
-//       movie_country || null,
-//       category_id ? parseInt(category_id) : null,
-//       movie_genre || null,
-//       movie_released_date || null,
-//       movie_video_link || null,
-//       movie_download_link || null,
-//       movie_trailer_link || null,
-//     ];
-
-//     const result = await pool.query(query, values);
-
-//     res.status(201).json({ movie: result.rows[0], message: "Movie uploaded successfully" });
-//   } catch (error) {
-//     console.error("Error uploading movie", error);
-//     res.status(500).json({ err: "Failed to insert movie" });
-//   }
-// });
 
 app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
   try {
@@ -348,7 +297,26 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
     res.status(500).json({ err: "Failed to insert movie" });
   }
 });
-
+// -----------------deleting category----------
+app.delete('/api/categories/:id', async (req, res) => {
+  const { id } = req.params; // this is the movie_id from the URL
+  if (!id) {
+    return res.status(400).json({ message: 'category ID is required' });
+  }
+  try {
+    const result = await pool.query(
+      'DELETE FROM categories WHERE category_id = $1 RETURNING *',
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ success: false, message: 'category not found' });
+    }
+    res.status(200).json({ success: true, message: 'category deleted', category: result.rows[0] });
+  } catch (err) {
+    console.error('Error deleting movie:', err);
+    return res.status(500).json({ success: false, message: 'Server error', error: err.message });
+  }
+});
 // ----------------fetching izidasobanuye--------
 app.get('/api/izidasobanuye', async(req,res) => {
   try {
@@ -388,6 +356,7 @@ const query = `
         c.category_name,m.category_id
       FROM movies m
       LEFT JOIN categories c ON m.category_id = c.category_id
+      ORDER BY m.movie_id DESC;
     `;
      const result = await pool.query(query);
     res.status(200).json(result.rows);
@@ -397,7 +366,34 @@ const query = `
     
   }
 })
-// -----------------addding to watchlist----------
+// -----------------deleting movie----------
+app.delete('/api/movies/:id', async (req, res) => {
+  const { id } = req.params; // this is the movie_id from the URL
+
+  if (!id) {
+    return res.status(400).json({ message: 'movie ID is required' });
+  }
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM movies WHERE movie_id = $1 RETURNING *',
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ success: false, message: 'movie not found' });
+
+    }
+
+    res.status(200).json({ success: true, message: 'movie deleted', movie: result.rows[0] });
+
+  } catch (err) {
+    console.error('Error deleting movie:', err);
+    return res.status(500).json({ success: false, message: 'Server error', error: err.message });
+
+  }
+});
+
 // -----------------add to watchlist----------
 app.post("/api/watchlist", async (req, res) => {
   const { user_id, movie_id } = req.body;

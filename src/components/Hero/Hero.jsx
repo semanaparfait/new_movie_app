@@ -51,12 +51,19 @@ export function phonenavbar(isAuthenticated) {
             <span>Contact</span>
           </li>
         </Link>
-        {/* <Link to={isAuthenticated ? "/userprofile" : "/account"}>
+                <Link to="/tvshows">
           <li className="flex flex-col items-center">
-            <i className="fa-solid fa-user"></i>
-            <span>Profile</span>
+            <i className="fa-solid fa-tv"></i>
+            <span>Tv show</span>
           </li>
-        </Link> */}
+        </Link>
+                <Link to="/livestreaming">
+          <li className="flex flex-col items-center">
+            <i className="fa-solid fa-envelope"></i>
+            <span>Live</span>
+          </li>
+        </Link>
+
       </ul>
     </div>
   );
@@ -296,32 +303,6 @@ function Hero() {
           </div>
           <br />
 
-          {/* <div className="flex gap-4 overflow-x-scroll p-4 scrollbar-hidden scroll-smooth ">
-            {Movies.map((provider) =>
-              provider.movieslist
-                .slice(0, 1) // ✅ fix here
-                .map((movie) => (
-                  <div
-                    key={movie.movieid}
-                    className="movie-card flex flex-col items-center flex-shrink-0  relative"
-                  >
-                    <div className="relative ">
-                      <img
-                        src={movie.poster}
-                        alt={movie.title}
-                        className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px] "
-                      />
-                      <img
-                        src={provider.movieproviderlogo}
-                        className="w-[18px] absolute bottom-4 right-2.5"
-                      />
-                    </div>
-                    <div></div>
-                    <div>{isAuthenticated ? overlay(movie) : overlaysub()}</div>
-                  </div>
-                ))
-            )}
-          </div> */}
         </div>
         <br />
         <br />
@@ -368,19 +349,7 @@ function Hero() {
                             className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
                           />
 
-                          {/* <img
-                  src={
-                movie.movie_image
-                  ? `${API_URL}/uploads/${movie.movie_image}`
-                  : `${API_URL}/${movie.movie_image}`
-}
 
-                  alt={movie.movie_name}
-                  className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
-                /> */}
-                          {/* <h1>{movie.movie_name}</h1> */}
-                          {/* If you have a provider logo, you can include it here */}
-                          {/* <img src={provider.movieproviderlogo} className="w-[18px] absolute bottom-4 right-2.5" /> */}
                         </div>
 
                         <div>
