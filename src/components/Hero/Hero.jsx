@@ -59,7 +59,7 @@ export function phonenavbar(isAuthenticated) {
         </Link>
                 <Link to="/livestreaming">
           <li className="flex flex-col items-center">
-            <i className="fa-solid fa-envelope"></i>
+            <i className="fa-solid fa-tower-broadcast"></i>
             <span>Live</span>
           </li>
         </Link>

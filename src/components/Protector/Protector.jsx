@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.withCredentials = true; // send cookies automatically
@@ -12,11 +12,22 @@ const Protector = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    axios.get(`${API_URL}/api/me`, { method: "GET" , credentials: "include" })
-      .then(() => setAuthenticated(true))
-      .catch(() => setAuthenticated(false))
+    axios
+      .get(`${API_URL}/api/me`, { method: "GET", credentials: "include" })
+      .then((response) => {
+        setAuthenticated(true);
+        setIsAdmin(response.data.is_admin); // Assuming the API returns is_admin
+        // console.log("API Response:", response.data); // Debug log
+      })
+      .catch(() => {
+        setAuthenticated(false);
+        setIsAdmin(false);
+        // console.log("Authentication failed or API error"); // Debug log
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -28,6 +39,14 @@ const Protector = ({ children }) => {
         </div>
       </div>
     );
+  }
+
+  console.log("Authenticated:", authenticated); // Debug log
+  console.log("Is Admin:", isAdmin); // Debug log
+  console.log("Current Path:", location.pathname); // Debug log
+
+  if (location.pathname === "/adminpage" && !isAdmin) {
+    return <Navigate to="/" replace />; // Redirect if not an admin
   }
 
   return authenticated ? children : <Navigate to="/" replace />;

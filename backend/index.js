@@ -154,7 +154,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber, created_at: user.created_at },
+      { id: user.id, email: user.email, username: user.username, phonenumber: user.phonenumber, created_at: user.created_at, is_admin: user.is_admin },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -181,8 +181,8 @@ console.log("Setting cookie session_token...");
 
 // getting the logged in user
 app.get("/api/me", authenticateToken, (req, res) => {
-  const { id, username, phonenumber, email, created_at } = req.user;
-  res.json({ id, username, phonenumber,email, created_at });
+  const { id, username, phonenumber, email, created_at, is_admin } = req.user;
+  res.json({ id, username, phonenumber,email, created_at, is_admin });
 });
 
 // -----logout-----------
