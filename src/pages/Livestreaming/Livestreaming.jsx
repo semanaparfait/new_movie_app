@@ -3,11 +3,25 @@ import logo from '../../assets/images/live streaming/live-streaming.png'
 import './Livestreaming.css'
 function Livestreaming() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+const show =()=>{
+  setShowPopup(!showPopup)
+}
   return (
     <div style={{padding:"1rem"}}>
-        <nav className='flex justify-between items-center  text-white'  >
-          <img src={logo} alt="logo" className='  w-[10rem] ' />
-          <p className='bg-green-600 rounded-[10px] font-semibold'style={{padding:"8px 20px"}}><i className="fa-regular fa-star"></i> Request VIP </p>
+      {showPopup && 
+      <div  className='bg-white  text-black w-fit rounded-[4px] absolute left-1/2 transform -translate-x-1/2 top-5'style={{padding:"10px"}}>
+        <h1>Do you want to request access with this account</h1>
+        <div className='flex gap-4 items-center justify-center' style={{padding:"10px"}}>
+          <button className='bg-green-700 rounded-[7px]' style={{padding:"3px 15px"}}>Yes</button>
+          <button className='bg-red-700 rounded-[7px]' style={{padding:"3px 15px"}}>No</button>
+        </div>
+      </div>
+      }
+        <nav className='flex justify-between items-center  text-white '  >
+          <img src={logo} alt="logo" className='  w-[7rem] ' />
+          <button onClick={show} className='bg-green-600 rounded-[10px] font-semibold'style={{padding:"8px 20px"}}><i className="fa-regular fa-star"></i> Request VIP </button>
         </nav>
 <div className=' flex flex-col gap-6 items-center justify-center text-white' style={{padding:"2rem"}}>
 

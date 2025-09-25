@@ -75,9 +75,11 @@ function Navbar() {
     <div className='navbar hidden md:block'>
       <nav className='flex justify-between items-center w-full mx-auto pt-11'>
         {/* Logo */}
+        <Link to="/">
         <div>
           <img src={homelogo} alt="home logo" className='w-[2.5rem]' />
         </div>
+        </Link>
 
         {/* Navigation Links */}
         <div className="hidden sm:block">

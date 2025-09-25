@@ -1,16 +1,20 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import { useParams } from 'react-router-dom';
 import './Player.css'
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 // import video from '../../assets/images/New folder/video.webm'
 
 function Player() {
+const navigate = useNavigate();
+
   // ------------fetching movies---------
-          const API_URL = 
+  const API_URL = 
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://new-movie-app.onrender.com";
-      const[movies, setMovies] = useState([])
+  ? "http://localhost:5000"
+  : "https://new-movie-app.onrender.com";
+  const[movies, setMovies] = useState([])
   useEffect( ()=>{
     fetch(`${API_URL}/api/movies`)
     .then(res => res.json())
@@ -18,48 +22,37 @@ function Player() {
     .catch((err) => console.error(err));
   },[])
   const { movieid } = useParams();
-
-  // Helper function to convert YouTube watch URL to embed URL
-
-
-  // Find the movie by movieid searching all movieslist arrays
-  // let movie = null;/
-  // for (const provider of movies) {
-  //   // const found = provider.movies.find(m => m.movie_id === movie_id);
-  //   if (found) {
-    //     movie = found;
-    //     break;
-    //   }
-    // }
-      const movie = movies.find(m => String(m.movie_id) === String(movieid));
-
+  
+  
+  const movie = movies.find(m => String(m.movie_id) === String(movieid));
+  
   if (!movie) {
     return <div>Movie not found</div>;
   }
-   const convertToEmbedUrl = (url) => {
+  const convertToEmbedUrl = (url) => {
     if (!url) return "";
     try {
       const urlObj = new URL(url);
-
+      
       if (urlObj.hostname.includes("youtube.com")) {
         const videoId = urlObj.searchParams.get("v");
         return `https://www.youtube.com/embed/${videoId}`;
       }
-
+      
       if (urlObj.hostname.includes("youtu.be")) {
         const videoId = urlObj.pathname.slice(1);
         return `https://www.youtube.com/embed/${videoId}`;
       }
-
+      
       return url; // fallback
     } catch {
       return "";
     }
   };
-const embedUrl = convertToEmbedUrl(movie.movie_trailer_link);
- const videoId = (() => {
-  try {
-    const urlObj = new URL(movie.movie_trailer_link);
+  const embedUrl = convertToEmbedUrl(movie.movie_trailer_link);
+  const videoId = (() => {
+    try {
+      const urlObj = new URL(movie.movie_trailer_link);
     if (urlObj.hostname.includes("youtube.com")) {
       return urlObj.searchParams.get("v");
     }
@@ -71,6 +64,11 @@ const embedUrl = convertToEmbedUrl(movie.movie_trailer_link);
     return "";
   }
 })();
+  const handlePlay = () => {
+    // Navigate to cinema page and pass movie ID
+    navigate(`/cinema/${movie.movie_id}`);
+  };
+
   return (
     <div>
       <div className='trailer-video fixed inset-0 z-[-1] w-full h-full'>
@@ -101,7 +99,9 @@ src={
           /><br/>
           
           <div className="buttons flex gap-4 flex-wrap items-center justify-center">
-            <button className='playBtn text-black bg-[white] rounded-[6px] font-bold flex items-center gap-2 px-4 py-2'>
+            <button 
+            onClick={handlePlay}
+            className='playBtn text-black bg-[white] rounded-[6px] font-bold flex items-center gap-2 px-4 py-2'>
               ▶ Watch Now
             </button>
             <Link to={movie.movie_download_link}>

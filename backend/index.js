@@ -366,6 +366,33 @@ const query = `
     
   }
 })
+// ----------------fetching single movie--------
+// Get a single movie by ID
+app.get('/api/movies/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const query = `
+      SELECT 
+        m.movie_id, m.movie_name, m.movie_description, m.movie_trailer_link, m.movie_image,
+        m.movie_country, m.movie_genre, m.movie_released_date, m.movie_video_link, m.movie_download_link,
+        c.category_name, m.category_id
+      FROM movies m
+      LEFT JOIN categories c ON m.category_id = c.category_id
+      WHERE m.movie_id = $1
+    `;
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching movie by ID:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // -----------------deleting movie----------
 app.delete('/api/movies/:id', async (req, res) => {
   const { id } = req.params; // this is the movie_id from the URL

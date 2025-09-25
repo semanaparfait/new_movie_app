@@ -17,6 +17,7 @@ import Protector from "./components/Protector/Protector";
 import Building from "./components/Building/Building";
 import Tvshows from "./pages/Tvshows/Tvshows";
 import Livestreaming from "./pages/Livestreaming/Livestreaming";
+import Cinema from "./pages/Cinema/Cinema";
 
 const LazyWatchlist = lazy(() => import("./pages/Watchlist/Watchlist"));
 const LazyHome = lazy(() => import("./pages/Home/Home"));
@@ -30,6 +31,7 @@ const LazyMovieApp = lazy(() => import("./pages/MovieApp/MovieApp"));
 const LazyPlayer = lazy(() => import("./pages/player/Player"));
 const LazyUserProfile = lazy(() => import("./pages/UserProfile/UserProfile"));
 const LazyAdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
+const LazyCinema = lazy(() => import("./pages/Cinema/Cinema"));
 
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
           <Route path="/interpreterpage/:id" element={<Protector><LazyInterpreterPage /></Protector>}/>
           <Route path="/moviesites/:siteid" element={<LazyMovieApp />}/>
           <Route path="/player/:movieid" element={<Protector><LazyPlayer /></Protector>}/>
+          <Route path="/cinema/:movieid" element={<Protector><LazyCinema /></Protector>}/>
           <Route path="/userprofile"element={<LazyUserProfile />}/>
           <Route path="/adminpage" element={<Protector adminOnly={true}><LazyAdminPage /></Protector>} />
           <Route path="*" element={<div>404 Not Found</div>} />
