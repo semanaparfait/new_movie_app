@@ -88,7 +88,7 @@ function Accountpage() {
   };
 
   const validatePhoneNumber = (number) => {
-    const phoneRegex = /^\+?[1-9][0-9]{7,14}$/; // Matches international phone numbers
+    const phoneRegex = /^07[2-8][0-9]{7}$/; // Matches international phone numbers
     return phoneRegex.test(number);
   };
 
@@ -264,7 +264,7 @@ function Accountpage() {
                   value={phonenumber}
                   onChange={(e) => setPhonenumber(e.target.value)}
                   placeholder="Enter your Phone number"
-                  pattern="^\+?[1-9][0-9]{7,14}$"
+                  pattern="^07[2-8][0-9]{7}$"
                   className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
                   style={{ paddingLeft: "7px" }}
                 />
