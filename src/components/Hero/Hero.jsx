@@ -308,61 +308,64 @@ function Hero() {
         <br />
         <div className="p-4">
           {/** Get all unique genres from all movies */}
-          {[...new Set(movies.map((movie) => movie.movie_genre))].map(
-            (genre, idx) => (
-              <div key={idx} className="mb-8">
-                {/* Genre Title */}
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold mb-4 capitalize">{genre}</h2>
-                  <div className="flex gap-4">
-                    <i
-                      className="fa-solid fa-arrow-left"
-                      onClick={() => scroll("left")}
-                    ></i>
-                    <i
-                      className="fa-solid fa-arrow-right"
-                      onClick={() => scroll("right")}
-                    ></i>
-                  </div>
-                </div>
-                <br />
+{[...new Set(movies.map((movie) => movie.movie_genre.trim().toLowerCase()))].map(
+  (genre, idx) => (
+    <div key={idx} className="mb-8">
+      {/* Genre Title */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold mb-4">{genre}</h2> {/* lowercase */}
+        <div className="flex gap-4">
+          <i
+            className="fa-solid fa-arrow-left"
+            onClick={() => scroll("left")}
+          ></i>
+          <i
+            className="fa-solid fa-arrow-right"
+            onClick={() => scroll("right")}
+          ></i>
+        </div>
+      </div>
+      <br />
 
-                {/* Scrollable Movies List */}
-                <div className="flex gap-4 overflow-x-scroll p-4 scrollbar-hidden scroll-smooth">
-                  {movies
-                    .filter((movie) => movie.movie_genre === genre)
-                    .map((movie) => (
-                      <div
-                        key={movie.movie_id}
-                        className="movie-card flex flex-col items-center flex-shrink-0 relative"
-                      >
-                        <div className="relative">
-                          <img
-                            src={
-                              movie.movie_image
-                                ? movie.movie_image.startsWith("http")
-                                  ? movie.movie_image // full URL, use as is
-                                  : `${API_URL}/uploads/${movie.movie_image}` // uploaded file, prepend API path
-                                : "/https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg" // optional fallback if no image
-                            }
-                            alt={movie.movie_name}
-                            className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
-                          />
+      {/* Scrollable Movies List */}
+      <div className="flex gap-4 overflow-x-scroll p-4 scrollbar-hidden scroll-smooth">
+        {movies
+          .filter((movie) => movie.movie_genre.trim().toLowerCase() === genre)
+          .map((movie) => (
+            <div
+              key={movie.movie_id}
+              className="movie-card flex flex-col items-center flex-shrink-0 relative"
+            >
+              <div className="relative">
+<img
+  src={
+    movie.movie_image
+      ? movie.movie_image.startsWith("http")
+        ? movie.movie_image
+        : `${API_URL}/uploads/${movie.movie_image}`
+      : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+  }
+  alt={movie.movie_name}
+  className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+  onError={(e) => {
+    e.target.onerror = null; // prevent infinite loop
+    e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+  }}
+/>
 
-
-                        </div>
-
-                        <div>
-                          {isAuthenticated
-                            ? overlay(movie, userId)
-                            : overlaysub()}
-                        </div>
-                      </div>
-                    ))}
-                </div>
               </div>
-            )
-          )}
+
+              <div>
+                {isAuthenticated ? overlay(movie, userId) : overlaysub()}
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+  )
+)}
+
+
         </div>
       </section>
     </main>

@@ -22,7 +22,8 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors({
   origin: [
     'http://localhost:5173', // React dev
-    'https://new-movie-app-1.onrender.com' // deployed frontend
+    'https://new-movie-app-1.onrender.com', // deployed frontend
+    'https://movieland.me/'
   ],
   credentials: true,
 }));
