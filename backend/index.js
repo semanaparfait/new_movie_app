@@ -23,7 +23,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173', // React dev
     'https://new-movie-app-1.onrender.com', // deployed frontend
-    'https://movieland.me/'
+    'https://movieland.me'
   ],
   credentials: true,
 }));
