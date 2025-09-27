@@ -87,10 +87,12 @@ function Accountpage() {
     }
   };
 
-  const validatePhoneNumber = (number) => {
-    const phoneRegex = /^07[2-8][0-9]{7}$/; // Matches international phone numbers
-    return phoneRegex.test(number);
-  };
+const validatePhoneNumber = (number) => {
+  // Matches + followed by 1-3 digit country code, then 7-12 digits
+  const phoneRegex = /^\+\d{1,3}\d{7,12}$/;
+  return phoneRegex.test(number);
+};
+
 
   return (
     <div className="absolute overflow-hidden inset-0 bg-[url('https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg')] bg-cover bg-center ">
@@ -259,15 +261,26 @@ function Accountpage() {
               {action === "Log in" ? (
                 <div></div>
               ) : (
-                <input
-                  type="number"
-                  value={phonenumber}
-                  onChange={(e) => setPhonenumber(e.target.value)}
-                  placeholder="Enter your Phone number"
-                  pattern="^\+\d{1,3}\d{7,12}$"
-                  className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
-                  style={{ paddingLeft: "7px" }}
-                />
+<input
+  type="tel"
+  value={phonenumber}
+  onChange={(e) => {
+    const input = e.target.value;
+    setPhonenumber(input);
+
+    // Optional: real-time validation
+    if (input && !validatePhoneNumber(input)) {
+      e.target.setCustomValidity("Please enter a valid international phone number, e.g., +250783456789");
+    } else {
+      e.target.setCustomValidity(""); // Clear error
+    }
+  }}
+  placeholder="Enter your Phone number in international format, e.g., +250783456789"
+  className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
+  style={{ paddingLeft: "7px" }}
+  required
+/>
+
               )}
 
               <input
