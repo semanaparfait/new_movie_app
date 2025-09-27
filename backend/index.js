@@ -301,6 +301,7 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
     ];
 
     const result = await pool.query(query, values);
+    cache.del('moviesData');
 
     res.status(201).json({ movie: result.rows[0], message: "Movie uploaded successfully" });
   } catch (error) {
@@ -308,6 +309,66 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
     res.status(500).json({ err: "Failed to insert movie" });
   }
 });
+// ------------update aafter caches---------
+app.put('/api/movies/:id', upload.single('movie_image'), async (req, res) => {
+  const { id } = req.params;
+  const {
+    movie_name,
+    movie_description,
+    movie_country,
+    movie_genre,
+    movie_released_date,
+    movie_video_link,
+    movie_download_link,
+    movie_trailer_link,
+    category_id,
+    movieposterURL,
+  } = req.body;
+
+  try {
+    const movie_image = req.file ? req.file.filename : movieposterURL || null;
+
+    const query = `
+      UPDATE movies
+      SET movie_name = $1,
+          movie_description = $2,
+          movie_image = $3,
+          movie_country = $4,
+          category_id = $5,
+          movie_genre = $6,
+          movie_released_date = $7,
+          movie_video_link = $8,
+          movie_download_link = $9,
+          movie_trailer_link = $10
+      WHERE movie_id = $11
+      RETURNING *;
+    `;
+
+    const values = [
+      movie_name, movie_description, movie_image,
+      movie_country || null,
+      category_id ? parseInt(category_id) : null,
+      movie_genre || null, movie_released_date || null,
+      movie_video_link || null, movie_download_link || null,
+      movie_trailer_link || null, id
+    ];
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    // Clear movies cache
+    cache.del('moviesData');
+
+    res.json({ movie: result.rows[0], message: "Movie updated successfully" });
+  } catch (err) {
+    console.error("Error updating movie:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // -----------------deleting category----------
 app.delete('/api/categories/:id', async (req, res) => {
   const { id } = req.params; // this is the movie_id from the URL
@@ -322,12 +383,53 @@ app.delete('/api/categories/:id', async (req, res) => {
     if (result.rowCount === 0) {
       return res.status(404).json({ success: false, message: 'category not found' });
     }
+    // Clear categories cache
+    cache.del('agasobanuyeData');
+    cache.del('izidasobanuyeData');
+
     res.status(200).json({ success: true, message: 'category deleted', category: result.rows[0] });
   } catch (err) {
     console.error('Error deleting movie:', err);
     return res.status(500).json({ success: false, message: 'Server error', error: err.message });
   }
 });
+// -------------update category after caches ----------
+app.put('/api/categories/:id', upload.single('category_image'), async (req, res) => {
+  const { id } = req.params;
+  const { category_name, main_category, categoryimageURL } = req.body;
+
+  if (!category_name || !main_category) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const category_image = req.file ? req.file.filename : categoryimageURL || null;
+
+    const result = await pool.query(
+      `UPDATE categories
+       SET category_name = $1,
+           category_image = $2,
+           main_category = $3
+       WHERE category_id = $4
+       RETURNING *`,
+      [category_name, category_image, main_category, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    // Clear relevant caches
+    cache.del('agasobanuyeData');
+    cache.del('izidasobanuyeData');
+
+    res.json({ category: result.rows[0], message: "Category updated successfully" });
+  } catch (err) {
+    console.error("Error updating category:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // ----------------fetching izidasobanuye--------
 app.get('/api/izidasobanuye', async (req, res) => {
   const cachedIzidasobanuye = cache.get('izidasobanuyeData');
@@ -426,11 +528,8 @@ app.get('/api/movies/:id', async (req, res) => {
 
 // -----------------deleting movie----------
 app.delete('/api/movies/:id', async (req, res) => {
-  const { id } = req.params; // this is the movie_id from the URL
-
-  if (!id) {
-    return res.status(400).json({ message: 'movie ID is required' });
-  }
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ message: 'movie ID is required' });
 
   try {
     const result = await pool.query(
@@ -438,19 +537,19 @@ app.delete('/api/movies/:id', async (req, res) => {
       [id]
     );
 
-    if (result.rowCount === 0) {
+    if (result.rowCount === 0)
       return res.status(404).json({ success: false, message: 'movie not found' });
 
-    }
+    // Clear movies cache
+    cache.del('moviesData');
 
     res.status(200).json({ success: true, message: 'movie deleted', movie: result.rows[0] });
-
   } catch (err) {
     console.error('Error deleting movie:', err);
     return res.status(500).json({ success: false, message: 'Server error', error: err.message });
-
   }
 });
+
 
 // -----------------add to watchlist----------
 app.post("/api/watchlist", async (req, res) => {
