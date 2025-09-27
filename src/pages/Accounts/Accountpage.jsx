@@ -264,7 +264,7 @@ function Accountpage() {
                   value={phonenumber}
                   onChange={(e) => setPhonenumber(e.target.value)}
                   placeholder="Enter your Phone number"
-                  pattern="^07[2-8][0-9]{7}$"
+                  pattern="^\+\d{1,3}\d{7,12}$"
                   className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
                   style={{ paddingLeft: "7px" }}
                 />
