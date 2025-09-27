@@ -238,11 +238,16 @@ function Hero() {
                 key={interpreter.category_id}
               >
                 <div className="interpreter-card flex-shrink-0 w-[150px]">
-                  <img
-                    src={`${API_URL}/uploads/${interpreter.category_image}`}
-                    alt={interpreter.category_name}
-                    className="rounded-full w-35 h-35 object-cover"
-                  />
+                <img
+                  src={
+                    interpreter.category_image?.startsWith("http")
+                      ? interpreter.category_image // use URL directly
+                      : `${API_URL}/uploads/${interpreter.category_image}` // use backend file
+                  }
+                  alt={interpreter.category_name}
+                  className="rounded-full w-35 h-35 object-cover"
+                />
+
                   <h3 className="text-center font-medium">
                     {interpreter.category_name}
                   </h3>
@@ -272,11 +277,21 @@ function Hero() {
                 key={site.category_id}
               >
                 <div className="provider-card flex-shrink-0 text-center w-[100px]">
-                  <img
+                  {/* <img
                     src={`${API_URL}/uploads/${site.category_image}`}
                     alt={site.category_name}
                     className="w-24 h-24 object-cover"
-                  />
+                  /> */}
+                  <img
+                  src={
+                    site.category_image?.startsWith("http")
+                      ? site.category_image // use URL directly
+                      : `${API_URL}/uploads/${site.category_image}` // use backend file
+                  }
+                  alt={site.category_name}
+                  className="w-24 h-24 object-cover"
+                />
+
                   <h3 className="text-center font-medium">
                     {site.category_name}
                   </h3>
@@ -337,21 +352,21 @@ function Hero() {
               className="movie-card flex flex-col items-center flex-shrink-0 relative"
             >
               <div className="relative">
-<img
-  src={
-    movie.movie_image
-      ? movie.movie_image.startsWith("http")
-        ? movie.movie_image
-        : `${API_URL}/uploads/${movie.movie_image}`
-      : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
-  }
-  alt={movie.movie_name}
-  className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
-  onError={(e) => {
-    e.target.onerror = null; // prevent infinite loop
-    e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
-  }}
-/>
+              <img
+                src={
+                  movie.movie_image
+                    ? movie.movie_image.startsWith("http")
+                      ? movie.movie_image
+                      : `${API_URL}/uploads/${movie.movie_image}`
+                    : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                }
+                alt={movie.movie_name}
+                className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+                onError={(e) => {
+                  e.target.onerror = null; // prevent infinite loop
+                  e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+                }}
+              />
 
               </div>
 

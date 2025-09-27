@@ -7,6 +7,7 @@ function Movieupload() {
     : "https://new-movie-app.onrender.com/api";
     const [categoryname,setCategoryname] = useState("")
     const [categoryimage,setCategoryimage] = useState(null)
+    const [categoryimageURL,setCategoryimageURL] = useState("")
     const [maincategory,setMaincategory] = useState("")
     const [categories,setCategories] = useState([]);
      const [message, setMessage] = useState("");
@@ -27,7 +28,7 @@ function Movieupload() {
 const uploadcategory = async (e) => {
   e.preventDefault();
 
-  if (!categoryimage || !categoryname || !maincategory) {
+  if ( !categoryname || !maincategory || (!categoryimage && !categoryimageURL)) {
     setMessage("All fields are required");
     return;
   }
@@ -37,6 +38,8 @@ const uploadcategory = async (e) => {
   formData.append("main_category", maincategory); // ✅ include main category
   if (categoryimage) {
     formData.append("category_image", categoryimage);
+  } else if (categoryimageURL) {
+    formData.append("categoryimageURL", categoryimageURL);
   }
 
   try {
@@ -49,6 +52,7 @@ const uploadcategory = async (e) => {
     if (res.ok) {
       setMessage(`Category "${data.category_name}" uploaded successfully!`);
       setCategoryname("");
+      setCategoryimageURL("");
       setCategoryimage(null);
       setMaincategory("");
     } else {
@@ -252,6 +256,10 @@ const Uploadmovie = async (e) => {
                             file:bg-blue-600 file:text-white
                             hover:file:bg-blue-700"
                 />
+                <input type="text"
+                value={categoryimageURL || ""}
+                onChange={(e)=>setCategoryimageURL(e.target.value)}
+                placeholder='category image link' />
                 <input type="text"
                 value={categoryname}
                 onChange={(e)=>setCategoryname(e.target.value)}

@@ -9,6 +9,8 @@ import multer from 'multer'
 import fs from "fs";
 import jwt from 'jsonwebtoken';
 import { error } from 'console';
+import NodeCache  from 'node-cache';
+
 
 
 
@@ -18,7 +20,11 @@ const app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads', {
+  maxAge: '30d', // cache for 30 days
+  etag: false,   // optional, reduces overhead
+}));
 app.use(cors({
   origin: [
     'http://localhost:5173', // React dev
@@ -35,35 +41,35 @@ const { Pool } = pg; // Destructure Pool from pg
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: isNeon
-    ? { rejectUnauthorized: false }
-    : false,
+  ? { rejectUnauthorized: false }
+  : false,
 });
 
 // const local = new pg.Pool({
-//   connectionString: process.env.LOCAL_UR,
-// });
-// setting up upload storage 
-
-// Middleware to verify JWT from cookie
-function authenticateToken(req, res, next) {
-  // 1. Check for a bearer token in the Authorization header.
-  const authHeader = req.headers['authorization'];
+  //   connectionString: process.env.LOCAL_UR,
+  // });
+  // setting up upload storage 
+  
+  // Middleware to verify JWT from cookie
+  function authenticateToken(req, res, next) {
+    // 1. Check for a bearer token in the Authorization header.
+    const authHeader = req.headers['authorization'];
   const bearerToken = authHeader && authHeader.split(' ')[1]; // Extracts the token after 'Bearer'
-
+  
   // 2. Check for a token in the cookies.
   const cookieToken = req.cookies.session_token;
-
+  
   // 3. Determine which token to use.
   const token = bearerToken || cookieToken;
-
+  
   // console.log('Token received:', token); // Debug log
-
+  
   // 4. If no token is found in either location, deny access.
   if (!token) {
     console.error('No token provided'); // Debug log
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
-
+  
   // 5. Verify the token.
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -86,6 +92,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+const cache = new NodeCache({ stdTTL: 3600 });
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
   const { username, email, phonenumber, password } = req.body;
@@ -213,12 +221,14 @@ app.get('/api/admin/users', async (req, res) => {
 // --------------upload-----------category===========
 app.post("/api/categories", upload.single("category_image"), async (req, res) => {
   try {
-    const { category_name ,main_category  } = req.body;
+    const { category_name ,main_category,categoryimageURL  } = req.body;
     if (!category_name || !main_category) {
   return res.status(400).json({ error: "All fields are required" });
 }
 
-    const categoryImage = req.file ? req.file.filename : null;
+    // const categoryImage = req.file ? req.file.filename : null;
+    const categoryImage = req.file ? req.file.filename : categoryimageURL || null;
+
 
     const result = await pool.query(
       `INSERT INTO categories (category_name, category_image , main_category)
@@ -319,27 +329,41 @@ app.delete('/api/categories/:id', async (req, res) => {
   }
 });
 // ----------------fetching izidasobanuye--------
-app.get('/api/izidasobanuye', async(req,res) => {
+app.get('/api/izidasobanuye', async (req, res) => {
+  const cachedIzidasobanuye = cache.get('izidasobanuyeData');
+  if (cachedIzidasobanuye) {
+    return res.status(200).json(cachedIzidasobanuye);
+  }
+
   try {
-const result = await pool.query(
-  'SELECT * FROM categories WHERE main_category = $1',
-  ['izidasobanuye']
-);
+    const result = await pool.query(
+      'SELECT * FROM categories WHERE main_category = $1',
+      ['izidasobanuye']
+    );
+
+    // Cache the data before sending the response
+    cache.set('izidasobanuyeData', result.rows, 3600); // 1 hour TTL
 
     res.status(200).json(result.rows);
   } catch (error) {
-    console.error("error fetching izidasobanuye category", error)
+    console.error("Error fetching izidasobanuye category", error);
     res.status(500).json({ err: "Failed to fetch izidasobanuye category" });
-    
   }
-})
+});
+
 // ----------------fetching agasobanuye--------
 app.get('/api/agasobanuye', async(req,res) => {
+  const cachedAgasobanuye = cache.get('agasobanuyeData');
+  if (cachedAgasobanuye) {
+    return res.status(200).json(cachedAgasobanuye);
+  }
   try {
 const result = await pool.query(
   'SELECT * FROM categories WHERE main_category = $1',
   ['agasobanuye']
 );
+// Cache the data before sending the response
+cache.set('agasobanuyeData', result.rows, 3600); // 1 hour TTL
 
     res.status(200).json(result.rows);
   } catch (error) {
@@ -350,6 +374,10 @@ const result = await pool.query(
 })
 // ----------------fetching movies--------
 app.get('/api/movies', async(req,res) => {
+  const cachedMovies = cache.get('moviesData');
+  if (cachedMovies) {
+    return res.status(200).json(cachedMovies);
+  }
   try{
 const query = `
       SELECT 
@@ -359,7 +387,9 @@ const query = `
       LEFT JOIN categories c ON m.category_id = c.category_id
       ORDER BY m.movie_id DESC;
     `;
-     const result = await pool.query(query);
+    const result = await pool.query(query);
+    // Cache the data before sending the response
+    cache.set('moviesData', result.rows, 3600); // 1 hour TTL
     res.status(200).json(result.rows);
   } catch (error) {
     console.error("error fetching movies category", error)
