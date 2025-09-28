@@ -34,7 +34,7 @@ function Inyarwanda() {
     <div className="px-4 relative">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h1 className="font-bold text-2xl">Rwanda Films</h1>
+        <h1 className="font-bold text-2xl">Rwandan Films</h1>
         <div className="flex gap-4 text-xl cursor-pointer">
           <i className="fa-solid fa-arrow-left"></i>
           <i className="fa-solid fa-arrow-right"></i>
