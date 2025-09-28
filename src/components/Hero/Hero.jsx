@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import overlayimg from "../../assets/images/overlay.png";
 import "./Hero.css";
 import { Link } from "react-router-dom";
+import Inyarwanda from "../Inyarwanda/Inyarwanda";
 export function overlaysub() {
   return (
     <div className="overlay-subscription w-full absolute top-0 left-0 ">
@@ -299,8 +300,11 @@ function Hero() {
               </Link>
             ))}
           </div>
-        </div>
-
+        </div><br />
+              {/* -------------rwanda full movies------- */}
+              <div>
+                <Inyarwanda />
+              </div>
         {/* most recents */}
         <div className="hidden">
           <div className="flex items-center justify-between">
