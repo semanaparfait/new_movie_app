@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, lazy } from "react";
 import overlayimg from "../../assets/images/overlay.png";
 import "./Hero.css";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ export function overlaysub() {
         src={overlayimg}
         alt="Provider Logo"
         className="w-28 h-44 md:w-43 md:h-65 object-cover rounded-[7px]"
+        loading="lazy"
       />
 
       {/* Overlay */}
@@ -247,6 +248,7 @@ function Hero() {
                   }
                   alt={interpreter.category_name}
                   className="rounded-full w-35 h-35 object-cover"
+                  loading="lazy"
                 />
 
                   <h3 className="text-center font-medium">
@@ -291,6 +293,7 @@ function Hero() {
                   }
                   alt={site.category_name}
                   className="w-24 h-24 object-cover"
+                  loading="lazy"
                 />
 
                   <h3 className="text-center font-medium">
@@ -370,6 +373,7 @@ function Hero() {
                   e.target.onerror = null; // prevent infinite loop
                   e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
                 }}
+                loading="lazy"
               />
 
               </div>

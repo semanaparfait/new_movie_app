@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , lazy} from "react";
 import { Link } from "react-router-dom";
 import "./Watchlist.css";
 import Navbar from "../../components/Navbar/Navbar";
@@ -81,7 +81,8 @@ function Watchlist() {
                 ? movie.movie_image
                 : `${API_URL}/uploads/${movie.movie_image}`
               : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
-          }
+            }
+            loading="lazy"
           alt={movie.movie_name}
           className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
         />

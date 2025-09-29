@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { Link, useParams } from 'react-router-dom';
 // import interpreters from '../../Data/Interpreters.js';
 import mostlogo from "../../assets/images/updatedlogo.png"
@@ -130,6 +130,7 @@ function InterpreterPage() {
                     src={movie.poster}
                     alt={movie.title}
                       className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-xl "
+                      loading='lazy'
                   />
 
                 </div>

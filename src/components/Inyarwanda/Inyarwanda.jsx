@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , lazy} from 'react';
 
 function Inyarwanda() {
   const movies = [
@@ -54,6 +54,7 @@ function Inyarwanda() {
               src={movie.src}
               alt={movie.name}
               className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              loading='lazy'
             />
           </div>
         ))}
@@ -68,6 +69,7 @@ function Inyarwanda() {
                 src={selectedMovie.src}
                 alt={selectedMovie.name}
                 className="w-full h-full rounded-lg object-cover"
+                loading='lazy'
               />
 
               {/* bottom shadow overlay */}

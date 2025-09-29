@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React,{useState,useEffect,useRef,lazy} from 'react';
 import { useParams } from 'react-router-dom';
 import './Player.css'
 import { Link } from 'react-router-dom';
@@ -86,16 +86,14 @@ const navigate = useNavigate();
 
         <div className='left-movie-poster w-[90%] sm:w-[40%] flex flex-col items-center'>
           <img 
-src={
-  movie.movie_image?.startsWith("http")
-    ? movie.movie_image
-    : `${API_URL}/uploads/${movie.movie_image}`
-}
-
-      
-
+            src={
+              movie.movie_image?.startsWith("http")
+                ? movie.movie_image
+                : `${API_URL}/uploads/${movie.movie_image}`
+            }
             alt="movie poster" 
             className='movie-poster w-[250px] rounded-[10px] h-full'
+            loading='lazy'
           /><br/>
           
           <div className="buttons flex gap-4 flex-wrap items-center justify-center">

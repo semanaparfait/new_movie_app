@@ -1,4 +1,4 @@
-import React,{useState,useEffect, use} from 'react'
+import React,{useState,useEffect, lazy} from 'react'
 import { Link } from 'react-router-dom'
 
 function Categories() {
@@ -58,7 +58,7 @@ const deleteCategory = (id) => {
                             <td>{category.category_id}</td>
                             <td>{category.created_at}</td>
                             <td>{category.category_name}</td>
-                            <td><img src={`${API_URL}/uploads/${category.category_image}`} alt={category.category_name} className='w-20 h-20 object-cover '/></td>
+                            <td><img src={`${API_URL}/uploads/${category.category_image}`} alt={category.category_name} className='w-20 h-20 object-cover ' loading='lazy'/></td>
                             <td >{category.main_category}</td>
                             <td title='delete' onClick={() => deleteCategory(category.category_id)}><i className="fa-solid fa-trash text-red-600 cursor-pointer"></i></td>
                         </tr>

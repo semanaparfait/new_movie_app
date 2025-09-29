@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, lazy} from 'react'
 
 function Movies() {
                 const API_URL = 
@@ -60,7 +60,8 @@ const deletMovie = (id) => {
                                     ? movie.movie_image // full URL, use as is
                                     : `${API_URL}/uploads/${movie.movie_image}` // uploaded file, prepend API path
                                     : '/https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg' // optional fallback if no image
-                                } alt="Tom & Jerry" className="w-14 h-19 rounded-[10px]" />
+                                } alt={movie.movie_name} className="w-14 h-19 rounded-[10px]"
+                                loading='lazy' />
                                 <div>
                                     <h4>{movie.movie_name}</h4>
                                     <p className="text-gray-500 ">{movie.movie_genre}</p>

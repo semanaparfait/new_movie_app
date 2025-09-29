@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import "./MovieApp.css";
 import mostlogo from "../../assets/images/updatedlogo.png";
 import Footer from "../../components/Footer/Footer";
@@ -169,6 +169,7 @@ function MovieApp(u) {
                             }
                             alt={movie.movie_name}
                             className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+                            loading="lazy"
                           />
                       </div>
                       {/* </Link> */}

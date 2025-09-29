@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , lazy} from 'react'
 import logo from '../../assets/images/overlay-2.png'
 import { Link } from 'react-router-dom';
 import './AdminPage.css'
@@ -184,13 +184,16 @@ function AdminPage() {
                             <tr key={movie.movie_id}>
                                 <td>{movie.movie_id}</td>
                                 <td className="flex items-center gap-3">
-                                <img                 src={
+                                <img   src={
                                 movie.movie_image
                                     ? movie.movie_image.startsWith('http')
                                     ? movie.movie_image // full URL, use as is
                                     : `${API_URL}/uploads/${movie.movie_image}` // uploaded file, prepend API path
                                     : '/https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg' // optional fallback if no image
-                                } alt="Tom & Jerry" className="w-14 h-19 rounded-[10px]" />
+                                } 
+                                alt="Tom & Jerry" 
+                                className="w-14 h-19 rounded-[10px]"
+                                loading='lazy' />
                                 <div>
                                     <h4>{movie.movie_name}</h4>
                                     <p className="text-gray-500 ">{movie.movie_genre}</p>

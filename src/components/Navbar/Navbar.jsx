@@ -132,6 +132,7 @@ function Navbar() {
                   src='https://i.pinimg.com/736x/8c/b3/ec/8cb3ec2bcd6067d551a8604d628416aa.jpg' 
                   alt="profile" 
                   className="w-6 sm:w-8 rounded-full" 
+                  
                 />
                 <button className='border rounded-[10px]' style={{ padding: '5px 10px' }}>Sign in</button>
               </div>
