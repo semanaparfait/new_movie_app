@@ -1,9 +1,9 @@
-.movie-container {
+.movie-container-watchlist {
   position: relative;
   display: inline-block;
 }
 
-.buttons {
+.watchlist-buttons {
   position: absolute;
   inset: 0; /* covers the image */
   display: flex;
@@ -13,7 +13,7 @@
   transition: opacity 0.3s ease;
 }
 
-.movie-container:hover .buttons {
+.movie-container-watchlist:hover .watchlist-buttons {
   opacity: 1;         /* show on hover */
 }
 
@@ -26,7 +26,11 @@
   padding: 10px 14px; */
   cursor: pointer;
   /* margin-right: 8px; */
-  font-size: 60px;
+  /* font-size: 60px; */
+}
+.play-watchlist{
+    border: none;
+    
 }
 
 

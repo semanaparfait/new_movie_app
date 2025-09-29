@@ -73,7 +73,7 @@ function Watchlist() {
       <h1 className="text-center text-[27px]">Your Favorites → Watchlist</h1>
     <div className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2" style={{padding:"20px 30px"}}>
       {watchlist.map((movie) => (
-      <div key={movie.movie_id} className="movie-container relative flex flex-col items-center">
+      <div key={movie.movie_id} className="movie-container-watchlist relative flex flex-col items-center">
         <img
           src={
             movie.movie_image
@@ -87,10 +87,10 @@ function Watchlist() {
         />
         <p>{movie.movie_name}</p>
 
-        <div className="buttons">
+        <div className="watchlist-buttons">
           <Link to={`/player/${movie.movie_id}`}>
-            <button className="playBtn-watchlist absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <i className="fa-solid fa-play"></i>
+            <button className="playBtn-watchlist absolute top-1/2 left-1/2 -translate-x-[80%] -translate-y-10 md:-translate-y-1/2">
+              <i className="fa-solid fa-play play-watchlist text-[40px] md:text-[60px]"></i>
             </button>
           </Link>
 
