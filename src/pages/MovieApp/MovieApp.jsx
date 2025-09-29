@@ -88,7 +88,7 @@ function MovieApp(u) {
     );
 
   // Get unique genres from filtered movies
-  const genres = [...new Set(filteredMovies.map((movie) => movie.movie_genre))];
+  const genres = [...new Set(filteredMovies.map((movie) => movie.movie_genre.trim().toLowerCase()))];
 
   // Get category name for display
   const categoryName = filteredMovies[0]?.category_name || `Category ${siteid}`;
@@ -121,20 +121,14 @@ function MovieApp(u) {
             </a>
           </div>
         </nav>
-        <br />
-        <br />
-
-        <div className="flex flex-col md:flex-row w-full gap-4">
-          <div className=" text-white p-4  flex flex-col justify-center w-full md:w-1/2 ">
-            <h2 className="text-2xl font-bold mb-2">Watch on {categoryName}</h2>
+        
+              <div className="-row w-full gap-4 hidden">
+          <div className=" text-white p-4  2 ">
+            <h2 className="title-provider text-2xl text-center font-bold mb-2">Provided by {categoryName}</h2>
             <br />
-            <h3 className="text-base">
-              Enjoy trending movies, top series, and exclusive shows—all in one
-              place. Start your {categoryName} journey today!
-            </h3>
           </div>
 
-          <div className="p-4 w-full md:w-1/2  flex justify-end">
+          <div className="p-4 w-full md:w-1/2  flex justify-end hidden">
             {/* <img src={interpreter.logodescription} alt="logo" className="w-[14rem]" /> */}
           </div>
         </div>
@@ -144,9 +138,9 @@ function MovieApp(u) {
             <div key={genre}>
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold mb-2 text-white capitalize">
-                  {genre} Movies
+                  {genre} 
                 </h2>
-                <div className="flex gap-4">
+                <div className="hidden md:flex gap-4">
                   <i
                     className="fa-solid fa-arrow-left"
                     onClick={() => scroll("left")}
@@ -160,7 +154,7 @@ function MovieApp(u) {
               <br />
               <div className="flex gap-4 overflow-x-scroll scrollbar-hidden scroll-smooth">
                 {filteredMovies
-                  .filter((movie) => movie.movie_genre === genre)
+                  .filter((movie) => movie.movie_genre.trim().toLowerCase() === genre)
                   .map((movie) => (
                     <div className="movie-card flex flex-col items-center flex-shrink-0 relative">
                       {/* <Link to={`/player/${movie.movieid}`} key={movie.movieid}> */}
@@ -179,7 +173,7 @@ function MovieApp(u) {
                       </div>
                       {/* </Link> */}
                        <div>
-                        {isAuthenticated ? overlay(movie) : overlaysub()}
+                        {isAuthenticated ? overlay(movie, userId) : overlaysub()}
                           </div>
                     </div>
                   ))}

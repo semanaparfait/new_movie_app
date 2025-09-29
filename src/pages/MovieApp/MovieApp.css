@@ -1,3 +1,10 @@
 .movie-site-holder{
     padding: 1px 20px;
 }
+.title-provider {
+   font-family: 'Roboto Mono', monospace;
+
+  font-weight: 600;
+    font-size: 50px;
+  /* color: #333; */
+}

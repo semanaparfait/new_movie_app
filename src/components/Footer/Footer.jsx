@@ -3,6 +3,7 @@ import logo from '../../assets/images/The Movies___.jpeg';
 import './footer.css'
 import playstore from '../../assets/images/google play.png';
 import appstore from '../../assets/images/app store.png';
+import { Link } from 'react-router-dom';
 const date = new Date();
 const year = date.getFullYear();
 
@@ -41,7 +42,9 @@ function Footer() {
           <p>+250 722 245 279</p><br />
           <p>+1 234 578 890</p><br />
           <p>semana.coder.expert@gmail.com</p><br />
-          <p><a href="contact.html">Via Here</a></p>
+          <Link to="contactus" className="text-white no-underline">
+          <p>Via Here</p>
+          </Link>
         </div>
 
         <div className="container4">

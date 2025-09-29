@@ -46,12 +46,12 @@ export function phonenavbar(isAuthenticated) {
             <span>Watchlist</span>
           </li>
         </Link>
-        <Link to={`contactus`}>
+        {/* <Link to={`contactus`}>
           <li className="flex flex-col items-center">
             <i className="fa-solid fa-envelope"></i>
             <span>Contact</span>
           </li>
-        </Link>
+        </Link> */}
                 <Link to="/tvshows">
           <li className="flex flex-col items-center">
             <i className="fa-solid fa-tv"></i>
@@ -224,7 +224,7 @@ function Hero() {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Interpreter</h1>
-            <div className="flex gap-4">
+            <div className="hidden md:flex gap-4">
               <i className="fa-solid fa-arrow-left"></i>
               <i className="fa-solid fa-arrow-right"></i>
             </div>
@@ -263,7 +263,7 @@ function Hero() {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Movie providers</h1>
-            <div className="flex gap-4">
+            <div className="hidden md:flex gap-4">
               <i className="fa-solid fa-arrow-left"></i>
               <i className="fa-solid fa-arrow-right"></i>
             </div>
@@ -309,7 +309,7 @@ function Hero() {
         <div className="hidden">
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Most recent</h1>
-            <div className="flex gap-4">
+            <div className="hidden md:flex gap-4">
               <i
                 className="fa-solid fa-arrow-left"
                 onClick={() => scroll(recentRef, "left")}
@@ -333,7 +333,7 @@ function Hero() {
       {/* Genre Title */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold mb-4">{genre}</h2> {/* lowercase */}
-        <div className="flex gap-4">
+        <div className="hidden md:flex gap-4">
           <i
             className="fa-solid fa-arrow-left"
             onClick={() => scroll("left")}

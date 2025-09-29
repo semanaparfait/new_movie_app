@@ -88,7 +88,7 @@ function Navbar() {
             <li><Link to="/tvshows">Tv shows</Link></li>
             <li><Link to="/livestreaming">Live streaming</Link></li>
             <li><Link to="/watchlist">watchlist</Link></li>
-            <li><Link to="/contactus">Contact us</Link></li>
+            {/* <li><Link to="/contactus">Contact us</Link></li> */}
           </ul>
         </div>
 

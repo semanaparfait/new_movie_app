@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./Watchlist.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 function Watchlist() {
   const [watchlist, setWatchlist] = useState([]);
@@ -66,37 +68,42 @@ function Watchlist() {
   if (watchlist.length === 0) return <img src="https://i.pinimg.com/736x/44/c4/e4/44c4e483771d88fbbca4caf5f09bc46e.jpg" alt="watch list id empy" className="w-full h-full" />;
 
   return (
+    <div><br />
+    <Navbar />
+      <h1 className="text-center text-[27px]">Your Favorites → Watchlist</h1>
     <div className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2" style={{padding:"20px 30px"}}>
       {watchlist.map((movie) => (
-        <div key={movie.movie_id} className="relative flex flex-col items-center">
-              <img
-                src={
-                  movie.movie_image
-                    ? movie.movie_image.startsWith('http')
-                      ? movie.movie_image // full URL, use as is
-                      : `${API_URL}/uploads/${movie.movie_image}` // uploaded file, prepend API path
-                    : '/https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg' // optional fallback if no image
-                }
-                alt={movie.movie_name}
-                className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
-              /><br/>
-              
-             <div className="buttons flex  gap-2 flex-wrap ">
-            <Link to={`/player/${movie.movie_id}`}>
-            <button className='playBtn text-black bg-[white] rounded-[6px] font-bold flex items-center gap-2 px-4 py-2'>
-            ▶ Play
+      <div key={movie.movie_id} className="movie-container relative flex flex-col items-center">
+        <img
+          src={
+            movie.movie_image
+              ? movie.movie_image.startsWith('http')
+                ? movie.movie_image
+                : `${API_URL}/uploads/${movie.movie_image}`
+              : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+          }
+          alt={movie.movie_name}
+          className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+        />
+        <p>{movie.movie_name}</p>
+
+        <div className="buttons">
+          <Link to={`/player/${movie.movie_id}`}>
+            <button className="playBtn-watchlist absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <i className="fa-solid fa-play"></i>
             </button>
-            </Link>
-            
-            <button className='downloadBtn bg-[red] rounded-[6px] font-bold px-4 py-2'
-            onClick={() => removeFromWatchlist(movie.movie_id)}
-            >
-                <i className="fa-solid fa-xmark"></i> Remove
-            </button>
-            
+          </Link>
+
+      <button 
+      className='downloadBtn-watchlist absolute top-2 right-8' 
+      onClick={() => removeFromWatchlist(movie.movie_id)} >
+         <i className="fa-solid fa-circle-xmark text-[23px]"></i> 
+         </button>
         </div>
-        </div>
+      </div>
+
       ))}
+    </div>
     </div>
   );
 }
