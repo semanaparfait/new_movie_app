@@ -96,7 +96,7 @@ const upload = multer({ storage });
 const cache = new NodeCache({ stdTTL: 3600 });
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
-  const { username, email, phonenumber, password } = req.body;
+  const { username, email,  password } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Username, email and password are required' });
@@ -108,8 +108,8 @@ app.post('/api/signup', async (req, res) => {
 
     // Insert user into DB
     await pool.query(
-      'INSERT INTO accountusers (username, email, phonenumber, password) VALUES ($1, $2, $3, $4)',
-      [username, email, phonenumber, hashedPassword]
+      'INSERT INTO accountusers (username, email,  password) VALUES ($1, $2, $3)',
+      [username, email,  hashedPassword]
     );
     
 

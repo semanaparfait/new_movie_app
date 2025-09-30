@@ -72,7 +72,7 @@ function UserProfile() {
                     </div><br />
                     <div>
                         <p>Phone Number:</p>
-                         <h3 className='font-bold'>{user?.phonenumber}</h3>
+                         <h3 className='font-bold'>{user?.phonenumber}- - -</h3>
                     </div>
                 </div>
             </div>

@@ -28,17 +28,17 @@ function Accountpage() {
     e.preventDefault();
 
     if (action === "Sign up") {
-      if (!validatePhoneNumber(phonenumber)) {
-        alert("Please enter a valid phone number.");
-        return;
-      }
+      // if (!validatePhoneNumber(phonenumber)) {
+      //   alert("Please enter a valid phone number.");
+      //   return;
+      // }
 
       // Call backend signup API
       try {
         const response = await fetch(`${API_URL}/api/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, email, phonenumber, password }),
+          body: JSON.stringify({ username, email, password }),
         });
 
         const data = await response.json();
@@ -48,7 +48,7 @@ function Accountpage() {
           // Optionally reset form fields here
           setUsername("");
           setEmail("");
-          setPhonenumber("");
+          // setPhonenumber("");
           setPassword("");
         } else {
           // alert(data.message);
@@ -87,11 +87,11 @@ function Accountpage() {
     }
   };
 
-const validatePhoneNumber = (number) => {
-  // Matches + followed by 1-3 digit country code, then 7-12 digits
-  const phoneRegex = /^\+\d{1,3}\d{7,12}$/;
-  return phoneRegex.test(number);
-};
+// const validatePhoneNumber = (number) => {
+//   // Matches + followed by 1-3 digit country code, then 7-12 digits
+//   const phoneRegex = /^\+\d{1,3}\d{7,12}$/;
+//   return phoneRegex.test(number);
+// };
 
 
   return (
@@ -261,25 +261,25 @@ const validatePhoneNumber = (number) => {
               {action === "Log in" ? (
                 <div></div>
               ) : (
-<input
-  type="tel"
-  value={phonenumber}
-  onChange={(e) => {
-    const input = e.target.value;
-    setPhonenumber(input);
+            <input
+              type="tel"
+              value={phonenumber}
+              onChange={(e) => {
+                const input = e.target.value;
+                setPhonenumber(input);
 
-    // Optional: real-time validation
-    if (input && !validatePhoneNumber(input)) {
-      e.target.setCustomValidity("Please enter a valid international phone number, e.g., +250783456789");
-    } else {
-      e.target.setCustomValidity(""); // Clear error
-    }
-  }}
-  placeholder="Enter your Phone number in international format, e.g., +250783456789"
-  className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
-  style={{ paddingLeft: "7px" }}
-  required
-/>
+                // Optional: real-time validation
+                if (input && !validatePhoneNumber(input)) {
+                  e.target.setCustomValidity("Please enter a valid international phone number, e.g., +250783456789");
+                } else {
+                  e.target.setCustomValidity(""); // Clear error
+                }
+              }}
+              placeholder="Enter your Phone number in international format, e.g., +250783456789"
+              className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem] hidden"
+              style={{ paddingLeft: "7px" }}
+              
+            />
 
               )}
 
