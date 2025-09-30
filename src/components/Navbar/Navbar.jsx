@@ -73,7 +73,7 @@ function Navbar() {
 
   return (
     <div className='navbar hidden md:block'>
-      <nav className='flex justify-between items-center w-full mx-auto pt-11'>
+      <nav className='flex justify-between items-center w-full mx-auto  '>
         {/* Logo */}
         <Link to="/">
         <div>
@@ -93,19 +93,21 @@ function Navbar() {
         </div>
 
         {/* Search Bar */}
+        <div >
         <div className="search-bar relative">
           <input
             type="text"
             value={query}
             onChange={handleSearch}
             placeholder="Search movies..."
-            className="search-input px-3 py-1 rounded-md border border-gray-300 w-64"
+            className="search-input  rounded-md border border-gray-300 w-64"
           />
           <i className="fa fa-search absolute right-2 top-1/2 -translate-y-1/2"></i>
 
+        </div>
           {/* 🔎 Search Results Dropdown */}
           {results.length > 0 && (
-            <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto z-50">
+            <div className="absolute w-[90%] md:w-1/3 right-4 md:right-8 bg-white z-500" style={{padding:'5px 10px'}}>
               {results.map((movie) => (
                 <Link
                   key={movie.movie_id}
@@ -116,13 +118,42 @@ function Navbar() {
                     setResults([]); // hide dropdown
                   }}
                 >
-                  {movie.movie_name}
+                  <div className='flex gap-1.5'>
+                    {/* <img src={movie.movie_image} alt={movie.movie_name}
+                    className='w-[3rem] h-[4rem] rounded-[6px] '
+                    /> */}
+                                  <img
+                src={
+                  movie.movie_image
+                    ? movie.movie_image.startsWith("http")
+                      ? movie.movie_image
+                      : `${API_URL}/uploads/${movie.movie_image}`
+                    : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                }
+                alt={movie.movie_name}
+                className="w-[3rem] h-[4rem] rounded-[6px] object-cover "
+                onError={(e) => {
+                  e.target.onerror = null; // prevent infinite loop
+                  e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+                }}
+                loading="lazy"
+              />
+                    <div>
+                      <p className='text-[13px] text-black'>{movie.movie_name}</p>
+                      <div className='flex gap-7'>
+
+                      <p className='text-gray-400 text-[13px] font-semibold'>{new Date(movie.created_at).getFullYear()}</p>
+                      <p className='text-white bg-red-500 w-fit rounded-[5px] text-[13px]' style={{padding:'2px 5px'}}>{movie.movie_genre}</p>
+                      </div>
+
+                    </div>
+                  </div><br />
+                  
                 </Link>
               ))}
             </div>
           )}
-        </div>
-
+     </div>
         {/* Authentication */}
         <div className='flex'>
           {!isLoggedin ? (

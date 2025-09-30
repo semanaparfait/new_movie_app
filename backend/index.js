@@ -386,7 +386,7 @@ app.get('/api/movies', async(req,res) => {
   try{
 const query = `
       SELECT 
-        m.movie_id, m.movie_name, m.movie_description, m.movie_trailer_link,m.movie_image,m.movie_country,m.movie_genre,m.movie_released_date,m.movie_video_link,m.movie_download_link,
+        m.movie_id, m.movie_name, m.movie_description, m.movie_trailer_link,m.movie_image,m.movie_country,m.movie_genre,m.movie_released_date,m.movie_video_link,m.movie_download_link,m.created_at,
         c.category_name,m.category_id
       FROM movies m
       LEFT JOIN categories c ON m.category_id = c.category_id
