@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Contactus from "./pages/Contactus/Contactus";
@@ -47,12 +48,28 @@ function App() {
           <Route path="/contactus" element={<Contactus />} />
           <Route path="/account" element={<LazyAccountpage />} />
           <Route path="/interpreterpage/:id" element={<Protector><LazyInterpreterPage /></Protector>}/>
-          <Route path="/moviesites/:siteid" element={<LazyMovieApp />}/>
+          <Route path="/moviesites/:siteid" element={<MovieApp/>}/>
           <Route path="/player/:movieid" element={<Protector><LazyPlayer /></Protector>}/>
           <Route path="/cinema/:movieid" element={<Protector><LazyCinema /></Protector>}/>
           <Route path="/userprofile"element={<LazyUserProfile />}/>
           <Route path="/adminpage" element={<Protector adminOnly={true}><LazyAdminPage /></Protector>} />
-          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route
+            path="*"
+            element={
+              <div className="w-screen h-screen flex items-center justify-center bg-black">
+                <img
+                  src="https://i.pinimg.com/736x/a4/3e/e6/a43ee6d3e310564af22b71bdfb1a52e7.jpg"
+                  alt="Not Found"
+                  loading="lazy"
+                  className="w-full h-full object-contain"
+                />
+                <Link to={'/'}>
+                <button title="Home"  className="bg-white text-black rounded-[5px] absolute top-6 left-7" style={{padding:'5px 20px'}}>Home</button>
+                </Link>
+              </div>
+            }
+          />
+
         </Routes>
       </Suspense>
     </BrowserRouter>
