@@ -73,13 +73,13 @@ const navigate = useNavigate();
     <div>
       <div className='trailer-video fixed inset-0 z-[-1] w-full h-full'>
 
-<iframe
-  className="w-full h-full"
-  src={`${embedUrl}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&modestbranding=1`}
-  frameBorder="0"
-  allow="autoplay; encrypted-media"
-  allowFullScreen
-/>
+      <iframe
+        className="w-full h-full"
+        src={`${embedUrl}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&modestbranding=1`}
+        frameBorder="0"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+      />
 
       </div>
       <div className='movie-info flex flex-wrap items-center justify-center sm:justify-evenly absolute '>

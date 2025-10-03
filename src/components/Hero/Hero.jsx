@@ -99,12 +99,12 @@ export function overlay(movie, userId) {
     <div className="overlay absolute bottom-[5px] left-0 w-full space-y-1 text-white text-[12px] md:text-[14px] flex flex-col gap-2 opacity-0">
       {/* Title */}
       <h3 className="font-bold text-[13px] md:text-[18px] w-fit  leading-tight ">
-        {movie.movie_name}
+        {movie.movie_name} 
       </h3>
       <div className="flex justify-evenly">
         {/* Genre */}
         <p className="genre bg-[#e50914]  rounded-[20px] md:text-xs   w-fit text-center">
-          🎬 {movie.movie_genre}
+          🎬 {movie.movie_genre} 
         </p>
         {/* <p className="font-semibold text-[17px]">{new Date(movie.movie_released_date).getFullYear()}</p> */}
       </div>
@@ -139,6 +139,75 @@ export function overlay(movie, userId) {
     </div>
   );
 }
+export function episodeoverlay( season,userId) {
+  const API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://new-movie-app.onrender.com";
+  const addToWatchlistseason = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/watchlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, serie_id_id: season.serie_id_id }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        // alert("Added to your watchlist!");
+      } else {
+        alert("Failed to add: " + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong.");
+    }
+  };
+  return (
+    <div className="overlay absolute bottom-[5px] left-0 w-full space-y-1 text-white text-[12px] md:text-[14px] flex flex-col gap-2 opacity-0">
+      {/* Title */}
+      <h3 className="font-bold text-[13px] md:text-[18px] w-fit  leading-tight ">
+        {season.serie_name}{season.serie_number}
+      </h3>
+      <div className="flex justify-evenly">
+        {/* Genre */}
+        <p className="genre bg-[#e50914]  rounded-[20px] md:text-xs   w-fit text-center">
+          🎬 {season.serie_genre}
+        </p>
+        {/* <p className="font-semibold text-[17px]">{new Date(movie.movie_released_date).getFullYear()}</p> */}
+      </div>
+      {/* Buttons */}
+      <div className="flex items-center justify-around">
+        {/* Play Button */}
+        <div className="relative">
+          <Link to={`/seasons/${season.serie_id}`}>
+
+            <i className="fa-solid fa-play w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          </Link>
+          <span className="span absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Watch Now
+          </span>
+        </div>
+
+        {/* Add to My List Button */}
+        <div className="relative cursor-not-allowed" >
+          <i className="fa-solid fa-plus cursor-not-allowed w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center  hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          <span className="span-plus absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Add to my list
+          </span>
+        </div>
+
+        {/* Add to My List Button */}
+        <div className="relative ">
+          <i className="fas fa-info w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          <span className="span-plus absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Add to my list
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 function Hero() {
   const scrollRef = useRef(null);
   const recentRef = useRef(null);
@@ -150,6 +219,8 @@ function Hero() {
   const [movies, setMovies] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [episodes, setEpisodes] = useState([])
+  const [seasons, setSeasons] = useState([])
 
   const API_URL =
     process.env.NODE_ENV === "development"
@@ -160,22 +231,28 @@ function Hero() {
     const fetchData = async () => {
       setLoading(true); // Set loading to true before fetching data
       try {
-        const [izidasobanuyeRes, agasobanuyeRes, moviesRes, userRes] =
+        const [izidasobanuyeRes, agasobanuyeRes, moviesRes, userRes, episodesRes, seasonsRes] =
           await Promise.all([
             fetch(`${API_URL}/api/izidasobanuye`),
             fetch(`${API_URL}/api/agasobanuye`),
             fetch(`${API_URL}/api/movies`),
             fetch(`${API_URL}/api/me`, { credentials: "include" }),
+            fetch(`${API_URL}/api/episodes`),
+            fetch(`${API_URL}/api/seasons`),
           ]);
 
         const izidasobanuyeData = await izidasobanuyeRes.json();
         const agasobanuyeData = await agasobanuyeRes.json();
         const moviesData = await moviesRes.json();
         const userData = await userRes.json();
+        const episodesData = await episodesRes.json();
+        const seasonsData = await seasonsRes.json();
 
         setIzidasobanuye(izidasobanuyeData);
         setAgasobanuye(agasobanuyeData);
         setMovies(moviesData);
+        setEpisodes(episodesData)
+        setSeasons(seasonsData);
 
         if (userData?.id) {
           setIsAuthenticated(true);
@@ -307,27 +384,60 @@ function Hero() {
               {/* -------------rwanda full movies------- */}
               <div>
                 <Inyarwanda />
-              </div>
-        {/* most recents */}
-        <div className="hidden">
+              </div><br />
+              {/* --------------series------------- */}
+              <div>
           <div className="flex items-center justify-between">
-            <h1 className="font-bold text-2xl">Most recent</h1>
-            <div className="hidden md:flex gap-4">
-              <i
-                className="fa-solid fa-arrow-left"
-                onClick={() => scroll(recentRef, "left")}
-              />
-              <i
-                className="fa-solid fa-arrow-right"
-                onClick={() => scroll(recentRef, "right")}
-              />
-            </div>
-          </div>
-          <br />
-
+        <h2 className="text-xl font-bold mb-4">Seasons</h2>  {/* lowercase */}
+        <div className="hidden md:flex gap-4">
+          <i
+            className="fa-solid fa-arrow-left"
+            onClick={() => scroll("left")}
+          ></i>
+          <i
+            className="fa-solid fa-arrow-right"
+            onClick={() => scroll("right")}
+          ></i>
         </div>
-        <br />
-        <br />
+         </div><br />
+      <div className="flex gap-4 overflow-x-scroll p-4 scrollbar-hidden scroll-smooth">
+        {seasons.map((season)=>
+            <div
+              key={season.serie_id}
+              className="movie-card flex flex-col items-center flex-shrink-0 relative"
+            >
+              <div className="relative">
+                
+              <img
+                src={
+                  season.serie_image
+                    ? season.serie_image.startsWith("http")
+                      ? season.serie_image
+                      : `${API_URL}/uploads/${season.serie_image}`
+                    : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                }
+                alt={season.serie_name}
+                className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+                onError={(e) => {
+                  e.target.onerror = null; // prevent infinite loop
+                  e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+                }}
+                loading="lazy"
+              />
+
+              </div>
+              {/* <h2>{season.serie_name}</h2> */}
+
+              <div>
+                {isAuthenticated ? episodeoverlay(season,userId) : overlaysub()}
+              </div>
+            </div>
+          )}
+      </div>
+     
+
+              </div>
+
         <div className="p-4">
           {/** Get all unique genres from all movies */}
 {[...new Set(movies.map((movie) => movie.movie_genre.trim().toLowerCase()))].map(

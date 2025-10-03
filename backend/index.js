@@ -453,7 +453,6 @@ app.delete('/api/movies/:id', async (req, res) => {
   }
 });
 
-
 // -----------------add to watchlist----------
 app.post("/api/watchlist", async (req, res) => {
   const { user_id, movie_id } = req.body;
@@ -542,6 +541,153 @@ app.get('/account', (req, res) => {
   res.status(200).json({ message: 'Account route placeholder' });
 });
 
+// -------------------upload sesions -----------
+app.post('/api/seasons', upload.single("season_image"), async (req, res) => {
+  try {
+    const { season_name, season_number, season_description, season_trailer_link, season_date, season_imagelink, season_genre,season_provider_choice } = req.body;
+
+    if (!season_name || !season_description || !season_trailer_link) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const serie_image = req.file ? req.file.filename : season_imagelink || null;
+
+    const result = await pool.query(
+      `INSERT INTO series 
+       (serie_name, serie_number, serie_image, serie_description, serie_trailer_link, serie_released_date, serie_genre,provider)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      [season_name, season_number || null, serie_image, season_description, season_trailer_link, season_date || null, season_genre || null ,season_provider_choice]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error uploading season:", err);
+    res.status(500).json({ error: "Failed to upload season" });
+  }
+});
+// -------------------select all seasons----------
+app.get('/api/seasons', async(req,res) => {
+  try {
+    const result = await pool.query(
+      `SELECT 
+        s.*,
+        c.*
+      FROM series s
+      JOIN categories c ON s.provider = c.category_id
+      `
+    );
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching seasons:', err);
+    res.status(500).json({ message: 'Server error fetching seasons' });
+  }
+});
+
+// --------------------upload episodes---------------
+app.post("/api/episodes", async (req, res) => {
+  try {
+    const {
+      serie_id,
+      episode_number,
+      episode_video_link,
+      episode_download_link,
+      episode_country,
+      episode_released_date,
+    } = req.body;
+
+    if (!serie_id || !episode_number || !episode_video_link) {
+      return res.status(400).json({ error: "Required fields are missing" });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO episodes 
+       (serie_id, episode_number, episode_video_link, episode_download_link, episode_country, episode_released_date) 
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [
+        serie_id,
+        episode_number,
+        episode_video_link,
+        episode_download_link,
+        episode_country,
+        episode_released_date,
+      ]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error uploading episodes:", err);
+    res.status(500).json({ error: "Failed to upload episodes" });
+  }
+});
+// ------------------geting episodes with seasond and category---------
+app.get('/api/episodes', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        e.*,
+        s.*
+      FROM episodes e
+      JOIN series s ON e.serie_id = s.serie_id
+
+    `);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching episodes:', err);
+    res.status(500).json({ message: 'Server error fetching episodes' });
+  }
+});
+// --------------------get single seasons wth its eps-----------
+app.get('/api/episodes/:id' ,  async(req,res)=>{
+  const {id} =req.params;
+  try {
+    const query=(`
+      SELECT 
+        e.*,
+        s.*
+      FROM episodes e
+      JOIN series s ON e.serie_id = s.serie_id
+      WHERE s.serie_id = $1
+      ORDER BY e.episode_number ASC
+
+    `);
+
+    const result = await pool.query(query, [id]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching single on serie id episodes:', err);
+    res.status(500).json({ message: 'Server error fetching single on serie id episodes' });
+  }
+})
+// ------------------------the single episode---------
+app.get('/api/episode/:episodeid' ,  async(req,res)=>{
+  const {episodeid} =req.params;
+  try {
+    const query=(`
+      SELECT 
+        e.*,
+        s.*
+      FROM episodes e
+      JOIN series s ON e.serie_id = s.serie_id
+      WHERE e.episode_id = $1
+      LIMIT 1
+
+    `);
+    const result = await pool.query(query, [episodeid]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Episode not found' });
+    }
+
+    // ✅ Return a single object instead of array
+    res.status(200).json(result.rows[0]);
+
+  } catch (err) {
+    console.error('Error fetching single on serie id episodes:', err);
+    res.status(500).json({ message: 'Server error fetching single on serie id episodes' });
+  }
+})
+// --------------------get all episodes and series----------
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

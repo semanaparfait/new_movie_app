@@ -1,4 +1,6 @@
 import React, {useEffect,useState} from 'react'
+import Season from './Season';
+import Episode from './Episode';
 
 function Movieupload() {
       const API_URL = 
@@ -136,7 +138,9 @@ const Uploadmovie = async (e) => {
     <div >
         <div className='flex justify-center gap-7 font-semibold cursor-pointer'>
             <h1 onClick={() => setUploadmovie("movie")}>Upload Movie</h1>
+            <h1 onClick={()=> setUploadmovie("episode")}>Upload Episodes</h1>
             <h1 onClick={()=> setUploadmovie("category")}>Upload Category</h1>
+            <h1 onClick={()=> setUploadmovie("seasons")}>Upload seasons</h1>
         </div>
         {/* ------------------main upload system-------------------- */}
         {uploadmovie === 'movie' && (
@@ -277,6 +281,14 @@ const Uploadmovie = async (e) => {
             </form>
 
             </div>
+            )}
+            {/* -----------------------upload season--------------/ */}
+            {uploadmovie === "seasons" && (
+              <Season/>
+            )}
+                        {/* -----------------------upload episode--------------/ */}
+            {uploadmovie === "episode" && (
+              <Episode/>
             )}
     </div>
   )

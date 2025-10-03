@@ -19,7 +19,11 @@ import Building from "./components/Building/Building";
 import Tvshows from "./pages/Tvshows/Tvshows";
 import Livestreaming from "./pages/Livestreaming/Livestreaming";
 import Cinema from "./pages/Cinema/Cinema";
+import PlayerSeasons from "./pages/player/PlayerSeasons";
+import CinemaSe from "./pages/Cinema/CinemaSe";
 
+
+const LazyPlayerseasons = lazy(() => import("./pages/player/PlayerSeasons"));
 const LazyWatchlist = lazy(() => import("./pages/Watchlist/Watchlist"));
 const LazyHome = lazy(() => import("./pages/Home/Home"));
 const LazyContactus = lazy(() => import("./pages/Contactus/Contactus"));
@@ -33,9 +37,11 @@ const LazyPlayer = lazy(() => import("./pages/player/Player"));
 const LazyUserProfile = lazy(() => import("./pages/UserProfile/UserProfile"));
 const LazyAdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 const LazyCinema = lazy(() => import("./pages/Cinema/Cinema"));
+const LazyCinemase = lazy(() => import("./pages/Cinema/CinemaSe"));
 
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
@@ -50,7 +56,9 @@ function App() {
           <Route path="/interpreterpage/:id" element={<Protector><LazyInterpreterPage /></Protector>}/>
           <Route path="/moviesites/:siteid" element={<MovieApp/>}/>
           <Route path="/player/:movieid" element={<Protector><LazyPlayer /></Protector>}/>
+          <Route path="/seasons/:seasonid" element={<Protector><LazyPlayerseasons /></Protector>}/>
           <Route path="/cinema/:movieid" element={<Protector><LazyCinema /></Protector>}/>
+          <Route path="/cinemase/:episodeid" element={<Protector><LazyCinemase /></Protector>}/>
           <Route path="/userprofile"element={<LazyUserProfile />}/>
           <Route path="/adminpage" element={<Protector adminOnly={true}><LazyAdminPage /></Protector>} />
           <Route

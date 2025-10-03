@@ -61,3 +61,7 @@ html, body, #root {
 .movie-info{
     background: transparent;
 }
+
+  .other-episodes {
+    /* margin-top: 50px; smaller spacing for phones */
+  }

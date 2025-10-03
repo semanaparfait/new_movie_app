@@ -1,6 +1,9 @@
 import React,{useState,useEffect, lazy} from 'react'
+import Seasons_Movies from './Seasons_Movies';
+import Episodes_Movie from './Episodes_Movie';
 
 function Movies() {
+  const [activeTab, setActiveTab] = useState("movies")
                 const API_URL = 
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
@@ -35,8 +38,17 @@ const deletMovie = (id) => {
 
 
   return (
-    <div className="overflow-x-auto px-4">
-                        <h4 className="font-bold ml-4">Most Recent Movies</h4><br />
+    <div>
+
+                  <div className='flex items-center justify-center gap-3 cursor-pointer'>
+
+                        <h4 className="font-bold ml-4" onClick={()=>setActiveTab("movies")}> Movies</h4>
+                        <h4 className="font-bold ml-4" onClick={()=>setActiveTab("seasons")}> Seasones</h4>
+                        <h4 className="font-bold ml-4" onClick={()=>setActiveTab("episodes")}> Episodes</h4>
+                  </div><br />
+                {activeTab === "movies" && (
+
+              <div className="overflow-x-auto px-4">
                         <table className="recent-table w-full text-sm md:text-base">
                             <thead className="bg-gray-100 ">
                             <tr>
@@ -79,6 +91,14 @@ const deletMovie = (id) => {
                             </tbody>
                         </table>
                         </div>
+                )}
+                {activeTab === "seasons" &&(
+                  <Seasons_Movies />
+                )}
+                {activeTab === "episodes" && (
+                  <Episodes_Movie />
+                )}
+      </div>
   )
 }
 

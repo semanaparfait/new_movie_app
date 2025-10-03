@@ -32,7 +32,7 @@ function Cinema() {
     ref={videoRef}
     controls
     autoPlay
-    className="w-full h-[90%] object-contain"
+    className="w-full h-[80%] object-contain mb-6 rounded-lg shadow-lg"
     src={movie.movie_video_link}
   >
     Your browser does not support the video tag.

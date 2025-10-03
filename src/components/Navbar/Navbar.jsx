@@ -169,9 +169,10 @@ function Navbar() {
               </div>
             </Link>
           ) : (
-            <div className="relative dropdown flex gap-3 text-right">
+            <div className="relative dropdown flex  text-right">
               <img src={profile} alt="profile" className="w-8 h-8 rounded-full cursor-pointer" />
-              <span className="ml-2">{user?.username}</span>
+             <span>{user?.username?.split(' ')[0].slice(0, 6)}</span>
+
               <div className="dropdown-menu absolute left-0 top-2 mt-2 shadow-lg rounded-md p-2">
                 <Link to="/userprofile">
                   <button className="w-full text-left px-2 py-1 hover:bg-gray-100">Profile</button>

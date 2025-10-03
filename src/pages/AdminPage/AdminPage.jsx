@@ -163,6 +163,7 @@ function AdminPage() {
                     </div><br /><br />
                     {/* most recent movies */}
                         <div className="overflow-x-auto px-4">
+                            <div></div>
                         <h4 className="font-bold ml-4">Most Recent Movies</h4><br />
                         <table className="recent-table w-full text-sm md:text-base">
                             <thead className="bg-gray-100 ">
