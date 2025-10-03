@@ -173,7 +173,7 @@ function PlayerSeasons() {
                   <br />
                   <p>{selectedEpisode.episode_country}</p>
                   <br />
-                  <p>{selectedEpisode.provider}</p>
+                  <p>{selectedEpisode.category_name}</p>
                   <br />
                 </div>
               </div>

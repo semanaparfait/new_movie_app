@@ -571,9 +571,10 @@ app.get('/api/seasons', async(req,res) => {
     const result = await pool.query(
       `SELECT 
         s.*,
-        c.*
+        c.category_name
       FROM series s
-      JOIN categories c ON s.provider = c.category_id
+      LEFT JOIN categories c ON s.provider = c.category_id;
+
       `
     );
     res.status(200).json(result.rows);
@@ -625,9 +626,11 @@ app.get('/api/episodes', async (req, res) => {
     const result = await pool.query(`
       SELECT 
         e.*,
-        s.*
+        s.*,
+        c.category_name
       FROM episodes e
       JOIN series s ON e.serie_id = s.serie_id
+      LEFT JOIN categories c ON s.provider = c.category_id
 
     `);
 
@@ -638,27 +641,25 @@ app.get('/api/episodes', async (req, res) => {
   }
 });
 // --------------------get single seasons wth its eps-----------
-app.get('/api/episodes/:id' ,  async(req,res)=>{
-  const {id} =req.params;
-  try {
-    const query=(`
-      SELECT 
-        e.*,
-        s.*
-      FROM episodes e
-      JOIN series s ON e.serie_id = s.serie_id
-      WHERE s.serie_id = $1
-      ORDER BY e.episode_number ASC
+app.get('/api/episodes/:id', async (req, res) => {
+  const { id } = req.params;
 
-    `);
+  const query = `
+    SELECT 
+      e.*,
+      s.*,
+      c.category_name
+    FROM episodes e
+    JOIN series s ON e.serie_id = s.serie_id
+    LEFT JOIN categories c ON s.provider = c.category_id
+    WHERE s.serie_id = $1
+    ORDER BY e.episode_number ASC
+  `;
 
-    const result = await pool.query(query, [id]);
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error('Error fetching single on serie id episodes:', err);
-    res.status(500).json({ message: 'Server error fetching single on serie id episodes' });
-  }
-})
+  const result = await pool.query(query, [id]);
+  res.status(200).json(result.rows);
+});
+
 // ------------------------the single episode---------
 app.get('/api/episode/:episodeid' ,  async(req,res)=>{
   const {episodeid} =req.params;
