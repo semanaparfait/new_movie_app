@@ -170,17 +170,13 @@ app.post('/api/login', async (req, res) => {
         console.log("JWT generated:", token);
 console.log("Setting cookie session_token...");
 
-const isProduction = process.env.NODE_ENV === "production";
-
-    res.cookie("session_token", token, {
-      httpOnly: true, // ✅ keeps it safe from JS access
-      secure: isProduction, // ✅ must be true for HTTPS
-      sameSite: isProduction ? "none" : "lax", // ✅ allow cross-site cookies in production
-      domain: isProduction ? ".movieland.me" : "localhost", // ✅ share cookies across subdomains
-      maxAge: 1000 * 60 * 60 * 12, // ✅ 12 hours
-      path: "/", 
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('session_token', token, {
+      httpOnly: true,
+      maxAge: 3600000, // 1 hour
+      sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-site prod, 'lax' for local
+      secure: isProduction // must be true for 'none'
     });
-
 
     res.json({ 
         message: 'Login successful',
@@ -203,14 +199,11 @@ app.post("/api/logout", (req, res) => {
   const isProduction = process.env.NODE_ENV === "production";
   res.clearCookie("session_token", {
     httpOnly: true,
-    secure: isProduction,
     sameSite: isProduction ? "none" : "lax",
-    domain: isProduction ? ".movieland.me" : "localhost",
-    path: "/", // ✅ ensure same path
+    secure: isProduction,
   });
   return res.json({ message: "Logged out successfully" });
 });
-
 
 // for admin
 app.get('/api/admin/users', async (req, res) => {
@@ -695,23 +688,6 @@ app.get('/api/episode/:episodeid' ,  async(req,res)=>{
     res.status(500).json({ message: 'Server error fetching single on serie id episodes' });
   }
 })
-
-app.post("/api/refresh", authenticateToken, (req, res) => {
-  const user = req.user;
-  const newToken = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "12h" });
-
-  const isProduction = process.env.NODE_ENV === "production";
-  res.cookie("session_token", newToken, {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
-    domain: isProduction ? ".movieland.me" : "localhost",
-    maxAge: 1000 * 60 * 60 * 12,
-  });
-
-  res.json({ message: "Token refreshed" });
-});
-
 // --------------------get all episodes and series----------
 // Start server
 const PORT = process.env.PORT || 5000;
