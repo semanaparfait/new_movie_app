@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://movieland.me/sitemap.xml

@@ -38,15 +38,18 @@ function CinemaSe() {
       {/* Video Player */}
 
 
-        <video
-    ref={videoRef}
-    controls
-    autoPlay
-    className="w-full h-[80%]  object-contain mb-6 rounded-lg shadow-lg"
-    src={episode.episode_video_link}
-  >
-    Your browser does not support the video tag.
-  </video>
+<video
+  ref={videoRef}
+  controls
+  autoPlay
+  preload="metadata"
+  poster={episode.serie_image}
+  className="w-full h-[80%] object-contain mb-6 rounded-lg shadow-lg"
+>
+  <source src={episode.episode_video_link} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 
 
     </div>
