@@ -4,7 +4,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true; // send cookies automatically
 
-const Protector = ({ children }) => {
+const Protector = ({ children, requireAuth = false, requireAdmin = false }) => {
   const API_URL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
@@ -17,19 +17,20 @@ const Protector = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/me`, { method: "GET", credentials: "include" })
+      .get(`${API_URL}/api/me`, { withCredentials: true })
       .then((response) => {
         setAuthenticated(true);
-        setIsAdmin(response.data.is_admin); // Assuming the API returns is_admin
-        // console.log("API Response:", response.data); // Debug log
+        setIsAdmin(response.data.is_admin);
       })
       .catch(() => {
         setAuthenticated(false);
         setIsAdmin(false);
-        // console.log("Authentication failed or API error"); // Debug log
       })
       .finally(() => setLoading(false));
   }, []);
+  console.log("Authenticated:", authenticated); // Debug log 
+  console.log("Is Admin:", isAdmin); // Debug log 
+  console.log("Current Path:", location.pathname); // Debug log
 
   if (loading) {
     return (
@@ -41,15 +42,18 @@ const Protector = ({ children }) => {
     );
   }
 
-  console.log("Authenticated:", authenticated); // Debug log
-  console.log("Is Admin:", isAdmin); // Debug log
-  console.log("Current Path:", location.pathname); // Debug log
-
-  if (location.pathname === "/adminpage" && !isAdmin) {
-    return <Navigate to="/" replace />; // Redirect if not an admin
+  // Admin route protection
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/" replace />;
   }
 
-  return authenticated ? children : <Navigate to="/" replace />;
+  // Auth-required route protection
+  if (requireAuth && !authenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // All good
+  return children;
 };
 
 export default Protector;

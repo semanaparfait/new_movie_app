@@ -167,7 +167,7 @@ export function episodeoverlay( season,userId) {
     <div className="overlay absolute bottom-[5px] left-0 w-full space-y-1 text-white text-[12px] md:text-[14px] flex flex-col gap-2 opacity-0">
       {/* Title */}
       <h3 className="font-bold text-[13px] md:text-[18px] w-fit  leading-tight ">
-        {season.serie_name}{season.serie_number}
+        {season.serie_name}
       </h3>
       <div className="flex justify-evenly">
         {/* Genre */}
@@ -429,7 +429,10 @@ function Hero() {
               {/* <h2>{season.serie_name}</h2> */}
 
               <div>
-                {isAuthenticated ? episodeoverlay(season,userId) : overlaysub()}
+                {episodeoverlay(season,userId)}
+                {/* {overlay(season, userId, isAuthenticated)} */}
+
+                {/* {isAuthenticated ? episodeoverlay(season,userId) : overlaysub()} */}
               </div>
             </div>
           )}
@@ -489,7 +492,8 @@ function Hero() {
               </div>
 
               <div>
-                {isAuthenticated ? overlay(movie, userId) : overlaysub()}
+                {overlay(movie, userId)}
+                {/* {isAuthenticated ? overlay(movie, userId) : overlaysub()} */}
               </div>
             </div>
           ))}

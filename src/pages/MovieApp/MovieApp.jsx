@@ -235,7 +235,8 @@ if (loading) {
                       </div>
                       {/* </Link> */}
                        <div>
-                        {isAuthenticated ? overlay(movie, userId) : overlaysub()}
+                        {overlay(movie, userId)}
+                        {/* {isAuthenticated ? overlay(movie, userId) : overlaysub()} */}
                           </div>
                     </div>
                   ))}
