@@ -189,10 +189,43 @@ console.log("Setting cookie session_token...");
 });
 
 // getting the logged in user
-app.get("/api/me", authenticateToken, (req, res) => {
+// app.get("/api/me", authenticateToken, (req, res) => {
+//   const { id, username, phonenumber, email, created_at, is_admin } = req.user;
+//   res.json({ id, username, phonenumber,email, created_at, is_admin });
+// });
+// ----------------it works like api/me-----------
+function optionalAuth(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader && authHeader.split(' ')[1];
+  const cookieToken = req.cookies.session_token;
+  const token = bearerToken || cookieToken;
+
+  if (!token) {
+    req.user = null;
+    return next(); // Proceed as guest
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+  } catch (err) {
+    console.warn('Invalid token, treating as guest');
+    req.user = null;
+  }
+
+  next();
+}
+
+app.get("/api/me", optionalAuth, (req, res) => {
+  if (!req.user) {
+    return res.json({ user: null }); // Guest response
+  }
+
   const { id, username, phonenumber, email, created_at, is_admin } = req.user;
-  res.json({ id, username, phonenumber,email, created_at, is_admin });
+  res.json({ id, username, phonenumber, email, created_at, is_admin  });
 });
+
+
 
 // -----logout-----------
 app.post("/api/logout", (req, res) => {

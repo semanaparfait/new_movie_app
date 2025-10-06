@@ -217,7 +217,9 @@ if (loading) {
                 {filteredMovies
                   .filter((movie) => movie.movie_genre.trim().toLowerCase() === genre)
                   .map((movie) => (
-                    <div className="movie-card flex flex-col items-center flex-shrink-0 relative">
+                    <div 
+                    key={movie.movie_id}
+                    className="movie-card flex flex-col items-center flex-shrink-0 relative">
                       {/* <Link to={`/player/${movie.movieid}`} key={movie.movieid}> */}
                       <div className="relative">
                           <img
