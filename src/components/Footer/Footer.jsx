@@ -28,12 +28,12 @@ function Footer() {
         </div>
 
         <div className="text-white container2">
-          <h1 className='titles text-2xl font-bold'>About The Movies</h1><br />
+          <h1 className='titles text-2xl font-bold'>About Movie Land</h1><br />
           <p>Genres Available</p><br />
           <p>Languages Supported</p><br />
           <p>Streaming Quality</p><br />
-          <p>Exclusive Content</p><br />
-          <p>Top Rated Movies</p><br /><br />
+          <p>About Us</p><br />
+          <p>Privacy Policy</p><br /><br />
         </div>
 
         <div className="container3">
