@@ -3,6 +3,7 @@ import overlayimg from "../../assets/images/overlay.png";
 import "./Hero.css";
 import { Link } from "react-router-dom";
 import Inyarwanda from "../Inyarwanda/Inyarwanda";
+import './SkeletonHero.css'
 export function overlaysub() {
   return (
     <div className="overlay-subscription w-full absolute top-0 left-0 ">
@@ -208,6 +209,27 @@ export function episodeoverlay( season,userId) {
     </div>
   );
 }
+// -----------------skeleton schema--------------
+function SkeletonCardhero() {
+  
+  return (
+    <div>
+    <div className="movie-container-watchlist flex flex-col items-center ">
+      <div className="skeleton skeleton-text mt-2"></div><br />
+      <div className="skeleton skeleton-poster-abasobanuzi rounded-full"></div>
+    </div><br />
+        <div className="movie-container-watchlist flex flex-col items-center">
+      <div className="skeleton skeleton-text mt-2"></div><br />
+      <div className="skeleton skeleton-poster-providers"></div>
+    </div>
+        <div className="movie-container-watchlist flex flex-col items-center">
+      <div className="skeleton skeleton-text mt-2"></div><br />
+      <div className="skeleton skeleton-poster-movies"></div>
+    </div>
+
+    </div>
+  );
+}
 function Hero() {
   const scrollRef = useRef(null);
   const recentRef = useRef(null);
@@ -273,9 +295,15 @@ function Hero() {
 
   if (loading) {
     return (
-      <div className="loading-container flex justify-center items-center h-screen">
-        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full">
-          <span className="visually-hidden">Loading...</span>
+      <div>
+        {/* <Navbar /> */}
+        <div
+          className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2"
+          style={{ padding: "20px 30px" }}
+        >
+          {Array.from({ length: 7 }).map((_, i) => (
+            <SkeletonCardhero key={i} />
+          ))}
         </div>
       </div>
     );

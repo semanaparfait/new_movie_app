@@ -28,9 +28,9 @@ const Protector = ({ children, requireAuth = false, requireAdmin = false }) => {
       })
       .finally(() => setLoading(false));
   }, []);
-  console.log("Authenticated:", authenticated); // Debug log 
-  console.log("Is Admin:", isAdmin); // Debug log 
-  console.log("Current Path:", location.pathname); // Debug log
+  // console.log("Authenticated:", authenticated); // Debug log 
+  // console.log("Is Admin:", isAdmin); // Debug log 
+  // console.log("Current Path:", location.pathname); // Debug log
 
   if (loading) {
     return (
