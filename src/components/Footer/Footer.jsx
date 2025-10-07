@@ -33,6 +33,7 @@ function Footer() {
           <p>Languages Supported</p><br />
           <p>Streaming Quality</p><br />
           <p>About Us</p><br />
+          <p>Terms & Conditions</p><br />
           <p>Privacy Policy</p><br /><br />
         </div>
 
