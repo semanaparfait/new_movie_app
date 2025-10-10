@@ -140,6 +140,74 @@ export function overlay(movie, userId) {
     </div>
   );
 }
+export function overlaymostrecent(mostrecent, userId) {
+  const API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://new-movie-app.onrender.com";
+  const addToWatchlist = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/watchlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, movie_id: mostrecent.movie_id }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        // alert("Added to your watchlist!");
+      } else {
+        alert("Failed to add: " + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong.");
+    }
+  };
+  return (
+    <div className="overlay absolute bottom-[5px] left-0 w-full space-y-1 text-white text-[12px] md:text-[14px] flex flex-col gap-2 opacity-0">
+      {/* Title */}
+      <h3 className="font-bold text-[13px] md:text-[18px] w-fit  leading-tight ">
+        {mostrecent.movie_name} 
+      </h3>
+      <div className="flex justify-evenly">
+        {/* Genre */}
+        <p className="genre bg-[#e50914]  rounded-[20px] md:text-xs   w-fit text-center">
+          🎬 {mostrecent.movie_genre} 
+        </p>
+        {/* <p className="font-semibold text-[17px]">{new Date(mostrecentmovie_released_date).getFullYear()}</p> */}
+      </div>
+      {/* Buttons */}
+      <div className="flex items-center justify-around">
+        {/* Play Button */}
+        <div className="relative">
+          <Link to={`/player/${mostrecent.movie_id}`}>
+            <i className="fa-solid fa-play w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          </Link>
+          <span className="span absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Watch Now
+          </span>
+        </div>
+
+        {/* Add to My List Button */}
+        <div className="relative " onClick={addToWatchlist}>
+          <i className="fa-solid fa-plus w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          <span className="span-plus absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Add to my list
+          </span>
+        </div>
+
+        {/* Add to My List Button */}
+        <div className="relative ">
+          <i className="fas fa-info w-8 h-8 md:w-10 md:h-10 border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e50914] text-white text-sm md:text-base"></i>
+          <span className="span-plus absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black font-semibold text-[10px] md:text-[13px]  rounded whitespace-nowrap w-max opacity-0">
+            Add to my list
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 export function episodeoverlay( season,userId) {
   const API_URL =
     process.env.NODE_ENV === "development"
@@ -412,6 +480,57 @@ function Hero() {
               {/* -------------rwanda full movies------- */}
               <div>
                 <Inyarwanda />
+              </div><br />
+              {/* -----------most recent movies---------------- */}
+         <div>
+          <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold mb-4">Most recent</h2>  {/* lowercase */}
+        <div className="hidden md:flex gap-4">
+          <i
+            className="fa-solid fa-arrow-left"
+            onClick={() => scroll("left")}
+          ></i>
+          <i
+            className="fa-solid fa-arrow-right"
+            onClick={() => scroll("right")}
+          ></i>
+        </div>
+         </div><br />
+        <div className="flex gap-4 overflow-x-scroll p-4 scrollbar-hidden scroll-smooth">
+          {movies
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort by newest first
+            .slice(0, 10) // Take only the 10 most recent
+            .map((mostrecent) => (
+              <div
+                key={mostrecent.movie_id}
+                className="movie-card flex flex-col items-center flex-shrink-0 relative"
+              >
+                <div className="relative">
+                  <img
+                    src={
+                      mostrecent.movie_image
+                        ? mostrecent.movie_image.startsWith("http")
+                          ? mostrecent.movie_image
+                          : `${API_URL}/uploads/${mostrecent.movie_image}`
+                        : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                    }
+                    alt={mostrecent.movie_name}
+                    className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+                {overlaymostrecent(mostrecent,userId)}
+              </div>
+            ))}
+        </div>
+
+     
+
               </div><br />
               {/* --------------series------------- */}
               <div>
