@@ -21,6 +21,7 @@ import Livestreaming from "./pages/Livestreaming/Livestreaming";
 import Cinema from "./pages/Cinema/Cinema";
 import PlayerSeasons from "./pages/player/PlayerSeasons";
 import CinemaSe from "./pages/Cinema/CinemaSe";
+import About from "./pages/About/About";
 
 
 const LazyPlayerseasons = lazy(() => import("./pages/player/PlayerSeasons"));
@@ -61,6 +62,7 @@ function App() {
           <Route path="/cinemase/:episodeid" element={<Protector><LazyCinemase /></Protector>}/>
           <Route path="/userprofile"element={<LazyUserProfile />}/>
           <Route path="/adminpage" element={<Protector adminOnly={true}><LazyAdminPage /></Protector>} />
+          <Route path="/about" element={<About />} />
           <Route
             path="*"
             element={

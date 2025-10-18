@@ -32,7 +32,9 @@ function Footer() {
           <p>Genres Available</p><br />
           <p>Languages Supported</p><br />
           <p>Streaming Quality</p><br />
+          <Link to="about">
           <p>About Us</p><br />
+          </Link>
           <p>Terms & Conditions</p><br />
           <p>Privacy Policy</p><br /><br />
         </div>
