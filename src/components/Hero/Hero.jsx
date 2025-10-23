@@ -12,6 +12,7 @@ export function overlaysub() {
         alt="Provider Logo"
         className="w-28 h-44 md:w-43 md:h-65 object-cover rounded-[7px]"
         loading="lazy"
+        decoding="async"
       />
 
       {/* Overlay */}
@@ -318,31 +319,33 @@ function Hero() {
       : "https://new-movie-app.onrender.com";
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Set loading to true before fetching data
+    // Fetch providers/interpreters first, then fetch movies (and user) so the UI can
+    // show category/provider content immediately and then movie data after.
+    const fetchInitial = async () => {
+      setLoading(true);
       try {
-        const [izidasobanuyeRes, agasobanuyeRes, moviesRes, userRes, episodesRes, seasonsRes] =
-          await Promise.all([
-            fetch(`${API_URL}/api/izidasobanuye`),
-            fetch(`${API_URL}/api/agasobanuye`),
-            fetch(`${API_URL}/api/movies`),
-            fetch(`${API_URL}/api/me`, { credentials: "include" }),
-            fetch(`${API_URL}/api/episodes`),
-            fetch(`${API_URL}/api/seasons`),
-          ]);
+        // Step 1: get izidasobanuye and agasobanuye first
+        const [izidasobanuyeRes, agasobanuyeRes] = await Promise.all([
+          fetch(`${API_URL}/api/izidasobanuye`),
+          fetch(`${API_URL}/api/agasobanuye`),
+        ]);
 
         const izidasobanuyeData = await izidasobanuyeRes.json();
         const agasobanuyeData = await agasobanuyeRes.json();
-        const moviesData = await moviesRes.json();
-        const userData = await userRes.json();
-        const episodesData = await episodesRes.json();
-        const seasonsData = await seasonsRes.json();
 
         setIzidasobanuye(izidasobanuyeData);
         setAgasobanuye(agasobanuyeData);
+
+        // Step 2: after providers/interpreters are available, fetch movies and user in parallel
+        const [moviesRes, userRes] = await Promise.all([
+          fetch(`${API_URL}/api/movies`),
+          fetch(`${API_URL}/api/me`, { credentials: "include" }),
+        ]);
+
+        const moviesData = await moviesRes.json();
+        const userData = await userRes.json();
+
         setMovies(moviesData);
-        setEpisodes(episodesData)
-        setSeasons(seasonsData);
 
         if (userData?.id) {
           setIsAuthenticated(true);
@@ -352,13 +355,31 @@ function Hero() {
           setUserId(null);
         }
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("Error fetching initial data:", err);
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       }
     };
 
-    fetchData();
+    // Fetch non-critical data (episodes/seasons) in background
+    const fetchRest = async () => {
+      try {
+        const [episodesRes, seasonsRes] = await Promise.all([
+          fetch(`${API_URL}/api/episodes`),
+          fetch(`${API_URL}/api/seasons`),
+        ]);
+
+        const episodesData = await episodesRes.json();
+        const seasonsData = await seasonsRes.json();
+
+        setEpisodes(episodesData);
+        setSeasons(seasonsData);
+      } catch (err) {
+        console.error("Error fetching additional data:", err);
+      }
+    };
+
+    fetchInitial().then(() => fetchRest());
   }, []);
 
   if (loading) {
@@ -422,6 +443,7 @@ function Hero() {
                   alt={interpreter.category_name}
                   className="rounded-full w-35 h-35 object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
 
                   <h3 className="text-center font-medium">
@@ -467,6 +489,7 @@ function Hero() {
                   alt={site.category_name}
                   className="w-24 h-24 object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
 
                   <h3 className="text-center font-medium">
@@ -522,6 +545,7 @@ function Hero() {
                         "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
                     }}
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 {overlaymostrecent(mostrecent,userId)}
@@ -570,6 +594,7 @@ function Hero() {
                   e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
                 }}
                 loading="lazy"
+                decoding="async"
               />
 
               </div>
@@ -634,6 +659,7 @@ function Hero() {
                   e.target.src = "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
                 }}
                 loading="lazy"
+                decoding="async"
               />
 
               </div>

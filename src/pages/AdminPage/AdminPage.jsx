@@ -6,6 +6,8 @@ import Movieupload from '../Accounts/Movieupload';
 import Users from '../Users/Users';
 import Movies from '../Movies/Movies';
 import Categories from '../Categories/Categories';
+import NewMovies from '../Movies/NewMovies';
+
 
 function AdminPage() {
             const API_URL = 
@@ -217,7 +219,8 @@ function AdminPage() {
 
             {/* movies page */}
             {activeTab === 'movies' && (
-               <Movies/>
+            //    <Movies/>
+               <NewMovies />
             )}
             {/* categories page */}
             {activeTab === 'categories' && (
