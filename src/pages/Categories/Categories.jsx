@@ -58,7 +58,18 @@ const deleteCategory = (id) => {
                             <td>{category.category_id}</td>
                             <td>{category.created_at}</td>
                             <td>{category.category_name}</td>
-                            <td><img src={`${API_URL}/uploads/${category.category_image}`} alt={category.category_name} className='w-20 h-20 object-cover ' loading='lazy'/></td>
+                            <td>                <img
+                  src={
+                    category.category_image?.startsWith("http")
+                      ? category.category_image // use URL directly
+                      : `${API_URL}/uploads/${category.category_image}` // use backend file
+                  }
+                  alt={category.category_name}
+                  className='w-20 h-20 object-cover '
+                  loading="lazy"
+                  decoding="async"
+                /></td>
+                            {/* <td><img src={`${API_URL}/uploads/${category.category_image}`} alt={category.category_name} className='w-20 h-20 object-cover ' loading='lazy'/></td> */}
                             <td >{category.main_category}</td>
                             <td title='delete' onClick={() => deleteCategory(category.category_id)}><i className="fa-solid fa-trash text-red-600 cursor-pointer"></i></td>
                         </tr>

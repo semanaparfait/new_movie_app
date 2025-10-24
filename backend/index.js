@@ -380,7 +380,8 @@ app.get('/api/izidasobanuye', async (req, res) => {
     );
 
     // Cache the data before sending the response
-    cache.set('izidasobanuyeData', result.rows, 3600); // 1 hour TTL
+    // cache.set('izidasobanuyeData', result.rows, 3600); // 1 hour TTL
+    cache.set('izidasobanuyeData', result.rows);
 
     res.status(200).json(result.rows);
   } catch (error) {
@@ -401,7 +402,7 @@ const result = await pool.query(
   ['agasobanuye']
 );
 // Cache the data before sending the response
-cache.set('agasobanuyeData', result.rows, 3600); // 1 hour TTL
+cache.set('agasobanuyeData', result.rows); // 1 hour TTL
 
     res.status(200).json(result.rows);
   } catch (error) {
