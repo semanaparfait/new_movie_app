@@ -29,28 +29,28 @@ function AdminPage() {
     function adminnavbar(){
     return(
     <div className=" block md:hidden fixed bottom-0 w-full bg-black z-50 " style={{padding:'10px'}}>
-        <ul className="flex justify-evenly text-white text-sm px-4 py-2">
-          <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('dashboard')}>
+        <ul className="flex justify-evenly text-white text-sm px-4 py-2 cursor-pointer">
+          <li className=" admin-links flex flex-col items-center " onClick={() => setActiveTab('dashboard')}>
             <i className="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </li>
-          <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('movies')}>
+          <li className=" admin-links flex flex-col items-center " onClick={() => setActiveTab('movies')}>
             <i className="fa-solid fa-bookmark"></i>
             <span>Movies</span>
           </li>
-            <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('episodes')}>
+            <li className="admin-links flex flex-col items-center " onClick={() => setActiveTab('episodes')}>
             <i className="fa-solid fa-bookmark"></i>
             <span>Episode</span>
           </li>
-            <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('categories')}>
+            <li className="admin-links flex flex-col items-center" onClick={() => setActiveTab('categories')}>
             <i className="fa-solid fa-bookmark"></i>
             <span>Categories</span>
           </li>
-          <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('users')}>
+          <li className="admin-links flex flex-col items-center " onClick={() => setActiveTab('users')}>
             <i className="fa-solid fa-envelope"></i>
             <span>Users</span>
           </li>
-          <li className="flex flex-col items-center cursor-pointer" onClick={() => setActiveTab('upload')}>
+          <li className="admin-links flex flex-col items-center " onClick={() => setActiveTab('upload')}>
             <i className="fa-solid fa-user"></i>
             <span>Upload</span>
           </li>
