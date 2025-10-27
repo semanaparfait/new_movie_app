@@ -63,10 +63,10 @@ const deletMovie = (id) => {
       {/* backdrop */}
       <div className="absolute inset-0 bg-black opacity-40 "  onClick={() => { setViewmovie(false); setSelectedMovie(null); }}></div>
 
-      <div className='movie-details  bg-white w-full max-w-3xl md:w-[80%] p-4 rounded-lg relative z-10 ' style={{padding:'10px'}}>
+      <div className='movie-details  bg-white w-full  md:w-[80%] h-full md:h-fit overflow-y-scroll p-4 rounded-lg relative z-10 ' style={{padding:'10px'}}>
         <h1 className='text-center font-semibold ftext-[20px]'>{selectedMovie.movie_name}</h1><br />
         <i className="fa-solid fa-xmark absolute right-5 top-5 text-[20px] cursor-pointer" onClick={()=>{setViewmovie(false); setSelectedMovie(null);}}></i>
-        <div className='flex items-start gap-4 mb-4 '><br />
+        <div className='flex flex-wrap items-start gap-4 mb-4 '><br />
           <img src={
             selectedMovie.movie_image
             ? selectedMovie.movie_image.startsWith('http')
@@ -74,7 +74,7 @@ const deletMovie = (id) => {
               : `${API_URL}/uploads/${selectedMovie.movie_image}`
             : 'https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg'
           } alt={selectedMovie.movie_name} className="w-45 h-60 rounded-[10px]" />
-          <div className="flex-1 min-w-0">
+          <div >
             <div className='flex items-center gap-10 flex-wrap'>
             <div>
             <label className='font-semibold'> name :</label>
@@ -100,7 +100,10 @@ const deletMovie = (id) => {
           </div>
         </div><br />
         <p>{selectedMovie.movie_description || selectedMovie.description || 'No description available.'}</p><br />
-          <i className="fa-solid fa-trash text-red-600 cursor-pointer absolute right-5 bottom-2 text-[20px] " title='delete' onClick={() => deletMovie(selectedMovie.movie_id)}></i>
+        <div className='flex gap-4 justify-end'>
+          <i className="fa-solid fa-trash text-red-600 cursor-pointer  text-[20px] " title='delete' onClick={() => deletMovie(selectedMovie.movie_id)}></i>
+          <i className="fa-solid fa-pen-to-square text-green-600 cursor-pointer  text-[20px] " title='Edit' onClick={() => EditMovie(selectedMovie.movie_id)}></i>
+        </div>
       </div>
     </div>
     )}
