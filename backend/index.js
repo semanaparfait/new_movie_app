@@ -722,6 +722,30 @@ app.get('/api/episode/:episodeid' ,  async(req,res)=>{
     res.status(500).json({ message: 'Server error fetching single on serie id episodes' });
   }
 })
+app.delete('/api/episode/:episodeid', async(req,res) =>{
+    const { episodeid } = req.params;
+  if (!episodeid) return res.status(400).json({ message: 'episode ID is required' });
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM episodes WHERE episode_id = $1 RETURNING *',
+      [episodeid]
+    );
+
+    if (result.rowCount === 0)
+      return res.status(404).json({ success: false, message: 'episode not found' });
+
+    // Clear movies cache
+    // cache.del('moviesData');
+
+    // CORRECT
+res.status(200).json({ success: true, message: 'episode deleted', episode: result.rows[0] });
+  } catch (err) {
+    console.error('Error deleting episode:', err);
+    return res.status(500).json({ success: false, message: 'Server error', error: err.message });
+  }
+
+});
 // --------------------get all episodes and series----------
 // Start server
 const PORT = process.env.PORT || 5000;

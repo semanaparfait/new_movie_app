@@ -187,7 +187,7 @@ function PlayerSeasons() {
             <h1 className="text-center text-2xl">Your Full Episode Guide on {selectedEpisode.serie_name}</h1>
             <br />
 
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-3 " style={{paddingLeft:"10px"}}>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-3 " style={{paddingLeft:"10px"}}>
               {seasons.map((episode) => (
                 <div
                   key={episode.episode_id}
