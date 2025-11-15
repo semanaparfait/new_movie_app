@@ -746,6 +746,77 @@ res.status(200).json({ success: true, message: 'episode deleted', episode: resul
   }
 
 });
+// ---------------updating episode ---------
+// ---------------updating episode ---------
+app.patch('/api/episode/:episodeid', async (req, res) => {
+  const { episodeid } = req.params;
+  const {
+    episode_number,
+    episode_video_link,
+    episode_download_link,
+    episode_country,
+    episode_released_date
+  } = req.body;
+
+  try {
+    // Check if episode exists
+    const existing = await pool.query('SELECT * FROM episodes WHERE episode_id = $1', [episodeid]);
+    if (existing.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Episode not found' });
+    }
+
+    // Build dynamic update query
+    const fields = [];
+    const values = [];
+    let count = 1;
+
+    if (episode_number) {
+      fields.push(`episode_number = $${count++}`);
+      values.push(episode_number);
+    }
+    if (episode_video_link) {
+      fields.push(`episode_video_link = $${count++}`);
+      values.push(episode_video_link);
+    }
+    if (episode_download_link) {
+      fields.push(`episode_download_link = $${count++}`);
+      values.push(episode_download_link);
+    }
+    if (episode_country) {
+      fields.push(`episode_country = $${count++}`);
+      values.push(episode_country);
+    }
+    if (episode_released_date) {
+      fields.push(`episode_released_date = $${count++}`);
+      values.push(episode_released_date);
+    }
+
+    // If no field to update
+    if (fields.length === 0) {
+      return res.status(400).json({ success: false, message: 'No fields provided for update' });
+    }
+
+    const query = `
+      UPDATE episodes 
+      SET ${fields.join(', ')}
+      WHERE episode_id = $${count}
+      RETURNING *;
+    `;
+    values.push(episodeid);
+
+    const result = await pool.query(query, values);
+
+    res.status(200).json({
+      success: true,
+      message: 'Episode updated successfully',
+      episode: result.rows[0]
+    });
+  } catch (err) {
+    console.error('Error updating episode:', err);
+    res.status(500).json({ success: false, message: 'Server error updating episode' });
+  }
+});
+
 // --------------------get all episodes and series----------
 // Start server
 const PORT = process.env.PORT || 5000;

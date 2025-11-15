@@ -67,8 +67,9 @@ input:focus{
   /* border-color: aqua; */
   border: none;
 }
-@media (max-width: 600px) {
-  .search-bar:hover input {
-    width: 8rem; 
-  }
+.user-options:hover,
+.nav-links:hover {
+  color: #FFBADE;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
 }

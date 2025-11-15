@@ -418,10 +418,10 @@ function Hero() {
         {/* Render content after loading */}
         <div>
           <div className="flex items-center justify-between">
-            <h1 className="font-bold text-2xl">Interpreter</h1>
+            <header className="font-bold text-2xl">Interpreter</header>
             <div className="hidden md:flex gap-4">
-              <i className="fa-solid fa-arrow-left"></i>
-              <i className="fa-solid fa-arrow-right"></i>
+              <i className="fa-solid fa-arrow-left hero-icons"></i>
+              <i className="fa-solid fa-arrow-right hero-icons"></i>
             </div>
           </div>
           <br />
@@ -461,8 +461,8 @@ function Hero() {
           <div className="flex items-center justify-between">
             <h1 className="font-bold text-2xl">Movie providers</h1>
             <div className="hidden md:flex gap-4">
-              <i className="fa-solid fa-arrow-left"></i>
-              <i className="fa-solid fa-arrow-right"></i>
+              <i className="fa-solid fa-arrow-left hero-icons"></i>
+              <i className="fa-solid fa-arrow-right hero-icons"></i>
             </div>
           </div>
           <br />
@@ -510,11 +510,11 @@ function Hero() {
         <h2 className="text-xl font-bold mb-4">Most recent</h2>  {/* lowercase */}
         <div className="hidden md:flex gap-4">
           <i
-            className="fa-solid fa-arrow-left"
+            className="fa-solid fa-arrow-left hero-icons"
             onClick={() => scroll("left")}
           ></i>
           <i
-            className="fa-solid fa-arrow-right"
+            className="fa-solid fa-arrow-right hero-icons"
             onClick={() => scroll("right")}
           ></i>
         </div>
@@ -562,11 +562,11 @@ function Hero() {
         <h2 className="text-xl font-bold mb-4">Seasons</h2>  {/* lowercase */}
         <div className="hidden md:flex gap-4">
           <i
-            className="fa-solid fa-arrow-left"
+            className="fa-solid fa-arrow-left hero-icons"
             onClick={() => scroll("left")}
           ></i>
           <i
-            className="fa-solid fa-arrow-right"
+            className="fa-solid fa-arrow-right hero-icons"
             onClick={() => scroll("right")}
           ></i>
         </div>
@@ -623,11 +623,11 @@ function Hero() {
         <h2 className="text-xl font-bold mb-4">{genre}</h2> {/* lowercase */}
         <div className="hidden md:flex gap-4">
           <i
-            className="fa-solid fa-arrow-left"
+            className="fa-solid fa-arrow-left hero-icons"
             onClick={() => scroll("left")}
           ></i>
           <i
-            className="fa-solid fa-arrow-right"
+            className="fa-solid fa-arrow-right hero-icons"
             onClick={() => scroll("right")}
           ></i>
         </div>
