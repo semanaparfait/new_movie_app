@@ -58,29 +58,29 @@ function UserProfile() {
             Hi, {user?.username?.split(" ")[0]}
             </h1>
 
-            <div className="cursor-pointer flex gap-10 items-center justify-center" style={{marginTop:'40px'}} >
+            <div className="cursor-pointer flex md:gap-10 items-center justify-center " style={{marginTop:'38px'}} >
             <Link to="/userprofile">
-                <button className="userprofile-links font-medium leading-[24px] cursor-pointer flex gap-1 items-center " title='Profile' style={{ padding: "7px 10px" }}>
+                <button className="userprofile-links font-medium leading-[24px] cursor-pointer md:flex gap-1 items-center " title='Profile' style={{ padding: "7px 10px" }}>
                 <i className="fa-solid fa-user"></i> 
-                <p className='hidden md:block' >Profile</p>
+                <p className='text-sm md:text-base'>Profile</p>
                 </button>
             </Link>
 
             <Link to="/watchlist">
-                <button className="userprofile-links font-medium leading-[24px] cursor-pointer flex gap-1 items-center" title='Watch List' style={{ padding: "7px 10px" }}>
+                <button className="userprofile-links font-medium leading-[24px] cursor-pointer md:flex gap-1 items-center" title='Watch List' style={{ padding: "7px 10px" }}>
                 <i className="fa-solid fa-heart"></i>
-                 <p className='hidden md:block' >Watch List</p>
+                 <p className='text-sm md:text-base' >Watch List</p>
                 </button>
             </Link>
 
-            <button className="userprofile-links font-medium leading-[24px] cursor-pointer flex gap-1 items-center" title='Notification' style={{ padding: "7px 10px" }}>
+            <button className="userprofile-links font-medium leading-[24px] cursor-pointer md:flex gap-1 items-center" title='Notification' style={{ padding: "7px 10px" }}>
                 <i className="fa-solid fa-bell"></i> 
-                <p className='hidden md:block' >Notification</p>
+                <p className='text-sm md:text-base' >Notification</p>
             </button>
 
-            <button className="userprofile-links font-medium leading-[24px] cursor-pointer flex gap-1 items-center" title='Settings' style={{ padding: "7px 10px" }}>
+            <button className="userprofile-links font-medium leading-[24px] cursor-pointer md:flex gap-1 items-center" title='Settings' style={{ padding: "7px 10px" }}>
                 <i className="fa-solid fa-gear"></i> 
-                <p className='hidden md:block' >Settings</p>
+                <p className='text-sm md:text-base' >Settings</p>
             </button>
             </div>
         </div>
