@@ -227,7 +227,7 @@ function Navbar() {
             <Link
               key={movie.movie_id}
               to={`/player/${movie.movie_id}`}
-              className="flex gap-2 px-3 py-2 hover:bg-gray-100"
+              className="searched-movie flex gap-2 px-3 py-2 "
               onClick={() => {
                 setQuery("");
                 setResults([]);

@@ -73,3 +73,10 @@ input:focus{
   transform: scale(1.05);
   transition: all 0.3s ease;
 }
+.searched-movie:hover {
+  /* color: #FFBADE; */
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+  background: #38364e;
+  padding: 10px 20px;
+}
