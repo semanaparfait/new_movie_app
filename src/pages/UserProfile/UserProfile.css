@@ -1,0 +1,7 @@
+.userprofile-links:hover{
+    transform: scale(1.09);
+      transition: all 0.3s ease;
+      color: #FFBADE;
+      font-weight: 600;
+
+}
