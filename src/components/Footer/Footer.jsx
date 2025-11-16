@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/images/profile/logo2.jpg';
+import logo from '../../assets/images/profile/logoo2.jpg';
 import './footer.css'
 import playstore from '../../assets/images/google play.png';
 import appstore from '../../assets/images/app store.png';

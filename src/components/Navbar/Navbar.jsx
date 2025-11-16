@@ -103,12 +103,12 @@ function Navbar() {
 };
 
   return (
-<header className="  w-full " style={{padding:'20px 10px'}}>
-  <nav className="flex justify-evenly items-center mx-auto  w-full ">
+<header className="  w-full " >
+  <nav className="flex justify-between  gap-5 items-center mx-auto  w-full " style={{padding:'10px 30px'}}>
 
     {/* Logo */}
-    <Link to="/" className="flex items-center">
-      <img src={homelogo} alt="Home logo" className="md:w-1/4 w-1/3" />
+    <Link to="/" className="flex items-center  ">
+      <img src={homelogo} alt="Home logo" className="md:w-32 w-28" />
     </Link>
 
     {/* Navigation Links */}
@@ -133,7 +133,7 @@ function Navbar() {
     </ul>
 
     {/* Search Section */}
-    <div className="">
+    <div >
           <button title='search' className='cursor-pointer font-bold' onClick={()=>setBringinput(!bringinput)}>
             <i className="fa fa-search "></i>
 
@@ -152,7 +152,7 @@ function Navbar() {
             alt="Guest user"
             className="w-8 h-8 rounded-full hidden"
           />
-             <button className='border rounded-[10px]' style={{ padding: '5px 10px' }}>Sign in</button>
+             <button className='border rounded-[10px] md:text-base text-sm' style={{ padding: '5px 10px' }}>Sign in</button>
         </Link>
       ) : (
  <div className="relative">

@@ -3,7 +3,7 @@ import logo from '../../assets/images/overlay-2.png'
 import { Link } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import profile from '../../assets/images/profile/logo2.jpg'
+import profile from '../../assets/images/profile/logoo2.jpg'
 import './UserProfile.css'
 
 function UserProfile() {

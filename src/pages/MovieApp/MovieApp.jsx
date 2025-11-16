@@ -72,28 +72,28 @@ if (loading) {
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar/>
-            <div className="relative border-b-4 border-red-500">
+            <div className="relative border-b-4 border-[#f25b29]">
           <img
           src={moviesimage}
           alt="movietitle"
-          className="w-full h-[9rem] object-cover rounded-md"
+          className="w-full h-36 object-cover rounded-md"
           loading='lazy'
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 backdrop-blur-[2px] rounded-md"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
         text-3xl md:text-5xl font-bold text-center text-white
-        before:content-[''] before:absolute before:w-6 before:h-6 before:border-t-4 before:border-l-4 before:border-red-600 before:top-0 before:left-0
-        after:content-[''] after:absolute after:w-6 after:h-6 after:border-b-4 after:border-r-4 after:border-red-600 after:bottom-0 after:right-0
+        before:content-[''] before:absolute before:w-6 before:h-6 before:border-t-4 before:border-l-4 before:border-[#f25b29] before:top-0 before:left-0
+        after:content-[''] after:absolute after:w-6 after:h-6 after:border-b-4 after:border-r-4 after:border-[#f25b29] after:bottom-0 after:right-0
         px-12 py-4 " style={{padding:'15px 50px'}}>
             Movie Land
         </div>
       </div><br />
-      <div className="flex justify-between flex-wrap gap-2.5 border-b-1 border-b-red-500" style={{paddingBottom:'10px'}}>
+      <div className="flex justify-between flex-wrap gap-2.5 border-b border-b-[#f25b29]" style={{paddingBottom:'10px'}}>
         <div>
-          <h3 className="font-semibold">All Movies provided by <span className="text-red-500">Movie Land</span></h3>
+          <h3 className="font-semibold">All Movies provided by <span className="text-[#f25b29]">Movie Land</span></h3>
           <p>Enjoy trending top movies, top series and exclusive offers</p>
         </div>
-        <button className="border rounded-[5px] border-blue-950 cursor-pointer"style={{padding:'4px 10px'}}><i className="fa-solid fa-bell"></i> Subscriibe to <span className="text-red-500">Movie Land</span></button>
+        <button className="border rounded-[5px] border-blue-950 cursor-pointer"style={{padding:'4px 10px'}}><i className="fa-solid fa-bell"></i> Subscriibe to <span className="text-[#f25b29]">Movie Land</span></button>
       </div><br />
       <div className="p-6">
         <div className="flex gap-4 flex-wrap">
@@ -153,7 +153,7 @@ if (loading) {
         // style={{ background: interpreter.sitebackground }}
       >
         <Navbar />
-      <div className="relative border-b-4 border-red-500">
+      <div className="relative border-b-4 border-[#f25b29]">
           <img
           src={moviesimage}
           alt="movietitle"
@@ -163,22 +163,22 @@ if (loading) {
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 backdrop-blur-[2px] rounded-md"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
         text-3xl md:text-5xl font-bold text-center text-white
-        before:content-[''] before:absolute before:w-6 before:h-6 before:border-t-4 before:border-l-4 before:border-red-600 before:top-0 before:left-0
-        after:content-[''] after:absolute after:w-6 after:h-6 after:border-b-4 after:border-r-4 after:border-red-600 after:bottom-0 after:right-0
+        before:content-[''] before:absolute before:w-6 before:h-6 before:border-t-4 before:border-l-4 before:border-[#f25b29] before:top-0 before:left-0
+        after:content-[''] after:absolute after:w-6 after:h-6 after:border-b-4 after:border-r-4 after:border-[#f25b29] after:bottom-0 after:right-0
         px-12 py-4 " style={{padding:'15px 50px'}}>
           {categoryName.split(" ").map((word, idx) => (
-            <span key={idx} className={idx === 1 ? "text-red-500" : "text-white"}>
+            <span key={idx} className={idx === 1 ? "text-[#f25b29]" : "text-white"}>
               {word}{" "}
             </span>
           ))}
         </div>
       </div><br />
-      <div className="flex justify-between flex-wrap gap-2.5 border-b-1 border-b-red-500" style={{paddingBottom:'10px'}}>
+      <div className="flex justify-between flex-wrap gap-2.5 border-b-1 border-b-[#f25b29]" style={{paddingBottom:'10px'}}>
         <div>
-          <h3 className="font-semibold">All Movies provided by <span className="text-red-500">{categoryName}</span></h3>
+          <h3 className="font-semibold">All Movies provided by <span className="text-[#f25b29]">{categoryName}</span></h3>
           <p>Enjoy trending top movies, top series and exclusive offers</p>
         </div>
-        <button className="border rounded-[5px] border-blue-950 cursor-pointer"style={{padding:'4px 10px'}}><i className="fa-solid fa-bell"></i> Subscriibe to <span className="text-red-500">{categoryName}</span></button>
+        <button className="border rounded-[5px] border-blue-950 cursor-pointer"style={{padding:'4px 10px'}}><i className="fa-solid fa-bell"></i> Subscriibe to <span className="text-[#f25b29]">{categoryName}</span></button>
       </div><br />
 
 
