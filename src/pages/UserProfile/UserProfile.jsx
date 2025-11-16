@@ -95,7 +95,7 @@ function UserProfile() {
                 <input type="email" className='border-none bg-white' value={user?.email}/>
                 <div className='bg-[#2b2a3c] rounded-lg' style={{padding:'10px'}}>
                     <p className='font-medium text-[13px] leading-[24px] text-[#666]'> <i className='fas fa-user-alt-slash'></i> Not Verified</p>
-                    <p style={{marginTop:'2px'}} className='font-medium text-[13px] leading-[24px]'>Your account has not been verified. <span className='text-green-500 cursor-pointer'>Click here</span> to resend verification email.</p>
+                    <p style={{marginTop:'2px'}} className='font-medium text-[13px] leading-[24px]'>Your account has not been verified. <span className='text-[#f25b29] cursor-pointer'>Click here</span> to resend verification email.</p>
                 </div>
                 <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>YOUR NAME</label>
                 <input type="text" className='border-none bg-white' value={user?.username}/>
@@ -113,7 +113,7 @@ function UserProfile() {
                         <input type="password" className='border-none bg-white'/>
                     </div>
                 )}
-                <button className='bg-[#FFBADE] w-full rounded-2xl text-black font-medium' style={{padding:'10px 0'}}>Save</button>
+                <button className='bg-[#f25b29] w-full rounded-2xl text-black font-medium' style={{padding:'10px 0'}}>Save</button>
             </div>
             <div className='md:bg-[#2b2a3c] ' style={{padding:'15px'}} >
 

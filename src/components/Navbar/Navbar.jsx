@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import homelogo from '../../assets/images/homelogo2.png';
+import homelogo from '../../assets/images/logoo.png';
 import profile from '../../assets/images/profile.jpg';
 import { useNavigate } from "react-router-dom";
 import { CiStreamOn } from "react-icons/ci";
@@ -47,8 +47,16 @@ function Navbar() {
   const handleLogout = () => {
     fetch(`${API_URL}/api/logout`, { credentials: "include", method: "POST" })
       .then(() => {
+        // Clear local client-side auth state and any stored token
         setIsLoggedin(false);
         setUser(null);
+        try { localStorage.removeItem('token'); } catch(e){}
+
+        // Notify other tabs/components about logout
+        try { window.dispatchEvent(new Event('app-logout')); } catch(e){}
+
+        // Optional: navigate to home
+        navigate('/');
       })
       .catch(err => console.error(err));
   };
@@ -85,7 +93,7 @@ function Navbar() {
 
   return text.split(regex).map((part, index) =>
     regex.test(part) ? (
-      <span key={index} className="bg-[#FFBADE] text-black  rounded" style={{padding:'2px 1px 2px 1px'}}>
+      <span key={index} className="bg-[#f25b29] text-black  rounded" style={{padding:'2px 1px 2px 1px'}}>
         {part}
       </span>
     ) : (
@@ -96,29 +104,29 @@ function Navbar() {
 
   return (
 <header className="  w-full " style={{padding:'20px 10px'}}>
-  <nav className="flex justify-between items-center mx-auto  w-full ">
+  <nav className="flex justify-evenly items-center mx-auto  w-full ">
 
     {/* Logo */}
     <Link to="/" className="flex items-center">
-      <img src={homelogo} alt="Home logo" className="w-[2.5rem]" />
+      <img src={homelogo} alt="Home logo" className="md:w-1/4 w-1/3" />
     </Link>
 
     {/* Navigation Links */}
     <ul className="hidden sm:flex items-center gap-8 text-white font-medium">
       <li>
         <Link to="/" className='flex flex-col items-center'>
-        <i className="fa-solid fa-house text-[#FFBADE]"></i>
+        <i className="fa-solid fa-house text-[#f25b29]"></i>
          <p className='nav-links' style={{paddingTop:'6px'}}>Home</p>
          </Link></li>
       <li>
         <Link to="/tvshows" className='flex flex-col items-center'>
-        <i className="fa-solid fa-tv text-[#FFBADE]"></i>
+        <i className="fa-solid fa-tv text-[#f25b29]"></i>
          <p className='nav-links' style={{paddingTop:'6px'}}>TV Shows</p>
          </Link>
          </li>
       <li className='text-center' >
         <Link to="/livestreaming" className='flex flex-col items-center'>
-        <CiStreamOn  className='font-black text-[22px] text-[#FFBADE]'/> 
+        <CiStreamOn  className='font-black text-[22px] text-[#f25b29]'/> 
         <p className='nav-links' >Live Streaming</p>
         </Link></li>
       <li className='hidden'><Link to="/watchlist">Watchlist</Link></li>
@@ -162,7 +170,7 @@ function Navbar() {
       className="absolute right-0 top-full  w-72 border border-gray-700 bg-[#121212] shadow-lg rounded-3xl z-50"
       style={{ padding: "20px", fontFamily: "Poppins, Arial",marginTop:'15px' }}
     >
-      <h1 className="font-medium text-[#FFBADE]">
+      <h1 className="font-medium text-[#f25b29]">
         {user?.username?.split(" ")[0].slice(0, 6)}
       </h1>
       <p className="font-normal text-sm">{user.email}</p><br />
@@ -222,7 +230,7 @@ function Navbar() {
               {/* Search Results */}
       {results.length > 0 && (
         <div className=" w-full text-white   bg-[#121212] z-500 flex flex-col gap-2 " >
-          <h1 className='text-center font-bold text-2xl md:text-3xl ' >All Results <span className='bg-[#FFBADE] rounded text-black' style={{padding:'3px 5px'}}>{query}</span> </h1>
+          <h1 className='text-center font-bold text-2xl md:text-3xl ' >All Results <span className='bg-[#f25b29] rounded text-black' style={{padding:'3px 5px'}}>{query}</span> </h1>
           {results.map((movie) => (
             <Link
               key={movie.movie_id}
@@ -263,7 +271,7 @@ function Navbar() {
               </div>
             </Link>
           ))}
-          <button className='bg-[#FFBADE]  rounded text-black ' style={{padding:'10px 0'}}>View all results <i className="fa-solid fa-arrow-right"></i></button>
+          <button className='bg-[#f25b29]  rounded text-black ' style={{padding:'10px 0'}}>View all results <i className="fa-solid fa-arrow-right"></i></button>
         </div>
       )}
 </header>

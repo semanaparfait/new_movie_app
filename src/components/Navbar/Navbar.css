@@ -69,12 +69,12 @@ input:focus{
 }
 .user-options:hover,
 .nav-links:hover {
-  color: #FFBADE;
+  color: #f25b29;
   transform: scale(1.05);
   transition: all 0.3s ease;
 }
 .searched-movie:hover {
-  /* color: #FFBADE; */
+  /* color: #f25b29; */
   transform: scale(1.01);
   transition: all 0.3s ease;
   background: #38364e;
