@@ -78,7 +78,7 @@ const pool = new Pool({
     req.user = decoded; // Attaches user info to the request object
     next();
   } catch (err) {
-    console.error('Token verification failed:', err.message); // Debug log
+    console.error('Token verification failedd:', err.message); // Debug log
     res.status(403).json({ message: 'Invalid or expired token' });
   }
 }
