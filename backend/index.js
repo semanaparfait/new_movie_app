@@ -10,7 +10,6 @@ import fs from "fs";
 import jwt from 'jsonwebtoken';
 import { error } from 'console';
 import NodeCache  from 'node-cache';
-import prerender from 'prerender-node';
 
 
 
@@ -78,7 +77,7 @@ const pool = new Pool({
     req.user = decoded; // Attaches user info to the request object
     next();
   } catch (err) {
-    console.error('Token verification failedd:', err.message); // Debug log
+    console.error('Token verification failed:', err.message); // Debug log
     res.status(403).json({ message: 'Invalid or expired token' });
   }
 }
@@ -95,49 +94,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const cache = new NodeCache({ stdTTL: 3600 });
-
-// Configure prerender middleware (used to serve pre-rendered HTML to crawlers)
-try {
-  prerender.set('prerenderToken', process.env.PRERENDERING_TOKEN);
-  prerender.set('protocol', 'https');
-  app.use(prerender);
-} catch (e) {
-  console.warn('Prerender middleware not initialized:', e?.message || e);
-}
-
-// In-memory log of recent crawler requests (for debugging only)
-const crawlerLogs = [];
-const MAX_CRAWLER_LOGS = 50;
-
-// Debug wrapper to log crawler requests and token presence
-app.use((req, res, next) => {
-  try {
-    const ua = (req.headers['user-agent'] || '').toLowerCase();
-    const isCrawler = /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp/.test(ua);
-    if (isCrawler) {
-      const entry = {
-        ts: new Date().toISOString(),
-        ua: req.headers['user-agent'] || '',
-        path: req.originalUrl,
-        ip: req.ip || req.connection?.remoteAddress || null,
-        tokenPresent: !!process.env.PRERENDERING_TOKEN,
-      };
-      crawlerLogs.unshift(entry);
-      if (crawlerLogs.length > MAX_CRAWLER_LOGS) crawlerLogs.pop();
-      console.log(`[prerender-debug] Crawler request for ${entry.path} - UA: ${entry.ua} - ip: ${entry.ip}`);
-      console.log(`[prerender-debug] PRERENDERING_TOKEN present: ${entry.tokenPresent}`);
-    }
-  } catch (e) {
-    // ignore logging errors
-  }
-  next();
-});
-
-// Debug endpoint to view recent crawler requests: /debug/crawlers
-// Note: This is intended for temporary debugging in development/staging.
-app.get('/debug/crawlers', (req, res) => {
-  res.json({ count: crawlerLogs.length, logs: crawlerLogs });
-});
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
   const { username, email,  password } = req.body;
