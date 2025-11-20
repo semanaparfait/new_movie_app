@@ -11,6 +11,9 @@ function Navbar() {
   const navigate = useNavigate();
   const [bringinput,setBringinput] = useState(false)
   const [userdetails, setUserdetails] = useState(false)
+  const [whatsappVisible, setWhatsappVisible] = useState(true);
+  const [bannerIndex, setBannerIndex] = useState(0);
+const [visible, setVisible] = useState(true);
 
   const API_URL =
     process.env.NODE_ENV === "development"
@@ -102,8 +105,89 @@ function Navbar() {
   );
 };
 
+
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setBannerIndex((prev) => (prev + 1) % 2); // 0 → 1 → 0 → ...
+  }, 15000);
+
+  return () => clearInterval(interval);
+}, []);
+
+
   return (
 <header className="  w-full " >
+<div className="flex overflow-x-auto w-full">
+
+  {visible && bannerIndex === 0 && (
+    <div 
+      className="min-w-full relative flex flex-col items-center justify-center 
+                 bg-gradient-to-r from-green-500 to-black"
+      style={{ padding: "15px" }}
+    >
+      {/* Close button */}
+      <button
+        className="absolute md:top-5 right-15 text-white text-lg cursor-pointer"
+        onClick={() => setVisible(false)}
+      >
+        <i className="fa-solid fa-x"></i>
+      </button>
+
+      {/* Text */}
+      <h1 className="text-white text-center text-[18px]">
+        Join our WhatsApp channel for the latest updates!
+      </h1>
+
+      {/* Button */}
+      <a
+        href="https://whatsapp.com/channel/0029VbB7AFS59PwSFpbkLb0b"
+        target="_blank"
+        className="flex items-center gap-2 bg-white text-green-600 font-semibold rounded-2xl mt-2 shadow"
+        style={{ padding: "5px 15px" }}
+      >
+        <i className="fa-brands fa-whatsapp text-lg"></i>
+        Join Now
+      </a>
+    </div>
+  )}
+
+  {visible && bannerIndex === 1 && (
+    <div 
+      className="min-w-full relative flex flex-col items-center justify-center 
+                 bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#515bd4]"
+      style={{ padding: "15px" }}
+    >
+      {/* Close */}
+      <button
+        className="absolute md:top-5 right-15 text-white text-lg cursor-pointer"
+        onClick={() => setVisible(false)}
+      >
+        <i className="fa-solid fa-x"></i>
+      </button>
+
+      {/* Text */}
+      <h1 className="text-white text-center text-[18px]">
+        Follow us on Instagram for the latest updates!
+      </h1>
+
+      {/* Button */}
+      <a
+        href="https://www.instagram.com/moviee_land?utm_source=qr&igsh=MTV3Y21uZzNldWJsNg=="
+        target="_blank"
+        className="flex items-center gap-2 bg-white text-[#dd2a7b] font-semibold rounded-2xl mt-2 shadow"
+        style={{ padding: "5px 15px" }}
+      >
+        <i className="fa-brands fa-instagram text-lg"></i>
+        Follow Now
+      </a>
+    </div>
+  )}
+
+</div>
+
+
+
   <nav className="flex justify-between  gap-5 items-center mx-auto  w-full " style={{padding:'10px 30px'}}>
 
     {/* Logo */}

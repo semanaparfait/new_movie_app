@@ -413,6 +413,8 @@ function Hero() {
           </p>
         </div>
       </div>
+
+
       <div>{phonenavbar()}</div>
       <section>
         {/* Render content after loading */}
