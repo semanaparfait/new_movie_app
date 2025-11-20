@@ -670,7 +670,7 @@ app.get('/api/episodes', async (req, res) => {
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error('Error fetching episodes:', err);
+    console.error('Error fetching episodess:', err);
     res.status(500).json({ message: 'Server error fetching episodes' });
   }
 });

@@ -110,7 +110,7 @@ const [visible, setVisible] = useState(true);
 useEffect(() => {
   const interval = setInterval(() => {
     setBannerIndex((prev) => (prev + 1) % 2); // 0 → 1 → 0 → ...
-  }, 15000);
+  }, 2000);
 
   return () => clearInterval(interval);
 }, []);
