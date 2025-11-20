@@ -104,7 +104,7 @@ function CinemaSe() {
 <div className="relative md:w-[70%] h-screen rounded-lg overflow-hidden shadow-lg bg-black">
   <video
     ref={videoRef}
-    controls={false} // remove native controls
+    controls={true} // remove native controls
     autoPlay
     preload="metadata"
     onPause={() => setIsPaused(true)}
