@@ -382,21 +382,21 @@ function Hero() {
     fetchInitial().then(() => fetchRest());
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <div>
-  //       {/* <Navbar /> */}
-  //       <div
-  //         className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2"
-  //         style={{ padding: "20px 30px" }}
-  //       >
-  //         {Array.from({ length: 7 }).map((_, i) => (
-  //           <SkeletonCardhero key={i} />
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div>
+        {/* <Navbar /> */}
+        <div
+          className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2"
+          style={{ padding: "20px 30px" }}
+        >
+          {Array.from({ length: 7 }).map((_, i) => (
+            <SkeletonCardhero key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     // abasobanuzii
@@ -413,8 +413,6 @@ function Hero() {
           </p>
         </div>
       </div>
-
-
       <div>{phonenavbar()}</div>
       <section>
         {/* Render content after loading */}
