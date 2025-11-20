@@ -82,7 +82,7 @@ const navigate = useNavigate();
       />
 
       </div>
-      <div className='movie-info flex flex-wrap items-center justify-center sm:justify-evenly absolute '>
+      <div className='movie-info flex flex-wrap items-center justify-center sm:justify-evenly absolute md:top-1/5 top-0'>
 
         <div className='left-movie-poster w-[90%] sm:w-[40%] flex flex-col items-center'>
           <img 

@@ -101,36 +101,55 @@ function CinemaSe() {
       </div>
 
       {/* Video Player */}
-      <div className="relative md:w-[70%] h-screen rounded-lg overflow-hidden shadow-lg bg-black">
-        <video
-          ref={videoRef}
-          controls
-          autoPlay
-          preload="metadata"
-          onPause={() => setIsPaused(true)}
-          onPlay={() => setIsPaused(false)}
-          poster={
-            selectedEpisode?.serie_image?.startsWith("http")
-              ? selectedEpisode.serie_image
-              : `${API_URL}/uploads/${selectedEpisode?.serie_image}`
-          }
-          className="w-full h-full object-contain"
-        >
-          <source src={selectedEpisode?.episode_video_link} type="video/mp4" />
-        </video>
+<div className="relative md:w-[70%] h-screen rounded-lg overflow-hidden shadow-lg bg-black">
+  <video
+    ref={videoRef}
+    controls={false} // remove native controls
+    autoPlay
+    preload="metadata"
+    onPause={() => setIsPaused(true)}
+    onPlay={() => setIsPaused(false)}
+    poster={
+      selectedEpisode?.serie_image?.startsWith("http")
+        ? selectedEpisode.serie_image
+        : `${API_URL}/uploads/${selectedEpisode?.serie_image}`
+    }
+    className="w-full h-full object-contain"
+  >
+    <source src={selectedEpisode?.episode_video_link} type="video/mp4" />
+  </video>
 
-        {/* Overlay info when paused */}
-        {isPaused && selectedEpisode && (
-          <div className="absolute inset-0 bg-black/70 flex justify-center items-center pointer-events-none">
-            <div className="text-white flex flex-col items-center p-6 text-center pointer-events-auto">
-              <p className="text-gray-400 text-lg">YOU'RE WATCHING</p>
-              <h1 className="font-bold text-3xl">{selectedEpisode.serie_name}</h1>
-              <p className="text-xl mt-2">Episode {selectedEpisode.episode_number}</p>
-              <p className="mt-4 max-w-[80%] mx-auto text-gray-300">{selectedEpisode.serie_description}</p>
-            </div>
-          </div>
-        )}
+  {/* Overlay info when paused */}
+  {selectedEpisode && (
+    <div
+      className={`absolute inset-0 bg-black/70 flex justify-center items-center transition-opacity duration-300 ${
+        isPaused ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <div className="text-white flex flex-col items-center p-6 text-center">
+        <p className="text-gray-400 text-lg">YOU'RE WATCHING</p>
+        <h1 className="font-bold text-3xl">{selectedEpisode.serie_name}</h1>
+        <p className="text-xl mt-2">Episode {selectedEpisode.episode_number}</p>
+        <p className="mt-4 max-w-[80%] mx-auto text-gray-300">{selectedEpisode.serie_description}</p>
       </div>
+    </div>
+  )}
+
+  {/* Custom play/pause button */}
+  <button
+    onClick={() => {
+      if (!videoRef.current) return;
+      if (videoRef.current.paused) videoRef.current.play();
+      else videoRef.current.pause();
+    }}
+    className="absolute inset-0 w-full h-full flex items-center justify-center"
+  >
+    {isPaused && (
+      <i className="fa-solid fa-play text-white text-5xl md:text-7xl opacity-80"></i>
+    )}
+  </button>
+</div>
+
     </section>
   );
 }

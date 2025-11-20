@@ -529,6 +529,7 @@ function Hero() {
                 className="movie-card flex flex-col items-center flex-shrink-0 relative"
               >
                 <div className="relative">
+                  <Link to={`/player/${mostrecent.movie_id}`}>  
                   <img
                     src={
                       mostrecent.movie_image
@@ -547,6 +548,7 @@ function Hero() {
                     loading="lazy"
                     decoding="async"
                   />
+                  </Link>
                 </div>
                 {overlaymostrecent(mostrecent,userId)}
               </div>
@@ -578,6 +580,7 @@ function Hero() {
               className="movie-card flex flex-col items-center flex-shrink-0 relative"
             >
               <div className="relative">
+                <Link to={`/seasons/${season.serie_id}`}>
                 
               <img
                 src={
@@ -596,6 +599,8 @@ function Hero() {
                 loading="lazy"
                 decoding="async"
               />
+                </Link>
+                
 
               </div>
               {/* <h2>{season.serie_name}</h2> */}
@@ -644,13 +649,14 @@ function Hero() {
               className="movie-card flex flex-col items-center flex-shrink-0 relative"
             >
               <div className="relative">
+                <Link to={`/player/${movie.movie_id}`}> 
               <img
                 src={
                   movie.movie_image
-                    ? movie.movie_image.startsWith("http")
-                      ? movie.movie_image
-                      : `${API_URL}/uploads/${movie.movie_image}`
-                    : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                  ? movie.movie_image.startsWith("http")
+                  ? movie.movie_image
+                  : `${API_URL}/uploads/${movie.movie_image}`
+                  : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
                 }
                 alt={movie.movie_name}
                 className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
@@ -660,7 +666,8 @@ function Hero() {
                 }}
                 loading="lazy"
                 decoding="async"
-              />
+                />
+                </Link>
 
               </div>
 
