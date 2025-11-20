@@ -319,70 +319,162 @@ function Hero() {
       : "https://new-movie-app.onrender.com";
 
   useEffect(() => {
-    // Fetch providers/interpreters first, then fetch movies (and user) so the UI can
-    // show category/provider content immediately and then movie data after.
-    const fetchInitial = async () => {
+    // Improve perceived load on slower networks by:
+    // - Hydrating from sessionStorage (if available) so UI shows immediately
+    // - Starting all fetches in parallel (no sequential waiting)
+    // - Updating state as each response arrives
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    // Try to hydrate from sessionStorage immediately
+    try {
+      const cachedMovies = sessionStorage.getItem("hero_movies");
+      const cachedIzidas = sessionStorage.getItem("hero_izidasobanuye");
+      const cachedAgas = sessionStorage.getItem("hero_agasobanuye");
+      const cachedEpisodes = sessionStorage.getItem("hero_episodes");
+      const cachedSeasons = sessionStorage.getItem("hero_seasons");
+
+      if (cachedMovies) setMovies(JSON.parse(cachedMovies));
+      if (cachedIzidas) setIzidasobanuye(JSON.parse(cachedIzidas));
+      if (cachedAgas) setAgasobanuye(JSON.parse(cachedAgas));
+      if (cachedEpisodes) setEpisodes(JSON.parse(cachedEpisodes));
+      if (cachedSeasons) setSeasons(JSON.parse(cachedSeasons));
+    } catch (e) {
+      console.warn("Failed to read hero cache:", e);
+    }
+
+    const fetchAll = async () => {
       setLoading(true);
       try {
-        // Step 1: get izidasobanuye and agasobanuye first
-        const [izidasobanuyeRes, agasobanuyeRes] = await Promise.all([
-          fetch(`${API_URL}/api/izidasobanuye`),
-          fetch(`${API_URL}/api/agasobanuye`),
+        // Start all requests together so the fastest can render first
+        const moviesP = fetch(`${API_URL}/api/movies`, { signal });
+        const userP = fetch(`${API_URL}/api/me`, { credentials: "include", signal });
+        const izidasP = fetch(`${API_URL}/api/izidasobanuye`, { signal });
+        const agasP = fetch(`${API_URL}/api/agasobanuye`, { signal });
+        const episodesP = fetch(`${API_URL}/api/episodes`, { signal });
+        const seasonsP = fetch(`${API_URL}/api/seasons`, { signal });
+
+        const [moviesRes, userRes, izidasRes, agasRes, episodesRes, seasonsRes] = await Promise.allSettled([
+          moviesP,
+          userP,
+          izidasP,
+          agasP,
+          episodesP,
+          seasonsP,
         ]);
 
-        const izidasobanuyeData = await izidasobanuyeRes.json();
-        const agasobanuyeData = await agasobanuyeRes.json();
+        // Movies
+        if (moviesRes.status === "fulfilled" && moviesRes.value.ok) {
+          try {
+            const data = await moviesRes.value.json();
+            setMovies(data);
+            try {
+              sessionStorage.setItem("hero_movies", JSON.stringify(data));
+            } catch (e) {}
+          } catch (e) {
+            console.error("Failed to parse movies response", e);
+          }
+        }
 
-        setIzidasobanuye(izidasobanuyeData);
-        setAgasobanuye(agasobanuyeData);
-
-        // Step 2: after providers/interpreters are available, fetch movies and user in parallel
-        const [moviesRes, userRes] = await Promise.all([
-          fetch(`${API_URL}/api/movies`),
-          fetch(`${API_URL}/api/me`, { credentials: "include" }),
-        ]);
-
-        const moviesData = await moviesRes.json();
-        const userData = await userRes.json();
-
-        setMovies(moviesData);
-
-        if (userData?.id) {
-          setIsAuthenticated(true);
-          setUserId(userData.id);
+        // User
+        if (userRes.status === "fulfilled" && userRes.value.ok) {
+          try {
+            const userData = await userRes.value.json();
+            if (userData?.id) {
+              setIsAuthenticated(true);
+              setUserId(userData.id);
+            } else {
+              setIsAuthenticated(false);
+              setUserId(null);
+            }
+          } catch (e) {
+            console.error("Failed to parse user response", e);
+            setIsAuthenticated(false);
+            setUserId(null);
+          }
         } else {
           setIsAuthenticated(false);
           setUserId(null);
         }
+
+        // izidasobanuye
+        if (izidasRes.status === "fulfilled" && izidasRes.value.ok) {
+          try {
+            const data = await izidasRes.value.json();
+            setIzidasobanuye(data);
+            try {
+              sessionStorage.setItem("hero_izidasobanuye", JSON.stringify(data));
+            } catch (e) {}
+          } catch (e) {
+            console.error("Failed to parse izidasobanuye", e);
+          }
+        }
+
+        // agasobanuye
+        if (agasRes.status === "fulfilled" && agasRes.value.ok) {
+          try {
+            const data = await agasRes.value.json();
+            setAgasobanuye(data);
+            try {
+              sessionStorage.setItem("hero_agasobanuye", JSON.stringify(data));
+            } catch (e) {}
+          } catch (e) {
+            console.error("Failed to parse agasobanuye", e);
+          }
+        }
+
+        // episodes
+        if (episodesRes.status === "fulfilled" && episodesRes.value.ok) {
+          try {
+            const data = await episodesRes.value.json();
+            setEpisodes(data);
+            try {
+              sessionStorage.setItem("hero_episodes", JSON.stringify(data));
+            } catch (e) {}
+          } catch (e) {
+            console.error("Failed to parse episodes", e);
+          }
+        }
+
+        // seasons
+        if (seasonsRes.status === "fulfilled" && seasonsRes.value.ok) {
+          try {
+            const data = await seasonsRes.value.json();
+            setSeasons(data);
+            try {
+              sessionStorage.setItem("hero_seasons", JSON.stringify(data));
+            } catch (e) {}
+          } catch (e) {
+            console.error("Failed to parse seasons", e);
+          }
+        }
       } catch (err) {
-        console.error("Error fetching initial data:", err);
+        if (err.name !== "AbortError") console.error("Error fetching hero data:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    // Fetch non-critical data (episodes/seasons) in background
-    const fetchRest = async () => {
-      try {
-        const [episodesRes, seasonsRes] = await Promise.all([
-          fetch(`${API_URL}/api/episodes`),
-          fetch(`${API_URL}/api/seasons`),
-        ]);
+    fetchAll();
 
-        const episodesData = await episodesRes.json();
-        const seasonsData = await seasonsRes.json();
-
-        setEpisodes(episodesData);
-        setSeasons(seasonsData);
-      } catch (err) {
-        console.error("Error fetching additional data:", err);
-      }
-    };
-
-    fetchInitial().then(() => fetchRest());
+    return () => controller.abort();
   }, []);
 
-  // Render immediately; content will populate as fetches complete.
+  if (loading) {
+    return (
+      <div>
+        {/* <Navbar /> */}
+        <div
+          className="p-4 grid grid-cols-2 md:grid-cols-6 gap-2"
+          style={{ padding: "20px 30px" }}
+        >
+          {Array.from({ length: 7 }).map((_, i) => (
+            <SkeletonCardhero key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     // abasobanuzii
