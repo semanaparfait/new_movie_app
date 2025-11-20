@@ -112,7 +112,7 @@ const navigate = useNavigate();
 
         <div className='right-movie-details w-[90%] sm:w-[40%]'><br />
           <h1 className='font-black text-[30px]'>{movie.movie_name}</h1><br />
-          <div className='flex gap-3.5 items-center'>
+          <div className='flex gap-3.5 items-center hidden'>
             <p className='font-medium '>24M Watchers</p>
             <div className="likes-cont flex flex-col items-center">
               <i className="fa-solid fa-thumbs-up "></i>
@@ -123,22 +123,22 @@ const navigate = useNavigate();
               <p className='dislike-btn'>324 </p>
             </div>
           </div>
-          <h1 className='description-tittle font-extra font-black '>Description</h1><br />
+          <h1 className='description-tittle font-extra font-black hidden '>Description</h1>
           <div className='info-container flex flex-col gap-4 '>
             <h2 className='font-black'>Description</h2>
             <p >{movie.movie_description} </p>
             <div className='flex gap-4.5'>
-              <div >
-                <p className='font-bold'><i className="fa-solid fa-calendar"></i> Relsead:</p><br />
-                <p className='font-bold'>	<i className="fas fa-tags"></i> Genre:</p><br />
-                <p className='font-bold'><i className="fa-solid fa-globe"></i> Country:</p><br />
-                <p className='font-bold'>	<i className="fas fa-film"></i> Provider:</p><br />
+              <div className='flex flex-col gap-2'>
+                <p className='font-bold'><i className="fa-solid fa-calendar"></i> Relsead:</p>
+                <p className='font-bold'>	<i className="fas fa-tags"></i> Genre:</p>
+                <p className='font-bold'><i className="fa-solid fa-globe"></i> Country:</p>
+                <p className='font-bold'>	<i className="fas fa-film"></i> Provider:</p>
               </div>
-              <div>
-                <p> {movie.movie_released_date}</p><br />
-                <p>{movie.movie_genre}</p><br />
-                <p>{movie.movie_country}</p><br />
-                <p>{movie.category_name}</p><br />
+              <div className='flex flex-col gap-2'>
+                <p> {movie.movie_released_date}</p>
+                <p>{movie.movie_genre}</p>
+                <p>{movie.movie_country}</p>
+                <p>{movie.category_name}</p>
               </div>
             </div>
           </div>

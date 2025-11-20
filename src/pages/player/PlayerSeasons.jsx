@@ -88,7 +88,7 @@ function PlayerSeasons() {
         </div>
 
         {/* Movie info */}
-        <div className="movie-info flex flex-wrap items-center justify-center sm:justify-evenly absolute top-0">
+        <div className="movie-info flex flex-wrap items-center justify-center sm:justify-evenly absolute md:top-1/5 top-0">
           {/* Left side */}
           <div className="left-movie-poster w-[90%] sm:w-[40%] flex flex-col items-center">
             <img
@@ -124,64 +124,42 @@ function PlayerSeasons() {
               <span>Ep {selectedEpisode.episode_number}</span>{" "}
               {selectedEpisode.serie_name}
             </h1>
-            <br />
-            <div className="flex gap-3.5 items-center">
-              <p className="font-medium ">24M Watchers</p>
-              <div className="likes-cont flex flex-col items-center">
-                <i className="fa-solid fa-thumbs-up "></i>
-                <p className="likes-btn flex backdrop-blur-md ">86K </p>
-              </div>
-              <div className="down-count flex flex-col items-center">
-                <i className="fa-solid fa-thumbs-down "></i>
-                <p className="dislike-btn">324 </p>
-              </div>
-            </div>
-            <h1 className="description-tittle font-extra font-black ">
-              Description
-            </h1>
+            
             <br />
             <div className="info-container flex flex-col gap-4 ">
               <h2 className="font-black">Description</h2>
               <p>{selectedEpisode.serie_description} </p>
               <div className="flex gap-4.5">
-                <div>
+                <div className='flex flex-col gap-2'>
                   <p className="font-bold">
                     <i className="fa-solid fa-calendar"></i> Relsead:
                   </p>
-                  <br />
                   <p className="font-bold">
                     <i className="fas fa-tags"></i> Genre:
                   </p>
-                  <br />
                   <p className="font-bold">
                     <i className="fa-solid fa-globe"></i> Country:
                   </p>
-                  <br />
                   <p className="font-bold">
                     <i className="fas fa-film"></i> Provider:
                   </p>
-                  <br />
                 </div>
-                <div>
+                <div className='flex flex-col gap-2'>
                   <p>
                     {new Date(
                       selectedEpisode.episode_released_date
                     ).toLocaleDateString()}
                   </p>
-                  <br />
                   <p>{selectedEpisode.serie_genre}</p>
-                  <br />
                   <p>{selectedEpisode.episode_country}</p>
-                  <br />
                   <p>{selectedEpisode.category_name}</p>
-                  <br />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Other episodes */}
-          <div>
+          <div className='hidden'>
             <br />
             <br />
             <h1 className="text-center text-2xl">Your Full Episode Guide on {selectedEpisode.serie_name}</h1>
