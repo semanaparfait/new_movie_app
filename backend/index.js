@@ -10,6 +10,8 @@ import fs from "fs";
 import jwt from 'jsonwebtoken';
 import { error } from 'console';
 import NodeCache  from 'node-cache';
+import axios from "axios";
+
 
 
 
@@ -94,6 +96,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const cache = new NodeCache({ stdTTL: 3600 });
+// Debug: store last forwarded webhook payload/status for troubleshooting
+let lastForwardedWebhook = null;
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
   const { username, email,  password } = req.body;
@@ -290,6 +294,8 @@ app.get('/api/categories', async (req,res) => {
 
 })
 
+// const axios = require("axios"); // make sure axios is imported
+
 app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
   try {
     const {
@@ -336,12 +342,65 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
     const result = await pool.query(query, values);
     cache.del('moviesData');
 
-    res.status(201).json({ movie: result.rows[0], message: "Movie uploaded successfully" });
+    const savedMovie = result.rows[0];
+    // Build an enriched payload for the webhook so downstream flows (emails) have all fields
+    let categoryName = null;
+    try {
+      if (savedMovie.category_id) {
+        const catRes = await pool.query('SELECT category_name FROM categories WHERE category_id = $1', [savedMovie.category_id]);
+        if (catRes.rows.length) categoryName = catRes.rows[0].category_name;
+      }
+    } catch (e) {
+      console.warn('Failed to fetch category name for webhook payload:', e.message);
+    }
+
+    const backendBase = process.env.BACKEND_BASE_URL || '';
+    const imageUrl = savedMovie.movie_image
+      ? (savedMovie.movie_image.startsWith('http') ? savedMovie.movie_image : `${backendBase}/uploads/${savedMovie.movie_image}`)
+      : null;
+
+    const webhookPayload = {
+      movie_id: savedMovie.movie_id,
+      movie_name: savedMovie.movie_name,
+      movie_image: imageUrl,
+      movie_genre: savedMovie.movie_genre,
+      movie_country: savedMovie.movie_country,
+      movie_released_date: savedMovie.movie_released_date,
+      category_name: categoryName,
+      created_at: savedMovie.created_at,
+      category_id: savedMovie.category_id,
+      movie_trailer_link: savedMovie.movie_trailer_link,
+      movie_video_link: savedMovie.movie_video_link,
+      // include full DB row for flexibility
+      _raw: savedMovie,
+    };
+
+    // ✅ Forward enriched payload to configured webhook (non-blocking)
+    try {
+      const forwardUrl = process.env.WEBHOOK_FORWARD_URL || process.env.WEBHOOK_FORWARD_URL2 ;
+      axios.post(forwardUrl, webhookPayload, {
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(() => {
+          console.log("Movie forwarded to webhook:", forwardUrl);
+          lastForwardedWebhook = { payload: webhookPayload, forwardedTo: forwardUrl, status: 'ok', time: new Date().toISOString() };
+        })
+        .catch((webhookError) => {
+          console.warn("Webhook forward failed:", webhookError.message);
+          lastForwardedWebhook = { payload: webhookPayload, forwardedTo: forwardUrl, status: 'error', error: webhookError.message, time: new Date().toISOString() };
+        });
+    } catch (e) {
+      console.warn("Webhook forwarding configuration error:", e.message);
+      lastForwardedWebhook = { payload: webhookPayload, forwardedTo: null, status: 'config_error', error: e.message, time: new Date().toISOString() };
+    }
+
+    res.status(201).json({ movie: savedMovie, message: "Movie uploaded successfully" });
   } catch (error) {
     console.error("Error uploading movie", error);
     res.status(500).json({ err: "Failed to insert movie" });
   }
 });
+
 // -----------------deleting category----------
 app.delete('/api/categories/:id', async (req, res) => {
   const { id } = req.params; // this is the movie_id from the URL
@@ -818,6 +877,19 @@ app.patch('/api/episode/:episodeid', async (req, res) => {
 });
 
 // --------------------get all episodes and series----------
+// Admin debug endpoint: return last forwarded webhook info
+app.get('/admin/last-webhook', (req, res) => {
+  if (!lastForwardedWebhook) return res.status(404).json({ message: 'No webhook forwarding recorded yet' });
+  return res.json(lastForwardedWebhook);
+});
+
+// API namespaced version (avoid CDN/static hijack) with no-cache headers
+app.get('/api/admin/last-webhook', (req, res) => {
+  res.set('Cache-Control', 'no-store, must-revalidate');
+  if (!lastForwardedWebhook) return res.status(404).json({ message: 'No webhook forwarding recorded yet' });
+  return res.json(lastForwardedWebhook);
+});
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
