@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Accountpage.css";
 import bgimage from "../../assets/images/account/bg react.jpg";
@@ -93,28 +93,49 @@ function Accountpage() {
 //   const phoneRegex = /^\+\d{1,3}\d{7,12}$/;
 //   return phoneRegex.test(number);
 // };
+useEffect(() => {
+  if (loginalert) {
+    const timer = setTimeout(() => {
+      navigate("/");
+    }, 1500); // 1 second
+
+    return () => clearTimeout(timer);
+  }
+}, [loginalert]);
+
+useEffect(() => {
+  if (signupsuccess) {
+    const timer = setTimeout(() => {
+      setSignupsuccess(false);
+      setAction("Log in"); // switch to login automatically
+    }, 2500); // 1 second delay
+
+    return () => clearTimeout(timer);
+  }
+}, [signupsuccess]);
+
 
 
   return (
     <section className="absolute  inset-0 bg-[url('https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg')] bg-cover bg-center bg-fixed">
       {/* Login Alert */}
       {loginalert && (
-        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50">
+        <div className="login-alert absolute right-0  top-15 transform  z-50">
           <div
-            className="bg-white text-black text-center max-w-md mx-auto w-full relative rounded-[6px] border-none"
-            style={{ padding: "0 50px" }}
+            className="bg-white text-black text-left flex gap-2 items-center max-w-md  w-full relative rounded-[6px] border-none"
+            style={{ padding: "10px" }}
           >
-            <i className="fa-solid fa-circle-check text-green-600 text-5xl absolute left-1/2 -translate-x-1/2 -top-6"></i>
-            <br />
-            <br />
-            <h1 className="font-semibold text-3xl">Congratulations</h1>
-            <br />
-            <h4>
-              Welcome back, <span className="font-semibold">{email}</span>!{" "}
-              <br /> Glad to see you again.
-            </h4>
+            <i className="fa-solid fa-circle-check text-green-600 text-4xl "></i>
+            <div>
+
+            <h1 className="font-semibold md:text-2xl text-[20px]">Congratulations</h1>
+            <p>
+            <span className="font-semibold">{email}</span>!{" "}
+               Glad to see you again.
+            </p>
+            </div>
             <button
-              className="bg-green-700 text-white rounded-[5px] w-1/4 h-[2rem]"
+              className="bg-green-700 text-white rounded-[5px] w-1/4 h-[2rem] hidden"
               onClick={() => {
                 setLoginalert(false);
                 navigate("/"); // Navigate to home page
@@ -126,10 +147,10 @@ function Accountpage() {
             <br />
           </div>
         </div>
-      )}
+      )} 
       {/* Login Failed Alert */}
       {loginfailed && (
-        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50 w-full md:w-1/4">
+        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50 w-full md:w-1/4 hidden">
           <div
             className="bg-white text-black text-center max-w-md mx-auto w-full relative rounded-[6px] border-none"
             style={{ padding: "0 20px" }}
@@ -158,36 +179,34 @@ function Accountpage() {
       )}
       {/* Signup Success Alert */}
       {signupsuccess && (
-        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50 w-full md:w-1/4">
+        <div className="login-alert absolute  top-15 right-0 z-50 w-full md:w-1/3">
           <div
-            className="bg-white text-black text-center max-w-md mx-auto w-full relative rounded-[6px] border-none"
+            className="bg-green-100 text-black flex items-center text-left gap-2 max-w-md  w-full relative rounded-[6px] border-none"
             style={{ padding: "0 20px" }}
           >
-            <i className="fa-solid fa-circle-check text-green-600 text-5xl absolute left-1/2 -translate-x-1/2 -top-6"></i>
-            <br />
+            <i className="fa-solid fa-circle-check text-green-600 text-3xl "></i>
 
-            <h1 className="font-semibold text-3xl">Signup Successful</h1>
-            <br />
-            <h4>
-              Your account has been created successfully. You can now log in.
-            </h4>
-            <button
-              className="bg-green-700 text-white rounded-[5px] w-1/3 h-[2rem]"
-              onClick={() => {
+          <div>
+
+            <h1 className="font-semibold text-2xl">Signup Successful</h1>
+            <p className="">
+              Your account has been created successfully
+            </p>
+          </div>
+          <i className="fa-solid fa-xmark  "
+                     onClick={() => {
                 setSignupsuccess(false);
                 setAction("Log in"); // Switch to login form
               }}
-            >
-              Log In
-            </button>
+          ></i>
             <br />
             <br />
           </div>
         </div>
-      )}
+      )} 
       {/* Signup Failed Alert */}
       {signupfailed && (
-        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50 w-full md:w-1/4">
+        <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50 w-full md:w-1/4 hidden">
           <div
             className="bg-white text-black text-center  relative rounded-[6px] border-none"
             style={{ padding: "0 20px" }}
@@ -247,18 +266,25 @@ function Accountpage() {
 
           {/* Inputs */}
           <div className="space-y-3 text-black ">
-            <form onSubmit={submitform} className="flex flex-col gap-2">
-              {action === "Log in" ? (
-                <div></div>
-              ) : (
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your Full name"
-                  className="w-full rounded bg-white/90 outline-none text-sm"
-                />
-              )}
+            <p className="text-green-600 hidden">Sign up successfully login to continue?</p>
+            <form onSubmit={submitform} className="flex flex-col ">
+            {action === "Log in" ? (
+              <>
+                {loginfailed && (
+                  <p className="text-red-700 text-left">Email not found. Please check and try again.</p>
+                )}
+              </>
+            ) : (
+              <input
+                type="text"
+                value={username}
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your Full name"
+                className="w-full rounded bg-white/90 outline-none text-sm"
+              />
+            )}
+
               {action === "Log in" ? (
                 <div></div>
               ) : (
@@ -288,15 +314,19 @@ function Accountpage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
                 placeholder="Enter your email address"
                 className="w-full rounded bg-white/90 outline-none text-sm"
               />
-              {/* <p className="text-red-700 inset-0">Invalid email</p> */}
+                {loginfailed && (
+                <p className="text-red-700 text-left">Incorrect password. Please try again.</p>
+              )}
 
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 placeholder="Enter your password"
                 className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
                 style={{ paddingLeft: "7px" }}
@@ -308,10 +338,10 @@ function Accountpage() {
               )}
 
               {/* Buttons */}
-              <button type="submit" className="signin-btn">
+              <button type="submit" className="signin-btn" style={{marginTop:'15px'}}>
                 {action}
               </button>
-              <button className="google-btn ">
+              <button className="google-btn" style={{marginTop:'15px'}}>
                 Continue with Google <img src={google} />
               </button>
               <br />
