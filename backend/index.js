@@ -394,7 +394,7 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
       lastForwardedWebhook = { payload: webhookPayload, forwardedTo: null, status: 'config_error', error: e.message, time: new Date().toISOString() };
     }
 
-    res.status(201).json({ movie: savedMovie, message: "Movie uploaded successfully" });
+    res.status(201).json({ movie: savedMovie, message: "Movie uploaded successfullyy" });
   } catch (error) {
     console.error("Error uploading movie", error);
     res.status(500).json({ err: "Failed to insert movie" });
