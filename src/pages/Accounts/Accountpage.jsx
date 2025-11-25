@@ -6,6 +6,7 @@ import facebook from "../../assets/images/account/facebook.png";
 import google from "../../assets/images/account/google.png";
 import logo from "../../assets/images/overlay-2.png";
 import { useNavigate } from "react-router-dom";
+import code from "../../assets/images/account/frame (2).png"
 
 function Accountpage() {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ function Accountpage() {
 
 
   return (
-    <div className="absolute overflow-hidden inset-0 bg-[url('https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg')] bg-cover bg-center ">
+    <section className="absolute  inset-0 bg-[url('https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg')] bg-cover bg-center bg-fixed">
       {/* Login Alert */}
       {loginalert && (
         <div className="login-alert absolute left-1/2 top-8 transform -translate-x-1/2 z-50">
@@ -239,13 +240,13 @@ function Accountpage() {
       <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Centered Content */}
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center flex-wrap">
         <div className="right-tect-content text-center text-white space-y-4 w-full max-w-md">
           <h1 className="text-3xl sm:text-4xl font-bold">{action}</h1>
           {/* <h4 className="text-lg sm:text-2xl">SEMANA SHEMA PARFAIT</h4> */}
 
           {/* Inputs */}
-          <div className="space-y-3 text-black">
+          <div className="space-y-3 text-black ">
             <form onSubmit={submitform} className="flex flex-col gap-2">
               {action === "Log in" ? (
                 <div></div>
@@ -315,10 +316,37 @@ function Accountpage() {
               </button>
               <br />
             </form>
+
           </div>
         </div>
+
+        {/* ---------------qrcode------------ */}
+      <div className=" hidden md:block right-tect-content text-center text-white  ">
+        
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">Quick Login</h1>
+          <div className="h-1 w-16 bg-blue-500 mx-auto rounded-full"></div>
+        </div>
+
+        {/* Glowing effect behind the QR code */}
+        <div className="relative group inline-block">
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          
+          <div className="relative bg-white p-3 rounded-lg">
+            <img 
+              src={code} 
+              alt="Scan me" 
+              className="w-52 h-52" 
+            />
+          </div>
+        </div>
+
+        <p className="mt-8 text-gray-400 text-sm">
+          Having trouble? <span className="text-blue-400 cursor-pointer hover:underline">Use password instead</span>
+        </p>
       </div>
-    </div>
+      </div>
+    </section>
   );
 }
 
