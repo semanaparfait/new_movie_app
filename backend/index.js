@@ -377,7 +377,7 @@ app.post('/api/movieupload', upload.single('movie_image'), async (req, res) => {
 
     // ✅ Forward enriched payload to configured webhook (non-blocking)
     try {
-      const forwardUrl = process.env.WEBHOOK_FORWARD_URL || process.env.WEBHOOK_FORWARD_URL2 ;
+      const forwardUrl = process.env.WEBHOOK_FORWARD_URL;
       axios.post(forwardUrl, webhookPayload, {
         headers: { 'Content-Type': 'application/json' }
       })
