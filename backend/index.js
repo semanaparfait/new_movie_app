@@ -100,7 +100,7 @@ const cache = new NodeCache({ stdTTL: 3600 });
 let lastForwardedWebhook = null;
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
-  const { username, email,  password } = req.body;
+  const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Username, email and password are required' });
@@ -110,13 +110,26 @@ app.post('/api/signup', async (req, res) => {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user into DB
+    // 1. Insert user into DB
     await pool.query(
-      'INSERT INTO accountusers (username, email,  password) VALUES ($1, $2, $3)',
-      [username, email,  hashedPassword]
+      'INSERT INTO accountusers (username, email, password) VALUES ($1, $2, $3)',
+      [username, email, hashedPassword]
     );
-    
 
+    // 2. TRIGGER N8N WEBHOOK
+    // We send the username and email so n8n can use them in the email
+    const n8nWebhookURL = process.env.WEBHOOK_NEWUSER_URL;
+
+    axios.post(n8nWebhookURL, {
+      username: username,
+      email: email,
+      created_at: new Date()
+    }).catch(err => {
+      // We catch errors here so the user still gets signed up even if n8n is offline
+      console.error("Failed to trigger n8n webhook:", err.message);
+    });
+
+    // 3. Send success response to frontend
     res.status(201).send({ message: 'User created successfully' });
 
   } catch (err) {
