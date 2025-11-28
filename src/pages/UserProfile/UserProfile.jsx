@@ -90,27 +90,27 @@ function UserProfile() {
     <div className='p-[10px] flex flex-col items-center justify-center '>
         <h1 className='font-medium text-3xl leading-[38px]'><i className="fa-solid fa-user"></i>  Edit Profile</h1>
         <div className='flex flex-wrap-reverse justify-center'>
-            <div  className='w-[90%] md:w-[50%]' style={{padding:'10px'}}>
+            <div  className='w-[90%] md:w-[50%] flex flex-col gap-1.5' style={{padding:'10px'}}>
                 <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'> EMAIL ADDRESS</label>
-                <input type="email" className='border-none bg-white' value={user?.email}/>
+                <input type="email" className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}} value={user?.email}/>
                 <div className='bg-[#2b2a3c] rounded-lg' style={{padding:'10px'}}>
                     <p className='font-medium text-[13px] leading-[24px] text-[#666]'> <i className='fas fa-user-alt-slash'></i> Not Verified</p>
                     <p style={{marginTop:'2px'}} className='font-medium text-[13px] leading-[24px]'>Your account has not been verified. <span className='text-[#f25b29] cursor-pointer'>Click here</span> to resend verification email.</p>
                 </div>
                 <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>YOUR NAME</label>
-                <input type="text" className='border-none bg-white' value={user?.username}/>
+                <input type="text" className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}}  value={user?.username}/>
                 <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>JOINED</label>
-                <input type="text" disabled className='border-none bg-white' value={user?.created_at}/>
+                <input type="text" disabled className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}}  value={user?.created_at}/>
                 <label onClick={()=>setShowpassinputs(!showpassinputs)}><i className="fa-solid fa-key"></i> Change password</label><br /><br />
                 {showpassinputs && (
                     <div>
 
                         <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>CURRENT PASSWORD</label>
-                        <input type="password" className='border-none bg-white'/>
+                        <input type="password" className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}} />
                         <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>NEW PASSWORD</label>
-                        <input type="password"className='border-none bg-white'/>
+                        <input type="password"className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}} />
                         <label className='text-[11px] leading-[24px] font-normal text-[rgb(255,255,255)]'>CONFIRM NEW PASSWORD</label>
-                        <input type="password" className='border-none bg-white'/>
+                        <input type="password" className='border-none bg-white text-black h-[2.5rem] rounded-[5px] w-full' style={{padding:'0 10px'}} />
                     </div>
                 )}
                 <button className='bg-[#f25b29] w-full rounded-2xl text-black font-medium' style={{padding:'10px 0'}}>Save</button>

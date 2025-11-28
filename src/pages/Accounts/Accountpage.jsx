@@ -267,7 +267,7 @@ useEffect(() => {
           {/* Inputs */}
           <div className="space-y-3 text-black ">
             <p className="text-green-600 hidden">Sign up successfully login to continue?</p>
-            <form onSubmit={submitform} className="flex flex-col ">
+            <form onSubmit={submitform} className="flex flex-col gap-3">
             {action === "Log in" ? (
               <>
                 {loginfailed && (
@@ -281,7 +281,7 @@ useEffect(() => {
                 required
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your Full name"
-                className="w-full rounded bg-white/90 outline-none text-sm"
+                className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]" style={{padding:'0 10px'}}
               />
             )}
 
@@ -316,7 +316,7 @@ useEffect(() => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email address"
-                className="w-full rounded bg-white/90 outline-none text-sm"
+                className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]" style={{padding:'0 10px'}}
               />
                 {loginfailed && (
                 <p className="text-red-700 text-left">Incorrect password. Please try again.</p>
@@ -328,8 +328,7 @@ useEffect(() => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Enter your password"
-                className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]"
-                style={{ paddingLeft: "7px" }}
+                className="w-full rounded-[10px] bg-white/90 outline-none text-sm h-[2.5rem]" style={{padding:'0 10px'}}
               />
               {action === "Log in" && (
                 <p className="text-right text-sm text-red-400 cursor-pointer">

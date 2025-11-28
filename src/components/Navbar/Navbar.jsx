@@ -305,7 +305,7 @@ useEffect(() => {
             value={query}
             onChange={handleSearch}
             placeholder="Search movies..."
-            className="  rounded-md border border-gray-300  bg-white"
+            className="  rounded-md border border-gray-300 text-black  bg-white w-full h-[2.5rem] " style={{padding:'0 10px'}}
           />
           <i className="fa fa-search absolute right-5 font-bold top-1/2 -translate-y-1/2 text-black"></i>
 

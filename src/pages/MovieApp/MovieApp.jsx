@@ -222,6 +222,7 @@ if (loading) {
                     className="movie-card flex flex-col items-center flex-shrink-0 relative">
                       {/* <Link to={`/player/${movie.movieid}`} key={movie.movieid}> */}
                       <div className="relative">
+                        <Link to={`/player/${movie.movie_id}`}>
                           <img
                             src={
                               movie.movie_image
@@ -234,6 +235,7 @@ if (loading) {
                             className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
                             loading="lazy"
                           />
+                        </Link>
                       </div>
                       {/* </Link> */}
                        <div>

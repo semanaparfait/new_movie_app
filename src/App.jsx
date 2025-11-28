@@ -3,66 +3,51 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Contactus from "./pages/Contactus/Contactus";
-import Home from "./pages/Home/Home";
-import Hero from "./components/Hero/Hero";
-import Accountpage from "./pages/Accounts/Accountpage";
-import InterpreterPage from "./pages/interpreterspage/InterpreterPage";
-import Player from "./pages/player/Player";
-import Hero2 from "./components/Hero/Hero2";
-import MovieApp from "./pages/MovieApp/MovieApp";
-import UserProfile from "./pages/UserProfile/UserProfile";
-import AdminPage from "./pages/AdminPage/AdminPage";
-import Watchlist from "./pages/Watchlist/Watchlist";
 import Protector from "./components/Protector/Protector";
 import Building from "./components/Building/Building";
-import Tvshows from "./pages/Tvshows/Tvshows";
-import Livestreaming from "./pages/Livestreaming/Livestreaming";
-import Cinema from "./pages/Cinema/Cinema";
-import PlayerSeasons from "./pages/player/PlayerSeasons";
-import CinemaSe from "./pages/Cinema/CinemaSe";
-import About from "./pages/About/About";
 
-
-const LazyPlayerseasons = lazy(() => import("./pages/player/PlayerSeasons"));
-const LazyWatchlist = lazy(() => import("./pages/Watchlist/Watchlist"));
+// ✅ PROPERLY lazy load ALL components
 const LazyHome = lazy(() => import("./pages/Home/Home"));
 const LazyContactus = lazy(() => import("./pages/Contactus/Contactus"));
-const LazyHero = lazy(() => import("./components/Hero/Hero"));
 const LazyAccountpage = lazy(() => import("./pages/Accounts/Accountpage"));
-const LazyInterpreterPage = lazy(() =>
-  import("./pages/interpreterspage/InterpreterPage")
-);
+const LazyInterpreterPage = lazy(() => import("./pages/interpreterspage/InterpreterPage"));
 const LazyMovieApp = lazy(() => import("./pages/MovieApp/MovieApp"));
 const LazyPlayer = lazy(() => import("./pages/player/Player"));
+const LazyPlayerSeasons = lazy(() => import("./pages/player/PlayerSeasons"));
 const LazyUserProfile = lazy(() => import("./pages/UserProfile/UserProfile"));
 const LazyAdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
+const LazyWatchlist = lazy(() => import("./pages/Watchlist/Watchlist"));
+const LazyTvshows = lazy(() => import("./pages/Tvshows/Tvshows"));
+const LazyLivestreaming = lazy(() => import("./pages/Livestreaming/Livestreaming"));
 const LazyCinema = lazy(() => import("./pages/Cinema/Cinema"));
-const LazyCinemase = lazy(() => import("./pages/Cinema/CinemaSe"));
-
+const LazyCinemaSe = lazy(() => import("./pages/Cinema/CinemaSe"));
+const LazyAbout = lazy(() => import("./pages/About/About"));
 
 function App() {
-  
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={
+        <div className="w-screen h-screen flex items-center justify-center bg-black hidden">
+          <div className="text-white text-xl">Loading...</div>
+        </div>
+      }>
         <Routes>
-          <Route path="/watchlist" element={<Protector><Watchlist /></Protector>}/>
-          <Route path="/" element={<Home />} />
-          <Route path="building" element={<Building />} />
-          <Route path="/tvshows" element={<Tvshows />} />
-          <Route path="/livestreaming" element={<Livestreaming />} />
-          <Route path="/contactus" element={<Contactus />} />
+          <Route path="/" element={<LazyHome />} />
+          <Route path="/building" element={<Building />} />
+          <Route path="/tvshows" element={<LazyTvshows />} />
+          <Route path="/livestreaming" element={<LazyLivestreaming />} />
+          <Route path="/contactus" element={<LazyContactus />} />
           <Route path="/account" element={<LazyAccountpage />} />
+          <Route path="/watchlist" element={<Protector><LazyWatchlist /></Protector>}/>
           <Route path="/interpreterpage/:id" element={<Protector><LazyInterpreterPage /></Protector>}/>
-          <Route path="/moviesites/:siteid" element={<MovieApp/>}/>
+          <Route path="/moviesites/:siteid" element={<LazyMovieApp/>}/>
           <Route path="/player/:movieid" element={<Protector><LazyPlayer /></Protector>}/>
-          <Route path="/seasons/:seasonid" element={<Protector><LazyPlayerseasons /></Protector>}/>
+          <Route path="/seasons/:seasonid" element={<Protector><LazyPlayerSeasons /></Protector>}/>
           <Route path="/cinema/:movieid" element={<Protector><LazyCinema /></Protector>}/>
-          <Route path="/cinemase/:episodeid" element={<Protector><LazyCinemase /></Protector>}/>
-          <Route path="/userprofile"element={<LazyUserProfile />}/>
+          <Route path="/cinemase/:episodeid" element={<Protector><LazyCinemaSe /></Protector>}/>
+          <Route path="/userprofile" element={<LazyUserProfile />}/>
           <Route path="/adminpage" element={<Protector adminOnly={true}><LazyAdminPage /></Protector>} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<LazyAbout />} />
           <Route
             path="*"
             element={
@@ -74,12 +59,11 @@ function App() {
                   className="w-full h-full object-contain"
                 />
                 <Link to={'/'}>
-                <button title="Home"  className="bg-white text-black rounded-[5px] absolute top-6 left-7" style={{padding:'5px 20px'}}>Home</button>
+                <button title="Home" className="bg-white text-black rounded-[5px] absolute top-6 left-7" style={{padding:'5px 20px'}}>Home</button>
                 </Link>
               </div>
             }
           />
-
         </Routes>
       </Suspense>
     </BrowserRouter>
