@@ -31,9 +31,8 @@ function Cinema() {
   <video
     ref={videoRef}
     controls
-    autoPlay
     loop
-    preload="metadata"
+    preload="none"
     poster={movie.movie_image}
     className="w-full h-[80%] object-contain mb-6 rounded-lg shadow-lg"
     src={movie.movie_video_link}

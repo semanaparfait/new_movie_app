@@ -105,8 +105,7 @@ function CinemaSe() {
   <video
     ref={videoRef}
     controls={true} // remove native controls
-    autoPlay
-    preload="metadata"
+    preload="none"
     onPause={() => setIsPaused(true)}
     onPlay={() => setIsPaused(false)}
     poster={
