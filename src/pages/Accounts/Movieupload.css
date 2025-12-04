@@ -1,0 +1,14 @@
+.movie-link,
+.movie-name,
+.movie-decription,
+.movie-country,
+.movie-date,
+.movie-genre,
+.movie-poster-link,
+.movie-download-link,
+.movie-trailer{
+    border: 2px solid rgb(53, 59, 53);
+    width: 100%;
+    padding-left: 5px;
+
+}

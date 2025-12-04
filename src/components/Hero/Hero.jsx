@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Inyarwanda from "../Inyarwanda/Inyarwanda";
 import './SkeletonHero.css'
 import { cachedFetch } from "../../utils/cache";
+import Movieland from '../../../public/logoo2.jpg'
 
 export function overlaysub() {
   return (
@@ -303,17 +304,17 @@ function Hero() {
     // Step 2: Load movies and other data in background
     const fetchMoviesData = async () => {
       try {
-        console.log('🎬 Fetching movies...');
+        // console.log('🎬 Fetching movies...');
         // OPTIMIZATION: Only fetch first page of movies (50 items)
         const moviesData = await cachedFetch(`${API_URL}/api/movies?page=1&limit=50`);
-        console.log('📦 Movies data received:', moviesData);
+        // console.log('📦 Movies data received:', moviesData);
         
         // Handle both new pagination response and old array response
         if (moviesData.movies && Array.isArray(moviesData.movies)) {
-          console.log('✅ Using paginated response, movies count:', moviesData.movies.length);
+          // console.log('✅ Using paginated response, movies count:', moviesData.movies.length);
           setMovies(moviesData.movies);
         } else if (Array.isArray(moviesData)) {
-          console.log('✅ Using array response, movies count:', moviesData.length);
+          // console.log('✅ Using array response, movies count:', moviesData.length);
           setMovies(moviesData);
         } else {
           console.error('❌ Unexpected movies data format:', moviesData);
@@ -399,11 +400,13 @@ function Hero() {
               >
                 <div className="interpreter-card flex-shrink-0 w-[150px]">
                   <img
-                    src={
-                      interpreter.category_image?.startsWith("http")
+                  src={
+                    interpreter.category_image
+                      ? interpreter.category_image.startsWith("http")
                         ? interpreter.category_image
                         : `${API_URL}/uploads/${interpreter.category_image}`
-                    }
+                      : Movieland
+                  }
                     alt={interpreter.category_name}
                     className="rounded-full w-35 h-35 object-cover"
                     loading="lazy"
@@ -442,6 +445,7 @@ function Hero() {
                       site.category_image?.startsWith("http")
                         ? site.category_image
                         : `${API_URL}/uploads/${site.category_image}`
+                        
                     }
                     alt={site.category_name}
                     className="w-24 h-24 object-cover"
@@ -597,14 +601,14 @@ function Hero() {
                                     ? movie.movie_image.startsWith("http")
                                       ? movie.movie_image
                                       : `${API_URL}/uploads/${movie.movie_image}`
-                                    : "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg"
+                                    : Movieland
                                 }
                                 alt={movie.movie_name}
                                 className="movie-poster w-28 h-44 md:w-43 md:h-65 object-cover rounded-[8px]"
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src =
-                                    "https://i.pinimg.com/1200x/c8/e6/e9/c8e6e97dba3541c0d0fa97b23a166019.jpg";
+                                    Movieland;
                                 }}
                                 loading="lazy"
                                 decoding="async"

@@ -5,6 +5,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protector from "./components/Protector/Protector";
 import Building from "./components/Building/Building";
+import Community from "./pages/Community/Community";
 
 // ✅ PROPERLY lazy load ALL components
 const LazyHome = lazy(() => import("./pages/Home/Home"));
@@ -22,6 +23,8 @@ const LazyLivestreaming = lazy(() => import("./pages/Livestreaming/Livestreaming
 const LazyCinema = lazy(() => import("./pages/Cinema/Cinema"));
 const LazyCinemaSe = lazy(() => import("./pages/Cinema/CinemaSe"));
 const LazyAbout = lazy(() => import("./pages/About/About"));
+const LazyCommunity = lazy(() => import("./pages/Community/Community"));
+  
 
 function App() {
   return (
@@ -32,6 +35,7 @@ function App() {
         </div>
       }>
         <Routes>
+          <Route path="/community" element={<Community />} />
           <Route path="/" element={<LazyHome />} />
           <Route path="/building" element={<Building />} />
           <Route path="/tvshows" element={<LazyTvshows />} />

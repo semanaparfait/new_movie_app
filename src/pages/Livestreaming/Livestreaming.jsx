@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import { Link } from 'react-router-dom';
 import logo from '../../assets/images/live streaming/live-streaming.png'
 import './Livestreaming.css'
 function Livestreaming() {
@@ -20,7 +21,9 @@ const show =()=>{
       </div>
       }
         <nav className='flex justify-between items-center  text-white '  >
+          <Link to="/">
           <img src={logo} alt="logo" className='  w-[7rem] ' />
+          </Link>
           <button onClick={show} className='bg-green-600 rounded-[10px] font-semibold'style={{padding:"8px 20px"}}><i className="fa-regular fa-star"></i> Request VIP </button>
         </nav>
 <div className=' flex flex-col gap-6 items-center justify-center text-white' style={{padding:"2rem"}}>

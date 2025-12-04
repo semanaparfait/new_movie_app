@@ -102,6 +102,7 @@ const uploadSeason = async (e) => {
 
                 <input type="text" 
                 value={seasonname}
+                className='season-'
                 onChange={(e)=>setSeasonname(e.target.value)}
                 placeholder='Season name'/>
                 <input type="number" 

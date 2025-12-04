@@ -213,6 +213,11 @@ useEffect(() => {
         <CiStreamOn  className='font-black text-[22px] text-[#f25b29]'/> 
         <p className='nav-links' >Live Streaming</p>
         </Link></li>
+              <li className='text-center' >
+        <Link to="/community" className='flex flex-col items-center'>
+        <i className="fa-solid fa-comment font-black text-[22px] text-[#f25b29]"></i>
+        <p className='nav-links' >Community</p>
+        </Link></li>
       <li className='hidden'><Link to="/watchlist">Watchlist</Link></li>
     </ul>
 
@@ -279,6 +284,11 @@ useEffect(() => {
         <button className=" user-options w-full font-normal rounded-3xl text-left cursor-pointer bg-[#4d4c5c] leading-[24px] " style={{padding:'7px 10px'}}>
           <i className="fa-solid fa-gear"></i> Settings
         </button>
+        <Link to="/community">
+          <button className=" user-options w-full font-normal rounded-3xl text-left cursor-pointer bg-[#4d4c5c] leading-[24px] " style={{padding:'7px 10px'}}>
+          <i className="fa-solid fa-gear"></i> Community
+        </button>
+        </Link>
       </div>
 
       <br />

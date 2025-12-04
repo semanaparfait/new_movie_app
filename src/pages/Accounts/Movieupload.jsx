@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import Season from './Season';
 import Episode from './Episode';
+import './Movieupload.css'
 
 function Movieupload() {
       const API_URL = 
@@ -146,7 +147,7 @@ const Uploadmovie = async (e) => {
         {uploadmovie === 'movie' && (
 
                 <div className='flex flex-col gap-4 items-center justify-center ' style={{padding:'10px'}}>
-                <form onSubmit={Uploadmovie}  className='flex flex-col gap-4 items-center justify-center w-full md:w-[40%]' style={{padding:'10px', marginBottom:'5rem'}}>
+                <form onSubmit={Uploadmovie}  className=' flex flex-col gap-4 items-center justify-center w-full md:w-[40%]' style={{padding:'10px', marginBottom:'5rem'}}>
                 {/* <label className="block">
                 <span className="text-sm font-medium text-gray-700">Upload Movie poster</span>
                 <input 
@@ -176,49 +177,62 @@ const Uploadmovie = async (e) => {
   />
 
   {/* Option 2: URL */}
-  <input
-    type="text"
-    placeholder="Or enter image URL"
-    value={movieposterURL || ""}
-    onChange={(e) => setMovieposterURL(e.target.value)} // string URL
-    className="mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-md px-2 py-1"
-  />
-</label>
+            <input
+              type="text"
+              placeholder="Or enter image URL"
+              value={movieposterURL || ""}
+              onChange={(e) => setMovieposterURL(e.target.value)} // string URL
+              className="movie-poster-link mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-md px-2 py-1"
+            />
+          </label>
 
                 <input type="text" 
                 value={movielink}
                 onChange={(e)=>setMovielink(e.target.value)}
+                className='movie-link '
                 placeholder='Movie  is link'/>
 
                 <input type="text" 
                     value={moviename}
+                    className='movie-name '
                 onChange={(e)=>setMoviename(e.target.value)}
                 placeholder='Movie name'/>
-
+    
                 <textarea 
                 value={moviedescription}
                 onChange={(e)=>setMoviedescription(e.target.value)}
+                className='movie-description resize-none w-full border-2 rounded-[10px] ' style={{paddingLeft:'10px'}}
                 placeholder='movie description'></textarea>
                 <input type="text" 
                 value={movietrailerlink}
                 onChange={(e)=>setMovietrailerlink(e.target.value)}
+                className='movie-trailer '
                 placeholder='movie trailer link' />
+                
                 <input type="text" 
                 value={moviedownloadlink}
                 onChange={(e)=>setMoviedownloadlink(e.target.value)}
+                className='movie-download-link '
                 placeholder='movie download link' />
                 <input type="text"
                 value={moviegenre}
                 onChange={(e)=>setMoviegenre(e.target.value)}
+                className='movie-genre '
                 placeholder='movie genre: action/drama ..' />
                 <input type="text"
                 value={moviecountry}
                 onChange={(e)=>setMoviecountry(e.target.value)}
+                className='movie-country '
                 placeholder='Movie country' />
-                <input type="date"
-                value={moviereleaseddate}
-                onChange={(e)=>setMoviereleaseddate(e.target.value)}
-                placeholder='Relseasd date' />
+                <input
+                  type="date"
+                  value={moviereleaseddate}
+                  onChange={(e) => setMoviereleaseddate(e.target.value)}
+                  className="w-full bg-white/10 backdrop-blur-xl border-2 h-[2.5rem] border-black  rounded-xl text-black   outline-none"
+                  placeholder="Released date"
+/>
+
+
                 {/* <select name="category_id" className="border-2 border-gray-500 rounded-[10px] h-[2.5rem] w-full  placeholder-black" required>
                 <option value="">-- Select Category --</option>
                 {categories.map((cat) => (
