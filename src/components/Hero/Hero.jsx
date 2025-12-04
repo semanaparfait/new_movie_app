@@ -60,6 +60,12 @@ export function phonenavbar(isAuthenticated) {
             <span>Tv show</span>
           </li>
         </Link>
+                <Link to="/community">
+          <li className="flex flex-col items-center">
+            <i className="fa-solid fa-comment"></i>
+            <span>Comment</span>
+          </li>
+        </Link>
         
         <Link to="/livestreaming">
           <li className="flex flex-col items-center">
